@@ -45,7 +45,7 @@ class _BasicButtonState extends State<BasicButton> {
             fixedSize: Size(MediaQuery.of(context).size.width * 0.85, 44),
           );
 
-    // التنفيذ بناءً على النوع
+    
     return widget.isOutlined
         ? OutlinedButton(
             onPressed: widget.onPressed,
