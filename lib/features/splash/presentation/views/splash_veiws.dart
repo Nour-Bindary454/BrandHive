@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:brand/core/utils/appImages/png_images.dart';
-import 'package:brand/features/login/presentation/views/login_view.dart';
-import 'package:brand/features/onboarding/presentation/views/onboarding.dart';
+
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
@@ -16,10 +15,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const Onboarding()),
-      );
+      Navigator.pushReplacementNamed(context, '/onboarding');
     });
   }
 
@@ -53,7 +49,6 @@ class _SplashState extends State<Splash> {
           Center(
             child: Image.asset(
               PngImages.logo,
-              // width: mediaQuery.size.width * 0.5,
             ),
           ),
         ],

@@ -22,11 +22,11 @@ class OnboardingBody extends StatelessWidget {
         children: [
           Image.asset(image, height: 280, fit: BoxFit.contain),
           const SizedBox(height: 30),
-          BasicText(text: t1, fontSize: 24, isBold: true),
-          BasicText(text: t2, fontSize: 24, isBold: true),
+          BasicText(text: t1, fontSize: 24, isBold: true, color: Colors.white),
+          BasicText(text: t2, fontSize: 24, isBold: true, color: Colors.white),
           const SizedBox(height: 20),
-          BasicText(text: s1, fontSize: 20, isBold: false),
-          BasicText(text: s2, fontSize: 20, isBold: false),
+          BasicText(text: s1, fontSize: 20, isBold: false, color: Colors.white),
+          BasicText(text: s2, fontSize: 20, isBold: false, color: Colors.white),
         ],
       ),
     );

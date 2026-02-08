@@ -1,10 +1,8 @@
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
-import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/mixed_bg.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/onboarding/presentation/views/widgets/onboarding_body.dart';
-import 'package:brand/features/welcome/presentation/views/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -31,7 +29,10 @@ class _OnboardingState extends State<Onboarding> {
       // الـ Stack هنا عشان الخلفية تكون ثابتة تحت كل الصفحات
       body: Stack(
         children: [
-          MixedBg(lightColor: BasicColors.linearGradientLight, darkColor: BasicColors.linearGradientDark),
+          MixedBg(
+            lightColor: BasicColors.linearGradientLight,
+            darkColor: BasicColors.linearGradientDark,
+          ),
 
           Column(
             children: [
@@ -71,15 +72,9 @@ class _OnboardingState extends State<Onboarding> {
                 child: Column(
                   children: [
                     BasicButton(
-
                       onPressed: () {
                         if (_currentPage == 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Welcome(),
-                            ),
-                          );
+                          Navigator.pushReplacementNamed(context, '/welcome');
                         } else {
                           // انقلي للصفحة التانية
                           _controller.nextPage(
@@ -88,9 +83,10 @@ class _OnboardingState extends State<Onboarding> {
                           );
                         }
                       },
-                      isOutlined: false,
+
                       text: _currentPage == 1 ? "Get Started" : "Next",
-                      color: BasicColors.buttonColorDark,
+                      colors: [BasicColors.buttonColorDark],
+
                       radius: 24,
                     ),
                     const SizedBox(height: 30),
