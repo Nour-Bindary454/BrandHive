@@ -58,6 +58,7 @@ class _SignupState extends State<Signup> {
               ],
               radius: 7.65,
             ),
+            SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

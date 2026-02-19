@@ -8,11 +8,10 @@ class BasicText extends StatelessWidget {
     required this.color,
     required this.isBold,
   });
-  String text;
-  double fontSize;
-
-  Color color;
-  bool isBold;
+  final String text;
+  final double fontSize;
+  final Color color;
+  final bool isBold;
   @override
   Widget build(BuildContext context) {
     return Text(

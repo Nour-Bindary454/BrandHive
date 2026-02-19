@@ -10,9 +10,9 @@ class SharedStack extends StatelessWidget {
     required this.t2,
     required this.widget,
   });
-  String t1;
-  String t2;
-  Widget widget;
+  final String t1;
+  final String t2;
+  final widget;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +50,8 @@ class SharedStack extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.7,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(60),
-                  topRight: Radius.circular(60),
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
                 color: Colors.white,
               ),

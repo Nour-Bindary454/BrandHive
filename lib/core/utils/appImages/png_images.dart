@@ -9,4 +9,7 @@ class PngImages {
   static const String polygon2 = '${pngpath}Polygon2.png';
   static const String polygon3 = '${pngpath}Polygon3.png';
   static const String logo2 = '${pngpath}logo2.png';
+  static const String google = '${pngpath}google.png';
+  static const String facebook = '${pngpath}facebook.png';
+  static const String forget_password = '${pngpath}forgot_password.png';
 }

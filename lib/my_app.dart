@@ -1,3 +1,4 @@
+import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
 import 'package:brand/features/login/presentation/views/login_view.dart';
 import 'package:brand/features/onboarding/presentation/views/onboarding.dart';
 import 'package:brand/features/signup/presentation/views/signup.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => Welcome(),
         '/login': (context) => Login(),
         '/signup': (context) => Signup(),
+        '/forgetPassword': (context) => ForgetPassword(),
       },
       //home: Splash(),
     );

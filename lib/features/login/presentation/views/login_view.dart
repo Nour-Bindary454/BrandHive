@@ -3,7 +3,8 @@ import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
-import 'package:brand/features/login/presentation/views/widgets/forget_password.dart';
+import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
+import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
 import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +40,25 @@ class _LoginState extends State<Login> {
               isPassword: true,
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [RememberMe(), ForgetPassword()],
+            Padding(
+              padding: const EdgeInsets.only(right: 25, left: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RememberMe(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/forgetPassword');
+                    },
+                    child: BasicText(
+                      text: "Forget Password?",
+                      fontSize: 13,
+                      color: Color(0xff2C3F52),
+                      isBold: true,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             BasicButton(
@@ -53,6 +70,27 @@ class _LoginState extends State<Login> {
               ],
               radius: 7.65,
             ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(width: 100, child: Divider(color: Color(0xff4E5052))),
+                SizedBox(width: 10),
+                BasicText(
+                  text: 'Or',
+                  fontSize: 13,
+                  color: Color(0xff4E5052),
+                  isBold: false,
+                ),
+                SizedBox(width: 15),
+
+                SizedBox(width: 100, child: Divider(color: Color(0xff4E5052))),
+              ],
+            ),
+            SizedBox(height: 20),
+            ContinueWithGoogle(),
+            SizedBox(height: 10),
+            ContinueWithFace(),
           ],
         ),
       ),
