@@ -39,26 +39,44 @@ class Welcome extends StatelessWidget {
                 SizedBox(height: 200),
                 Image.asset(PngImages.logo2),
                 SizedBox(height: 30),
-                BasicText(text: 'Welcome !', fontSize: 35, isBold: true),
+                BasicText(
+                  text: 'Welcome !',
+                  fontSize: 35,
+                  isBold: true,
+                  color: Colors.white,
+                ),
                 SizedBox(height: 30),
 
-                BasicButton(
+                OutlinedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'brandProfile');
+                    Navigator.pushReplacementNamed(context, '/login');
                   },
-                  text: 'Sign in',
-                  color: BasicColors.linearGradientSLight,
-                  radius: 24,
-                  isOutlined: true,
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.white, width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width * 0.85,
+                      44,
+                    ),
+                  ),
+                  child: BasicText(
+                    text: 'Sign in',
+                    fontSize: 17,
+                    isBold: false,
+                    color: Colors.white,
+                  ),
                 ),
                 SizedBox(height: 20),
-
                 BasicButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/signup');
+                  },
                   text: 'Sign up',
-                  color: BasicColors.buttonColorDark,
+
                   radius: 24,
-                  isOutlined: false,
+                  colors: [BasicColors.buttonColorDark],
                 ),
               ],
             ),

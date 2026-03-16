@@ -5,19 +5,19 @@ class BasicText extends StatelessWidget {
     super.key,
     required this.text,
     required this.fontSize,
-   // required this.fontWeight,
+    required this.color,
     required this.isBold,
   });
-  String text;
-  double fontSize;
-  //FontWeight fontWeight;
-  bool isBold;
+  final String text;
+  final double fontSize;
+  final Color color;
+  final bool isBold;
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
-        color: Colors.white,
+        color: color,
         fontSize: fontSize,
         fontFamily: 'Poppins',
         fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
