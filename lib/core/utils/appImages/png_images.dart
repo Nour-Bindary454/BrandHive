@@ -1,5 +1,5 @@
 class PngImages {
-  static const pngpath = 'assets/images/';
+  static const pngpath = 'assets/images/png/';
   static const String logo = '${pngpath}logo.png';
   static const String frametop = '${pngpath}frame_top.png';
   static const String framebottom = '${pngpath}frame_bottom.png';
@@ -9,4 +9,5 @@ class PngImages {
   static const String polygon2 = '${pngpath}Polygon2.png';
   static const String polygon3 = '${pngpath}Polygon3.png';
   static const String logo2 = '${pngpath}logo2.png';
+  static const String bag = '${pngpath}bag.png';
 }

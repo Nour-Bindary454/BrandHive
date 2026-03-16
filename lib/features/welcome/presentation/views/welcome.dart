@@ -43,7 +43,9 @@ class Welcome extends StatelessWidget {
                 SizedBox(height: 30),
 
                 BasicButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'brandProfile');
+                  },
                   text: 'Sign in',
                   color: BasicColors.linearGradientSLight,
                   radius: 24,
