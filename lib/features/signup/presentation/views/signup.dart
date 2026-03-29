@@ -4,6 +4,8 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -48,7 +50,7 @@ class _SignupState extends State<Signup> {
               controller: TextEditingController(),
               isPassword: true,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             BasicButton(
               onPressed: () {},
               text: "Create Account",
@@ -58,13 +60,13 @@ class _SignupState extends State<Signup> {
               ],
               radius: 7.65,
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 40.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BasicText(
                   text: 'Already have an account?',
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   isBold: false,
                   color: BasicColors.linearGradientDark,
                 ),
@@ -74,7 +76,8 @@ class _SignupState extends State<Signup> {
                   },
                   child: BasicText(
                     text: "Log In",
-                    fontSize: 14,
+                    fontSize: 14.sp,
+
                     color: BasicColors.linearGradientDark,
                     isBold: true,
                   ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class LoadingSkeleton extends StatelessWidget {
   const LoadingSkeleton({super.key});
@@ -6,33 +8,33 @@ class LoadingSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       children: [
         // Cover
         Container(
-          height: 150,
+          height: 150.h,
           decoration: BoxDecoration(
             color: Colors.grey[200],
-            borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(32.r)),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         // Info
         Row(
           children: [
             CircleAvatar(radius: 30, backgroundColor: Colors.grey[200]),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(width: 120, height: 20, color: Colors.grey[200]),
-                const SizedBox(height: 8),
-                Container(width: 80, height: 16, color: Colors.grey[200]),
+                Container(width: 120.w, height: 20.h, color: Colors.grey[200]),
+                SizedBox(height: 8.h),
+                Container(width: 80.w, height: 16.h, color: Colors.grey[200]),
               ],
             )
           ],
         ),
-        const SizedBox(height: 32),
+        SizedBox(height: 32.h),
         // Grid
         GridView.builder(
           shrinkWrap: true,
@@ -47,7 +49,7 @@ class LoadingSkeleton extends StatelessWidget {
           itemBuilder: (_, __) => Container(
             decoration: BoxDecoration(
               color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
           ),
         ),

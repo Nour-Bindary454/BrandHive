@@ -4,6 +4,8 @@ import 'package:brand/core/sharedWidgets/mixed_bg.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/onboarding/presentation/views/widgets/onboarding_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Onboarding extends StatefulWidget {
@@ -68,7 +70,7 @@ class _OnboardingState extends State<Onboarding> {
 
               // 2. الجزء الثابت (الزرار والاندكيتور)
               Padding(
-                padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
+                padding: EdgeInsets.only(bottom: 50.h, left: 20.w, right: 20.w),
                 child: Column(
                   children: [
                     BasicButton(
@@ -89,7 +91,7 @@ class _OnboardingState extends State<Onboarding> {
 
                       radius: 24,
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30.h),
 
                     // النقطتين (Indicator)
                     SmoothPageIndicator(

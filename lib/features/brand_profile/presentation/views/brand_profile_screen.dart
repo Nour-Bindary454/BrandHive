@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../view_models/brand_profile_view_model.dart';
 import '../widgets/brand_header_section.dart';
 import '../widgets/loading_skeleton.dart';
@@ -49,7 +51,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                   backgroundColor: Colors.white,
                   elevation: 0,
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: Icon(Icons.arrow_back, color: Colors.black),
                     onPressed: () =>
                         Navigator.of(context).pop(), // Need meaningful nav
                     style: IconButton.styleFrom(
@@ -59,7 +61,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                   ),
                   actions: [
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.share_outlined,
                         color: Colors.black,
                       ),
@@ -69,7 +71,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                         shape: const CircleBorder(),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                     background: _viewModel.brand != null
@@ -82,11 +84,11 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                   bottom: PreferredSize(
                     preferredSize: const Size.fromHeight(20),
                     child: Container(
-                      height: 20,
-                      decoration: const BoxDecoration(
+                      height: 20.h,
+                      decoration: BoxDecoration(
                         color: Color(0xFFF8F9FB),
                         borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(32),
+                          top: Radius.circular(32.r),
                         ),
                       ),
                     ),
@@ -102,9 +104,9 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
 
                 // Product Grid
                 SliverPadding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
                   ),
                   sliver: SliverGrid(
                     gridDelegate:
@@ -132,7 +134,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                     }, childCount: _viewModel.products.length),
                   ),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                SliverToBoxAdapter(child: SizedBox(height: 32.h)),
               ],
             ),
     );

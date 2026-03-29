@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class BasicButton extends StatelessWidget {
   final String text;
@@ -18,7 +20,7 @@ class BasicButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 44,
+      height: 44.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         // التدريجة شغالة دايماً
@@ -39,7 +41,7 @@ class BasicButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: 17.sp),
         ),
       ),
     );

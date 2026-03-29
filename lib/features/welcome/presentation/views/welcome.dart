@@ -4,6 +4,8 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/mixed_bg.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -18,17 +20,17 @@ class Welcome extends StatelessWidget {
             darkColor: BasicColors.linearGradientSDark,
           ),
           Positioned(
-            top: 100,
-            right: 50,
+            top: 100.h,
+            right: 50.w,
             child: Image.asset(PngImages.polygon1),
           ),
           Positioned(
-            top: 230,
-            right: 170,
+            top: 230.h,
+            right: 170.w,
             child: Image.asset(PngImages.polygon2),
           ),
           Positioned(
-            top: 150,
+            top: 150.h,
             left: -40,
             child: Image.asset(PngImages.polygon3),
           ),
@@ -36,25 +38,25 @@ class Welcome extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 200),
+                SizedBox(height: 200.h),
                 Image.asset(PngImages.logo2),
-                SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 BasicText(
                   text: 'Welcome !',
-                  fontSize: 35,
+                  fontSize: 35.sp,
                   isBold: true,
                   color: Colors.white,
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 30.h),
 
                 OutlinedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/login');
                   },
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white, width: 1.5),
+                    side: BorderSide(color: Colors.white, width: 1.5.w),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
                     fixedSize: Size(
                       MediaQuery.of(context).size.width * 0.85,
@@ -63,12 +65,12 @@ class Welcome extends StatelessWidget {
                   ),
                   child: BasicText(
                     text: 'Sign in',
-                    fontSize: 17,
+                    fontSize: 17.sp,
                     isBold: false,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 BasicButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/signup');

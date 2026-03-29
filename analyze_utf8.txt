@@ -1,0 +1,59 @@
+﻿Analyzing brand...                                              
+
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\core\sharedWidgets\basic_text.dart:4:3 - prefer_const_constructors_in_immutables
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\core\sharedWidgets\basic_text_field.dart:6:3 - prefer_const_constructors_in_immutables
+  error - Extension methods can't be used in constant expressions - lib\core\sharedWidgets\basic_text_field.dart:53:77 - const_eval_extension_method
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\core\sharedWidgets\mixed_bg.dart:4:3 - prefer_const_constructors_in_immutables
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\core\sharedWidgets\shared_stack.dart:9:3 - prefer_const_constructors_in_immutables
+   info - An uninitialized field should have an explicit type annotation - lib\core\sharedWidgets\shared_stack.dart:17:9 - prefer_typing_uninitialized_variables
+   info - Missing type annotation - lib\core\sharedWidgets\shared_stack.dart:17:9 - strict_top_level_inference
+   info - The constant name 'forget_password' isn't a lowerCamelCase identifier - lib\core\utils\appImages\png_images.dart:17:23 - constant_identifier_names
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\brand_profile\presentation\views\brand_profile_screen.dart:58:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\brand_profile\presentation\views\brand_profile_screen.dart:70:55 - deprecated_member_use
+  error - Extension methods can't be used in constant expressions - lib\features\brand_profile\presentation\views\brand_profile_screen.dart:137:66 - const_eval_extension_method
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\brand_profile\presentation\widgets\brand_header_section.dart:39:47 - deprecated_member_use
+  error - Extension methods can't be used in constant expressions - lib\features\brand_profile\presentation\widgets\brand_header_section.dart:126:35 - const_eval_extension_method
+   info - Unnecessary use of multiple underscores - lib\features\brand_profile\presentation\widgets\loading_skeleton.dart:49:28 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\brand_profile\presentation\widgets\product_card.dart:30:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\brand_profile\presentation\widgets\product_card.dart:62:39 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\home.dart:18:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\action_buttons_section.dart:9:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\action_buttons_section.dart:28:52 - deprecated_member_use
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\action_buttons_section.dart:44:71 - const_eval_extension_method
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\bazaars_events_section.dart:10:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\categories_section.dart:10:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\categories_section.dart:54:49 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\featured_products_section.dart:13:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\featured_products_section.dart:74:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\featured_products_section.dart:109:55 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\home_header.dart:11:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_header.dart:25:54 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\home_hero_banner.dart:10:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_hero_banner.dart:29:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_hero_banner.dart:43:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_hero_banner.dart:44:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_hero_banner.dart:65:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_hero_banner.dart:91:41 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\home_search_bar.dart:6:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\home_search_bar.dart:16:32 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\home_shimmer_loading.dart:6:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\promotional_banner.dart:8:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\promotional_banner.dart:27:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\promotional_banner.dart:43:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\promotional_banner.dart:61:41 - deprecated_member_use
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\promotional_banner.dart:82:31 - const_eval_extension_method
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:11:9 - use_super_parameters
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:25:51 - const_eval_extension_method
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:26:29 - const_eval_extension_method
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:30:27 - const_eval_extension_method
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:44:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:116:61 - deprecated_member_use
+  error - Extension methods can't be used in constant expressions - lib\features\home\presentation\views\widgets\recommended_for_you_section.dart:185:37 - const_eval_extension_method
+   info - Parameter 'key' could be a super parameter - lib\features\home\presentation\views\widgets\top_local_brands_section.dart:11:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\top_local_brands_section.dart:81:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\top_local_brands_section.dart:92:52 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\views\widgets\top_local_brands_section.dart:114:57 - deprecated_member_use
+warning - Unused import: 'package:brand/features/home/presentation/views/home.dart' - lib\features\login\presentation\views\login_view.dart:6:8 - unused_import
+   info - The member 'initState' overrides an inherited member but isn't annotated with '@override' - lib\features\splash\presentation\views\splash_veiws.dart:15:8 - annotate_overrides
+  error - Extension methods can't be used in constant expressions - lib\features\welcome\presentation\views\welcome.dart:57:72 - const_eval_extension_method
+

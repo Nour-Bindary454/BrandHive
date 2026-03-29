@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:brand/core/sharedWidgets/basic_text.dart'; // تأكدي من المسارات بتاعتك
 
 class OnboardingBody extends StatelessWidget {
@@ -16,17 +18,17 @@ class OnboardingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
+      padding: EdgeInsets.only(top: 80.h, left: 20.w, right: 20.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image, height: 280, fit: BoxFit.contain),
-          const SizedBox(height: 30),
-          BasicText(text: t1, fontSize: 24, isBold: true, color: Colors.white),
-          BasicText(text: t2, fontSize: 24, isBold: true, color: Colors.white),
-          const SizedBox(height: 20),
-          BasicText(text: s1, fontSize: 20, isBold: false, color: Colors.white),
-          BasicText(text: s2, fontSize: 20, isBold: false, color: Colors.white),
+          Image.asset(image, height: 280.h, fit: BoxFit.contain),
+          SizedBox(height: 30.h),
+          BasicText(text: t1, fontSize: 24.sp, isBold: true, color: Colors.white),
+          BasicText(text: t2, fontSize: 24.sp, isBold: true, color: Colors.white),
+          SizedBox(height: 20.h),
+          BasicText(text: s1, fontSize: 20.sp, isBold: false, color: Colors.white),
+          BasicText(text: s2, fontSize: 20.sp, isBold: false, color: Colors.white),
         ],
       ),
     );

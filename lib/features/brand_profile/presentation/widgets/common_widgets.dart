@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class RatingWidget extends StatelessWidget {
   final double rating;
@@ -19,18 +21,18 @@ class RatingWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.star, size: 16, color: starColor),
-        const SizedBox(width: 4),
+        Icon(Icons.star, size: 16.sp, color: starColor),
+        SizedBox(width: 4.w),
         Text(
           rating.toString(),
-          style: textStyle ?? const TextStyle(fontWeight: FontWeight.bold),
+          style: textStyle ?? TextStyle(fontWeight: FontWeight.bold),
         ),
         if (reviewCount != null) ...[
-          const SizedBox(width: 4),
+          SizedBox(width: 4.w),
           Text(
             '($reviewCount reviews)',
             style: textStyle?.copyWith(color: Colors.grey) ?? 
-                const TextStyle(color: Colors.grey, fontSize: 12),
+                TextStyle(color: Colors.grey, fontSize: 12.sp),
           ),
         ],
       ],
@@ -51,7 +53,7 @@ class FollowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: 36.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -60,13 +62,13 @@ class FollowButton extends StatelessWidget {
           elevation: 0,
           side: isFollowed ? const BorderSide(color: Color(0xFFE0E0E0)) : null,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
         ),
         child: Text(
           isFollowed ? 'Following' : 'Follow',
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp),
         ),
       ),
     );
@@ -87,9 +89,9 @@ class AddToCartButton extends StatelessWidget {
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onPressed,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(Icons.add, color: Colors.white, size: 20),
+        child: Padding(
+          padding: EdgeInsets.all(8.0.r),
+          child: Icon(Icons.add, color: Colors.white, size: 20.sp),
         ),
       ),
     );

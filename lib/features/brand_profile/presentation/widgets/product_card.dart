@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 import '../../data/models/product_model.dart';
 import 'common_widgets.dart';
@@ -18,16 +20,16 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 200.h,
 
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            blurRadius: 16.r,
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -38,24 +40,24 @@ class ProductCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(16),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(16.r),
                 ),
                 child: Image.asset(
                   product.image,
-                  height: 150,
+                  height: 150.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
-                    height: 160,
+                    height: 160.h,
                     color: Colors.grey[100],
                     child: const Center(child: Icon(Icons.image_not_supported)),
                   ),
                 ),
               ),
               Positioned(
-                top: 8,
-                right: 8,
+                top: 8.h,
+                right: 8.w,
                 child: Material(
                   color: Colors.white.withOpacity(0.9),
                   shape: const CircleBorder(),
@@ -63,12 +65,12 @@ class ProductCard extends StatelessWidget {
                     customBorder: const CircleBorder(),
                     onTap: onFavoritePressed,
                     child: Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: EdgeInsets.all(6.0.r),
                       child: Icon(
                         product.isFavorite
                             ? Icons.favorite
                             : Icons.favorite_border,
-                        size: 18,
+                        size: 18.sp,
                         color: product.isFavorite ? Colors.red : Colors.grey,
                       ),
                     ),
@@ -80,7 +82,7 @@ class ProductCard extends StatelessWidget {
 
           // Info Section
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,28 +94,28 @@ class ProductCard extends StatelessWidget {
                     Text(
                       'CAIRO LEATHER', // Static or dynamic
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey[600],
                         letterSpacing: 0.5,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Text(
                       product.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: TextStyle(
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
-                        height: 1.2,
+                        height: 1.2.h,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     RatingWidget(
                       rating: product.rating,
-                      textStyle: const TextStyle(
-                        fontSize: 10,
+                      textStyle: TextStyle(
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       starColor: Colors.amber,
@@ -129,17 +131,17 @@ class ProductCard extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: '${product.price.toInt()} ',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                             ),
                           ),
                           TextSpan(
                             text: product.currency,
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 10,
+                              fontSize: 10.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
