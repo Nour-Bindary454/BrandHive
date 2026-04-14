@@ -1,3 +1,4 @@
+import 'package:brand/features/seller/seller_main_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../viewmodels/profile_viewmodel.dart';
@@ -6,7 +7,6 @@ import 'widgets/seller_mode_card.dart';
 import 'widgets/stats_row.dart';
 import 'widgets/menu_list_section.dart';
 import 'widgets/sign_out_button.dart';
-import '../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../core/sharedWidgets/basic_text.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -76,6 +76,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SellerModeCard(
                     onTap: () {
                       // Navigate to seller mode
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SellerMainLayout(),
+                        ),
+                      );
                     },
                   ),
                   SizedBox(height: 24.h),

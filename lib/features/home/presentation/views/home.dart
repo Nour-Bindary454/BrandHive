@@ -1,10 +1,10 @@
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../view_models/home_view_model.dart';
 import 'widgets/home_header.dart';
-import 'widgets/home_search_bar.dart';
 import 'widgets/home_hero_banner.dart';
 import 'widgets/action_buttons_section.dart';
 import 'widgets/categories_section.dart';
@@ -97,7 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
 
                           // 2. Search Bar
-                          const HomeSearchBar(),
+                          CusSearchBar(hintText: 'Search local brands...'),
+
                           SizedBox(height: 20.h),
 
                           // 3. Hero Banner

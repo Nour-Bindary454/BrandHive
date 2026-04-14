@@ -2,9 +2,14 @@ import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key});
+class CusSearchBar extends StatefulWidget {
+  const CusSearchBar({super.key, required this.hintText});
+  final String hintText;
+  @override
+  State<CusSearchBar> createState() => _CusSearchBarState();
+}
 
+class _CusSearchBarState extends State<CusSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +30,7 @@ class HomeSearchBar extends StatelessWidget {
       ),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Search local brands...',
+          hintText: widget.hintText,
           hintStyle: TextStyle(color: BasicColors.grey),
           prefixIcon: Icon(Icons.search, color: BasicColors.grey),
           border: InputBorder.none,
@@ -33,5 +38,6 @@ class HomeSearchBar extends StatelessWidget {
         ),
       ),
     );
+    ;
   }
 }

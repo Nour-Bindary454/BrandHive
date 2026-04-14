@@ -34,7 +34,7 @@ class SellerModeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   BasicText(
+                  BasicText(
                     text: 'Switch to Seller Mode',
                     fontSize: 16.sp,
                     color: BasicColors.white,

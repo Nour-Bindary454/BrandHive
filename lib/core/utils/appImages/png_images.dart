@@ -15,4 +15,17 @@ class PngImages {
   static const String google = '${pngpath}google.png';
   static const String facebook = '${pngpath}facebook.png';
   static const String forget_password = '${pngpath}forgot_password.png';
+  static const String filter = '${pngpath}filter.png';
+  static const String trending_now = '${pngpath}trendingNow.png';
+  static const String fashion = '${pngpath}fashion.png';
+  static const String homeDecor = '${pngpath}homeDecor.png';
+  static const String accessories = '${pngpath}accessories.png';
+  static const String beauty = '${pngpath}beauty.png';
+  static const String handCrafts = '${pngpath}handCrafts.png';
+  static const String add = '${pngpath}add.png';
+  static const String orders = '${pngpath}orders.png';
+  static const String overview = '${pngpath}overview.png';
+  static const String products = '${pngpath}products.png';
+  static const String setting = '${pngpath}settings.png';
+  static const String trash = '${pngpath}Trash.png';
 }
