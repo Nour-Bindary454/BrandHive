@@ -28,4 +28,8 @@ class PngImages {
   static const String products = '${pngpath}products.png';
   static const String setting = '${pngpath}settings.png';
   static const String trash = '${pngpath}Trash.png';
+  static const String people = '${pngpath}people.png';
+  static const String dollar = '${pngpath}dollarsign.png';
+  static const String logout = '${pngpath}logout.png';
+  static const String addproduct = '${pngpath}upload.png';
 }

@@ -6,7 +6,6 @@ import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
 
@@ -68,7 +67,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             SizedBox(height: 20.h),
             BasicButton(
               text: 'Send Code',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/verify');
+              },
               colors: [BasicColors.buttonColorLight],
               radius: 8,
             ),
