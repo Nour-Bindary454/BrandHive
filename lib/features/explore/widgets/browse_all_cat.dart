@@ -2,6 +2,7 @@ import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/explore/widgets/categ_container.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BrowseAllCat extends StatelessWidget {
   BrowseAllCat({super.key});
   List<String> categories = [

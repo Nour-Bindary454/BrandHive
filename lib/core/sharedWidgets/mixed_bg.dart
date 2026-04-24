@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MixedBg extends StatelessWidget {
-  MixedBg({super.key, required this.lightColor, required this.darkColor});
+  const MixedBg({super.key, required this.lightColor, required this.darkColor});
   final Color lightColor;
   final Color darkColor;
   @override

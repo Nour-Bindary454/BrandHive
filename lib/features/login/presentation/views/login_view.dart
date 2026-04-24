@@ -3,14 +3,12 @@ import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
-import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
 import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -83,7 +81,10 @@ class _LoginState extends State<Login> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 100.w, child: Divider(color: Color(0xff4E5052))),
+                SizedBox(
+                  width: 100.w,
+                  child: Divider(color: Color(0xff4E5052)),
+                ),
                 SizedBox(width: 10.w),
                 BasicText(
                   text: 'Or',
@@ -93,7 +94,10 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(width: 15.w),
 
-                SizedBox(width: 100.w, child: Divider(color: Color(0xff4E5052))),
+                SizedBox(
+                  width: 100.w,
+                  child: Divider(color: Color(0xff4E5052)),
+                ),
               ],
             ),
             SizedBox(height: 20.h),

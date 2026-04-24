@@ -4,9 +4,8 @@ import 'package:brand/core/sharedWidgets/mixed_bg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class SharedStack extends StatelessWidget {
-  SharedStack({
+  const SharedStack({
     super.key,
     required this.t1,
     required this.t2,
@@ -14,7 +13,7 @@ class SharedStack extends StatelessWidget {
   });
   final String t1;
   final String t2;
-  final widget;
+  final Widget widget;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BasicText extends StatelessWidget {
-  BasicText({
+  const BasicText({
     super.key,
     required this.text,
     required this.fontSize,
@@ -14,7 +14,7 @@ class BasicText extends StatelessWidget {
   final Color color;
   final bool isBold;
   final TextAlign? textAlign;
-  
+
   @override
   Widget build(BuildContext context) {
     return Text(

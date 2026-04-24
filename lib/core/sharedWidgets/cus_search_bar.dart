@@ -38,6 +38,5 @@ class _CusSearchBarState extends State<CusSearchBar> {
         ),
       ),
     );
-    ;
   }
 }
