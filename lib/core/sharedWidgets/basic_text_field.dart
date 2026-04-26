@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class BasicTextField extends StatefulWidget {
-  BasicTextField({super.key,required this.label,required this.hint,required this.controller,required this.isPassword});
-final String label;
-final String hint;
-final TextEditingController controller;
-final bool isPassword;
+  const BasicTextField({
+    super.key,
+    required this.label,
+    required this.hint,
+    required this.controller,
+    required this.isPassword,
+  });
+  final String label;
+  final String hint;
+  final TextEditingController controller;
+  final bool isPassword;
   @override
   State<BasicTextField> createState() => _BasicTextFieldState();
 }
@@ -28,36 +33,43 @@ class _BasicTextFieldState extends State<BasicTextField> {
           ),
         ),
         SizedBox(height: 8.h),
-       SizedBox(
-        width: MediaQuery.of(context).size.width * 0.85,
-        height: 44.h,
-        
-        
-         child: TextField(
-          obscureText: widget.isPassword,
-          controller: widget.controller,
-          decoration: InputDecoration(
-           hintText: widget.hint,
-            hintStyle: TextStyle(color: Color(0xFF8E8E8E), fontSize: 14.sp, fontFamily: 'Poppins'),
-            contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            // شكل الحدود وهي مش متداس عليها
-            enabledBorder: OutlineInputBorder(
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.85,
+          height: 44.h,
 
-              borderRadius: BorderRadius.circular(8.r), // الحواف الدائرية
-              borderSide: const BorderSide(color: Color(0xFFD1D1D1)), // لون الحدود الرمادي
-             
+          child: TextField(
+            obscureText: widget.isPassword,
+            controller: widget.controller,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              hintStyle: TextStyle(
+                color: Color(0xFF8E8E8E),
+                fontSize: 14.sp,
+                fontFamily: 'Poppins',
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 10.h,
+              ),
+              // شكل الحدود وهي مش متداس عليها
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.r), // الحواف الدائرية
+                borderSide: const BorderSide(
+                  color: Color(0xFFD1D1D1),
+                ), // لون الحدود الرمادي
+              ),
+
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.r),
+                borderSide: BorderSide(color: Color(0xFFD1D1D1), width: 2.w),
+              ),
+              filled: true,
+              fillColor: Colors.white,
             ),
-            
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: Color(0xFFD1D1D1), width: 2.w), 
-            ),
-            filled: true,
-            fillColor: Colors.white,
           ),
-               ),
-       ),
-      SizedBox(height: 16.h),
-    ],);
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
   }
 }

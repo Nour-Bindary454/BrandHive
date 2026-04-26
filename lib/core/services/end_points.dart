@@ -1,0 +1,8 @@
+class EndPoints {
+  static const String baseUrl =
+      'https://brandhive-apis-production.up.railway.app/';
+  static String register = "auth/register";
+  static String confirmEmail = "auth/confirm-email";
+  static String verifyresetcode = "auth/verify-reset-code";
+  static String resendOtp = "auth/resend-otp";
+}
