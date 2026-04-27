@@ -1,11 +1,8 @@
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 
-import 'package:brand/features/cart/cart.dart';
-import 'package:brand/features/explore/explore.dart';
-import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';
-import 'package:brand/features/profile/presentation/views/profile_screen.dart';
+
 import 'package:brand/features/seller/add/add.dart';
 import 'package:brand/features/seller/orders/orders.dart';
 import 'package:brand/features/seller/overView/overview.dart';

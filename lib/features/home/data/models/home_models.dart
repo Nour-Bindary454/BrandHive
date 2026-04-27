@@ -15,11 +15,7 @@ class CategoryModel {
   final String name;
   final String imageUrl;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-    required this.imageUrl,
-  });
+  CategoryModel({required this.id, required this.name, required this.imageUrl});
 }
 
 class EventModel {
@@ -88,4 +84,16 @@ class HomeProduct {
     this.matchPercentage = 0,
     this.rating = 0.0,
   });
+
+  factory HomeProduct.fromJson(Map<String, dynamic> json) {
+    return HomeProduct(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      brandName: json['brand']?['name'] ?? '',
+      category: json['category']?['name'] ?? '',
+      imageUrl: json['mainImage'] ?? '',
+      price: (json['price'] ?? 0).toDouble(),
+      rating: (json['stats']?['averageRating'] ?? 0).toDouble(),
+    );
+  }
 }

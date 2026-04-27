@@ -5,4 +5,6 @@ class EndPoints {
   static String confirmEmail = "auth/confirm-email";
   static String verifyresetcode = "auth/verify-reset-code";
   static String resendOtp = "auth/resend-otp";
+  static String login = "auth/login";
+  //static String products = "product";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/home_models.dart';
+import '../../data/repository/home_repo.dart';
 
 class HomeViewModel extends ChangeNotifier {
   bool _isLoading = true;
