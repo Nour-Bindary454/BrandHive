@@ -8,12 +8,14 @@ class BasicText extends StatelessWidget {
     required this.color,
     required this.isBold,
     this.textAlign,
+    this.fontFamily,
   });
   final String text;
   final double fontSize;
   final Color color;
   final bool isBold;
   final TextAlign? textAlign;
+  final String? fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class BasicText extends StatelessWidget {
       style: TextStyle(
         color: color,
         fontSize: fontSize,
-        fontFamily: 'Poppins',
+        fontFamily: fontFamily,
         fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
       ),
     );

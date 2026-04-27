@@ -1,6 +1,6 @@
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 
-import 'package:brand/features/cart/cart.dart';
+import 'package:brand/features/cart/presentation/cart_screen.dart';
 import 'package:brand/features/explore/explore.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';
@@ -12,13 +12,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Mainlayout extends StatelessWidget {
-
   Mainlayout({super.key});
 
   final List<Widget> screens = [
     Center(child: HomeScreen()),
     Center(child: Explore()),
-    Center(child: Cart()),
+    Center(child: CartScreen()),
     Center(child: ProfileScreen()),
   ];
 
