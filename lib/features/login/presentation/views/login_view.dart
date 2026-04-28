@@ -4,6 +4,7 @@ import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
+import 'package:brand/core/utils/toast/toast.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
 import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
@@ -32,6 +33,10 @@ class _LoginState extends State<Login> {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
           if (state is LoginSuccess) {
+            Toast.showSuccessToast(
+              msg: state.model.message.toString(),
+              context: context,
+            );
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Mainlayout()),

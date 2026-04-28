@@ -41,7 +41,11 @@ class _SignupState extends State<Signup> {
             msg: state.registerModel.message.toString(),
             context: context,
           );
-          Navigator.pushReplacementNamed(context, '/mainlayout');
+          Navigator.pushReplacementNamed(
+            context,
+            '/verify',
+            arguments: emailController.text.trim(),
+          );
         }
         if (state is SignUpError) {
           Toast.showErrorToast(msg: state.message.toString(), context: context);

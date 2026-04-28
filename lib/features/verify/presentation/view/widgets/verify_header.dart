@@ -17,8 +17,10 @@ class VerifyHeader extends StatelessWidget {
 
         // Title
         BasicText(
+          fontFamily: 'Poppins',
+
           text: 'Please check your\nemail',
-          fontSize: 28,
+          fontSize: 30,
           color: const Color(0xFF333333),
           isBold: true,
         ),
