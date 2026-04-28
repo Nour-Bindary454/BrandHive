@@ -6,5 +6,6 @@ class EndPoints {
   static String verifyresetcode = "auth/verify-reset-code";
   static String resendOtp = "auth/resend-otp";
   static String login = "auth/login";
+  static String forgetPassword = "auth/forget-password";
   //static String products = "product";
 }

@@ -1,6 +1,7 @@
 import 'package:brand/core/services/api_services.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
+import 'package:brand/features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/login/presentation/views/login_view.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
@@ -12,6 +13,7 @@ import 'package:brand/features/signup/presentation/view_model/cubit/register_cub
 import 'package:brand/features/signup/presentation/views/signup.dart';
 import 'package:brand/features/splash/presentation/views/splash_veiws.dart';
 import 'package:brand/features/verify/presentation/view/verify.dart';
+import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
 import 'package:brand/features/welcome/presentation/views/welcome.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +74,17 @@ class MyApp extends StatelessWidget {
                 child: Signup(),
               ),
 
-              '/forgetPassword': (context) => ForgetPassword(),
+              '/forgetPassword': (context) => BlocProvider(
+                create: (_) => sl<ForgetPasswordCubit>(),
+                child: ForgetPassword(),
+              ),
               '/home': (context) => HomeScreen(),
               '/mainlayout': (context) => Mainlayout(),
               '/resetPassword': (context) => ResetPassword(),
-              '/verify': (context) => Verify(),
+              '/verify': (context) => BlocProvider(
+                create: (_) => sl<ConfirmEmailCubit>(),
+                child: Verify(),
+              ),
             },
           );
         },
