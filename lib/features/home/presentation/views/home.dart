@@ -14,6 +14,7 @@ import 'widgets/home_shimmer_loading.dart';
 import 'widgets/top_local_brands_section.dart';
 import 'widgets/recommended_for_you_section.dart';
 import 'widgets/featured_products_section.dart';
+import 'package:brand/features/category/presentation/views/category_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -140,9 +141,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             CategoriesSection(
                               categories: _viewModel.categories,
                               onCategoryTap: (id) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Category $id tapped'),
+                                final category = _viewModel.categories.firstWhere((c) => c.id == id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CategoryView(
+                                      categoryName: category.name,
+                                      categoryImage: category.imageUrl,
+                                      productsCount: 120, // Dummy count
+                                    ),
                                   ),
                                 );
                               },

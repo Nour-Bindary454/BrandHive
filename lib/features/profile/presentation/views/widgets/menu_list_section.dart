@@ -43,7 +43,13 @@ class MenuListSection extends StatelessWidget {
           return MenuItemTile(
             item: item,
             onTap: () {
-              // Handle tap
+              if (item.title == 'Payment Methods') {
+                Navigator.pushNamed(context, '/paymentMethods');
+              } else if (item.title == 'Wishlist') {
+                Navigator.pushNamed(context, '/wishlist');
+              } else {
+                // Handle other taps
+              }
             },
           );
         },

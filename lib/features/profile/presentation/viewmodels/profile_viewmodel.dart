@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/profile_model.dart';
+import '../../../../core/services/cache_helper.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   ProfileModel? _profileData;
@@ -72,8 +73,13 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  void signOut() {
-    // Implement sign out logic
+  void signOut(BuildContext context) {
+    // Clear token
+    CacheHelper.removeData('token');
+    
+    // Navigate to Login and clear stack
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    
     debugPrint("Signing out...");
   }
 }

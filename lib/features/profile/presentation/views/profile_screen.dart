@@ -75,13 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // Seller Mode Banner
                   SellerModeCard(
                     onTap: () {
-                      // Navigate to seller mode
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerMainLayout(),
-                        ),
-                      );
+                      // Navigate to seller registration
+                      Navigator.pushNamed(context, '/sellerRegistration');
                     },
                   ),
                   SizedBox(height: 24.h),
@@ -95,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 32.h),
 
                   // Sign Out Button
-                  SignOutButton(onTap: () => _viewModel.signOut()),
+                  SignOutButton(onTap: () => _viewModel.signOut(context)),
                   SizedBox(height: 24.h),
                 ],
               ),

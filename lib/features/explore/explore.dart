@@ -7,6 +7,7 @@ import 'package:brand/features/brand_profile/presentation/widgets/product_card.d
 import 'package:brand/features/explore/widgets/browse_all_cat.dart';
 import 'package:brand/features/explore/widgets/category_selector.dart';
 import 'package:brand/features/explore/widgets/collections_container.dart';
+import 'package:brand/features/explore/widgets/filter_bottom_sheet.dart';
 import 'package:brand/features/explore/widgets/subcategory_tabs.dart';
 import 'package:brand/features/explore/widgets/featured_brands.dart';
 import 'package:brand/features/explore/widgets/trending_item.dart';
@@ -65,23 +66,33 @@ class Explore extends StatelessWidget {
                               hintText: 'Search products, brands...',
                             ),
                           ),
-                          Container(
-                            height: 45.h,
-                            width: 0.13.sw,
-                            decoration: BoxDecoration(
-                              color: BasicColors.white,
-                              borderRadius: BorderRadius.circular(20.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.08),
-                                  spreadRadius: 2.r,
-                                  blurRadius: 10.r,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                              border: Border.all(color: Colors.grey.shade200),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => const FilterBottomSheet(),
+                              );
+                            },
+                            child: Container(
+                              height: 45.h,
+                              width: 0.13.sw,
+                              decoration: BoxDecoration(
+                                color: BasicColors.white,
+                                borderRadius: BorderRadius.circular(20.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.08),
+                                    spreadRadius: 2.r,
+                                    blurRadius: 10.r,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                                border: Border.all(color: Colors.grey.shade200),
+                              ),
+                              child: ImageIcon(AssetImage(PngImages.filter)),
                             ),
-                            child: ImageIcon(AssetImage(PngImages.filter)),
                           ),
                         ],
                       ),

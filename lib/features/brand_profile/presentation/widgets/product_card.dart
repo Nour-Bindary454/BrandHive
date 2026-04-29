@@ -37,47 +37,48 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image Section
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(16.r),
-                ),
-                child: Image.asset(
-                  product.image,
-                  height: 150.h,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    height: 160.h,
-                    color: Colors.grey[100],
-                    child: const Center(child: Icon(Icons.image_not_supported)),
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(16.r),
+                  ),
+                  child: Image.asset(
+                    product.image,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      color: Colors.grey[100],
+                      child: const Center(child: Icon(Icons.image_not_supported)),
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: 8.h,
-                right: 8.w,
-                child: Material(
-                  color: Colors.white.withOpacity(0.9),
-                  shape: const CircleBorder(),
-                  child: InkWell(
-                    customBorder: const CircleBorder(),
-                    onTap: onFavoritePressed,
-                    child: Padding(
-                      padding: EdgeInsets.all(6.0.r),
-                      child: Icon(
-                        product.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        size: 18.sp,
-                        color: product.isFavorite ? Colors.red : Colors.grey,
+                Positioned(
+                  top: 8.h,
+                  right: 8.w,
+                  child: Material(
+                    color: Colors.white.withValues(alpha: 0.9),
+                    shape: const CircleBorder(),
+                    child: InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: onFavoritePressed,
+                      child: Padding(
+                        padding: EdgeInsets.all(6.0.r),
+                        child: Icon(
+                          product.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 18.sp,
+                          color: product.isFavorite ? Colors.red : Colors.grey,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
 
           // Info Section

@@ -1,5 +1,6 @@
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/explore/widgets/categ_container.dart';
+import 'package:brand/features/category/presentation/views/category_view.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -26,48 +27,39 @@ class BrowseAllCat extends StatelessWidget {
     PngImages.beauty,
     PngImages.handCrafts,
   ];
+
+  void _navigateToCategory(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CategoryView(
+          categoryName: categories[index],
+          categoryImage: images[index],
+          productsCount: 198, // Dummy count as requested
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      shrinkWrap: true, // مهم جداً عشان الـ Grid مياخدش طول لا نهائي
-      physics:
-          NeverScrollableScrollPhysics(), // عشان الشاشة كلها تعمل Scroll مرة واحدة
-      crossAxisCount: 2, // عمودين
-      mainAxisSpacing: 10, // مسافة رأسية
-      crossAxisSpacing: 5, // مسافة أفقية
-      childAspectRatio: 1.25, // بيتحكم في "تربيعة" الكارت (عرضه بالنسبة لطوله)
-      children: [
-        CategContainer(
-          tap: () {},
-          image: images[0],
-          title: categories[0],
-          discription: discription[0],
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 2,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 5,
+      childAspectRatio: 1.25,
+      children: List.generate(
+        categories.length,
+        (index) => CategContainer(
+          tap: () => _navigateToCategory(context, index),
+          image: images[index],
+          title: categories[index],
+          discription: discription[index],
         ),
-        CategContainer(
-          tap: () {},
-          image: images[1],
-          title: categories[1],
-          discription: discription[1],
-        ),
-        CategContainer(
-          tap: () {},
-          image: images[2],
-          title: categories[2],
-          discription: discription[2],
-        ),
-        CategContainer(
-          tap: () {},
-          image: images[3],
-          title: categories[3],
-          discription: discription[3],
-        ),
-        CategContainer(
-          tap: () {},
-          image: images[4],
-          title: categories[4],
-          discription: discription[4],
-        ),
-      ],
+      ),
     );
   }
 }
+

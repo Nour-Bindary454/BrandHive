@@ -5,6 +5,8 @@ import 'package:brand/features/verify/presentation/view/widgets/custom_keyboard.
 import 'package:brand/features/verify/presentation/view/widgets/otp_inputs.dart';
 import 'package:brand/features/verify/presentation/view/widgets/verify_button_section.dart';
 import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
+import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_cubit.dart';
+import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,35 +36,74 @@ class _VerifyState extends State<Verify> {
 
   @override
   Widget build(BuildContext context) {
-    final email = ModalRoute.of(context)!.settings.arguments as String;
-    return BlocListener<ConfirmEmailCubit, ConfirmEmailState>(
-      listener: (context, state) {
-        if (state is ConfirmEmailLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
-          );
-        }
+    final args = ModalRoute.of(context)!.settings.arguments;
+    String email = '';
+    bool isForgetPassword = false;
 
-        if (state is ConfirmEmailSuccess) {
-          Navigator.pop(context);
+    if (args is String) {
+      email = args;
+    } else if (args is Map) {
+      email = args['email'] as String;
+      isForgetPassword = args['isForgetPassword'] as bool? ?? false;
+    }
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => Mainlayout()),
-            (route) => false,
-          );
-        }
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ConfirmEmailCubit, ConfirmEmailState>(
+          listener: (context, state) {
+            if (state is ConfirmEmailLoading) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const Center(child: CircularProgressIndicator()),
+              );
+            }
 
-        if (state is ConfirmEmailError) {
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
+            if (state is ConfirmEmailSuccess) {
+              Navigator.pop(context);
 
-          Toast.showErrorToast(msg: state.message, context: context);
-        }
-      },
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => Mainlayout()),
+                (route) => false,
+              );
+            }
+
+            if (state is ConfirmEmailError) {
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+
+              Toast.showErrorToast(msg: state.message, context: context);
+            }
+          },
+        ),
+        BlocListener<VerifyResetCodeCubit, VerifyResetCodeStates>(
+          listener: (context, state) {
+            if (state is VerifyResetCodeLoading) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            if (state is VerifyResetCodeSuccess) {
+              Navigator.pop(context);
+
+              Navigator.pushReplacementNamed(context, '/resetPassword', arguments: email);
+            }
+
+            if (state is VerifyResetCodeError) {
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+
+              Toast.showErrorToast(msg: state.message, context: context);
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -75,7 +116,7 @@ class _VerifyState extends State<Verify> {
                       OtpInputs(otpCode: otpCode),
                       const SizedBox(height: 40),
 
-                      VerifyButtonSection(otpCode: otpCode, email: email),
+                      VerifyButtonSection(otpCode: otpCode, email: email, isForgetPassword: isForgetPassword),
                     ],
                   ),
                 ),

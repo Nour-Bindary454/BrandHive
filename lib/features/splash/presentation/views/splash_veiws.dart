@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:brand/core/utils/appImages/png_images.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,10 +13,16 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/onboarding');
+    Timer(const Duration(seconds: 2), () {
+      final token = CacheHelper.getData('token');
+      if (token != null && token.isNotEmpty) {
+        Navigator.pushReplacementNamed(context, '/mainlayout');
+      } else {
+        Navigator.pushReplacementNamed(context, '/onboarding');
+      }
     });
   }
 

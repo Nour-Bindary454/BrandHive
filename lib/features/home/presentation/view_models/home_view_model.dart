@@ -47,7 +47,7 @@ class HomeViewModel extends ChangeNotifier {
         title: 'Ramadan Collection',
         subtitle: 'Handcrafted Lanterns & Decor',
         imageUrl:
-            'https://images.unsplash.com/photo-1596484552834-8a58f7eb21a2?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop', // Replaced broken URL
       );
 
       _categories = [
@@ -79,7 +79,7 @@ class HomeViewModel extends ChangeNotifier {
           id: 'c5',
           name: 'Handicrafts',
           imageUrl:
-              'https://images.unsplash.com/photo-1610471927806-69503dd2e2fb?q=80&w=300&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=300&auto=format&fit=crop', // Replaced
         ),
       ];
 
@@ -112,7 +112,7 @@ class HomeViewModel extends ChangeNotifier {
           name: 'Loyus Beauty',
           category: 'Beauty',
           coverImageUrl:
-              'https://images.unsplash.com/photo-1615397323625-ed2366bfe0f8?q=80&w=300&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=300&auto=format&fit=crop', // Replaced
           logoText: 'LB',
         ),
         HomeBrand(
@@ -165,7 +165,7 @@ class HomeViewModel extends ChangeNotifier {
           category: 'Fashion',
           name: 'Straight Fit Jeans',
           imageUrl:
-              'https://images.unsplash.com/photo-1542272605-e3666d6d84a7?q=80&w=400&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=400&auto=format&fit=crop', // Replaced
           price: 900,
           rating: 4.8,
         ),
@@ -195,7 +195,7 @@ class HomeViewModel extends ChangeNotifier {
           category: 'Fashion',
           name: 'HandMade Colorful dress',
           imageUrl:
-              'https://images.unsplash.com/photo-1515347619362-e6e87f1ba28d?q=80&w=400&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=400&auto=format&fit=crop', // Replaced
           price: 1400,
           rating: 4.9,
         ),

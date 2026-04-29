@@ -2,17 +2,20 @@ import 'dart:async';
 
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
+import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyButtonSection extends StatefulWidget {
   final String otpCode;
   final String email;
+  final bool isForgetPassword;
 
   const VerifyButtonSection({
     super.key,
     required this.otpCode,
     required this.email,
+    this.isForgetPassword = false,
   });
 
   @override
@@ -64,10 +67,17 @@ class _VerifyButtonSectionState extends State<VerifyButtonSection> {
           onPressed: () {
             if (widget.otpCode.length < 6) return;
 
-            context.read<ConfirmEmailCubit>().confirmEmail(
-              email: widget.email,
-              otp: widget.otpCode,
-            );
+            if (widget.isForgetPassword) {
+              context.read<VerifyResetCodeCubit>().verifyResetCode(
+                email: widget.email,
+                otp: widget.otpCode,
+              );
+            } else {
+              context.read<ConfirmEmailCubit>().confirmEmail(
+                email: widget.email,
+                otp: widget.otpCode,
+              );
+            }
           },
         ),
 

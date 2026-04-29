@@ -14,7 +14,12 @@ import 'package:brand/features/signup/presentation/views/signup.dart';
 import 'package:brand/features/splash/presentation/views/splash_veiws.dart';
 import 'package:brand/features/verify/presentation/view/verify.dart';
 import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
+import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_cubit.dart';
 import 'package:brand/features/welcome/presentation/views/welcome.dart';
+import 'package:brand/features/seller_registration/presentation/views/seller_registration_view.dart';
+import 'package:brand/features/seller_registration/presentation/views/seller_registration_success_view.dart';
+import 'package:brand/features/payment_methods/presentation/views/payment_methods_view.dart';
+import 'package:brand/features/wishlist/presentation/views/wishlist_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,10 +86,17 @@ class MyApp extends StatelessWidget {
               '/home': (context) => HomeScreen(),
               '/mainlayout': (context) => Mainlayout(),
               '/resetPassword': (context) => ResetPassword(),
-              '/verify': (context) => BlocProvider(
-                create: (_) => sl<ConfirmEmailCubit>(),
+              '/verify': (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (_) => sl<ConfirmEmailCubit>()),
+                  BlocProvider(create: (_) => sl<VerifyResetCodeCubit>()),
+                ],
                 child: Verify(),
               ),
+              '/sellerRegistration': (context) => const SellerRegistrationView(),
+              '/sellerRegistrationSuccess': (context) => const SellerRegistrationSuccessView(),
+              '/paymentMethods': (context) => const PaymentMethodsView(),
+              '/wishlist': (context) => const WishlistView(),
             },
           );
         },

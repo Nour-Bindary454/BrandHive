@@ -86,7 +86,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Navigator.pushReplacementNamed(
                     context, 
                     '/verify', 
-                    arguments: _emailController.text,
+                    arguments: {
+                      'email': _emailController.text,
+                      'isForgetPassword': true,
+                    },
                   );
                 } else if (state is ForgetPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
