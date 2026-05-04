@@ -5,9 +5,7 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
 import 'package:brand/core/utils/toast/toast.dart';
-import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
-import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
-import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
+
 import 'package:brand/features/login/presentation/viewsModel/login_cubit.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_states.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
@@ -79,9 +77,8 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: EdgeInsets.only(right: 25.w, left: 25.w),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          RememberMe(),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/forgetPassword');
@@ -97,7 +94,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
 
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 40.h), // مساحة أكبر للزر
 
                     BasicButton(
                       onPressed: () {
@@ -116,35 +113,32 @@ class _LoginState extends State<Login> {
                       radius: 7.65,
                     ),
 
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 60.h), // مساحة إضافية لتوزيع العناصر بشكل أفضل
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 100.w,
-                          child: Divider(color: Color(0xff4E5052)),
-                        ),
-                        SizedBox(width: 10.w),
                         BasicText(
-                          text: 'Or',
-                          fontSize: 13.sp,
-                          color: Color(0xff4E5052),
+                          text: "Don't have an account?",
+                          fontSize: 14.sp,
+                          color: const Color(0xff4E5052),
                           isBold: false,
                         ),
-                        SizedBox(width: 15.w),
-                        SizedBox(
-                          width: 100.w,
-                          child: Divider(color: Color(0xff4E5052)),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                          child: BasicText(
+                            text: "Sign Up",
+                            fontSize: 14.sp,
+                            color: const Color(0xFF2D4373),
+                            isBold: true,
+                          ),
                         ),
                       ],
                     ),
 
-                    SizedBox(height: 20.h),
 
-                    ContinueWithGoogle(),
-                    SizedBox(height: 10.h),
-                    ContinueWithFace(),
                   ],
                 ),
               ),

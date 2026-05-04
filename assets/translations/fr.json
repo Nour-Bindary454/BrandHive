@@ -1,0 +1,20 @@
+{
+  "notifications_section": "NOTIFICATIONS",
+  "push_notifications": "Notifications Push",
+  "email_promotions": "Promotions par Email",
+  "order_updates": "Mises à jour de commande",
+  "preferences_section": "PRÉFÉRENCES",
+  "language": "Langue",
+  "currency": "Devise",
+  "dark_mode": "Mode Sombre",
+  "account_section": "COMPTE",
+  "edit_profile": "Modifier le profil",
+  "privacy_security": "Confidentialité et sécurité",
+  "sign_out": "Se déconnecter",
+  "my_orders": "Mes Commandes",
+  "wishlist": "Liste de souhaits",
+  "payment_methods": "Méthodes de paiement",
+  "notifications": "Notifications",
+  "settings": "Paramètres",
+  "help_support": "Aide & Support"
+}

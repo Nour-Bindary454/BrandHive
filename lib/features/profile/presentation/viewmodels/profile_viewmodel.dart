@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/profile_model.dart';
 import '../../../../core/services/cache_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   ProfileModel? _profileData;
@@ -36,31 +37,31 @@ class ProfileViewModel extends ChangeNotifier {
         ),
         menuItems: [
           MenuItemModel(
-            title: 'My Orders',
+            title: 'my_orders'.tr(),
             icon: Icons.inventory_2_outlined,
             badgeText: '2 active',
           ),
           MenuItemModel(
-            title: 'Wishlist',
+            title: 'wishlist'.tr(),
             icon: Icons.favorite_border,
             badgeText: '12 items',
           ),
           MenuItemModel(
-            title: 'Payment Methods',
+            title: 'payment_methods'.tr(),
             icon: Icons.payment_outlined,
           ),
           MenuItemModel(
-            title: 'Notifications',
+            title: 'notifications'.tr(),
             icon: Icons.notifications_none_outlined,
             badgeText: 'New',
             isBadgeRed: true,
           ),
           MenuItemModel(
-            title: 'Settings',
+            title: 'settings'.tr(),
             icon: Icons.settings_outlined,
           ),
           MenuItemModel(
-            title: 'Help & Support',
+            title: 'help_support'.tr(),
             icon: Icons.help_outline,
           ),
         ],

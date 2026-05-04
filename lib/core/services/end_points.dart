@@ -7,4 +7,5 @@ class EndPoints {
   static String resendOtp = "auth/resend-otp";
   static String login = "auth/login";
   static String forgetPassword = "auth/forget-password";
+  static const String resetPassword = "auth/reset-password";
 }

@@ -1,0 +1,20 @@
+{
+  "notifications_section": "الإشعارات",
+  "push_notifications": "إشعارات التطبيق",
+  "email_promotions": "العروض عبر البريد",
+  "order_updates": "تحديثات الطلب",
+  "preferences_section": "التفضيلات",
+  "language": "اللغة",
+  "currency": "العملة",
+  "dark_mode": "الوضع الداكن",
+  "account_section": "الحساب",
+  "edit_profile": "تعديل الحساب",
+  "privacy_security": "الخصوصية والأمان",
+  "sign_out": "تسجيل الخروج",
+  "my_orders": "طلباتي",
+  "wishlist": "المفضلة",
+  "payment_methods": "طرق الدفع",
+  "notifications": "الإشعارات",
+  "settings": "الإعدادات",
+  "help_support": "المساعدة والدعم"
+}
