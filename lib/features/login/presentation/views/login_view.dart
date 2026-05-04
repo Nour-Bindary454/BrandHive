@@ -5,14 +5,12 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
 import 'package:brand/core/utils/toast/toast.dart';
-<<<<<<< HEAD
+
 import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
 import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
 import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
-=======
 
->>>>>>> 4b569775a0e116875f8006c370bdb1bdd68d7edf
 import 'package:brand/features/login/presentation/viewsModel/login_cubit.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_states.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
@@ -42,15 +40,7 @@ class _LoginState extends State<Login> {
               msg: state.model.message.toString(),
               context: context,
             );
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (_) => sl<HomeCubit>()..loadHomeData(),
-                  child: Mainlayout(),
-                ),
-              ),
-            );
+            Navigator.pushReplacementNamed(context, '/mainlayout');
           }
 
           if (state is LoginError) {
@@ -125,7 +115,9 @@ class _LoginState extends State<Login> {
                       radius: 7.65,
                     ),
 
-                    SizedBox(height: 60.h), // مساحة إضافية لتوزيع العناصر بشكل أفضل
+                    SizedBox(
+                      height: 60.h,
+                    ), // مساحة إضافية لتوزيع العناصر بشكل أفضل
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -149,8 +141,6 @@ class _LoginState extends State<Login> {
                         ),
                       ],
                     ),
-
-
                   ],
                 ),
               ),

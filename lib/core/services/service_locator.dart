@@ -39,8 +39,7 @@ final sl = GetIt.instance;
 void setup() {
   // 🔹 Core
   sl.registerLazySingleton<Dio>(() => Dio());
-
-  sl.registerLazySingleton<ApiService>(() => ApiService(sl()));
+  sl.registerLazySingleton<ApiService>(() => ApiService(sl<Dio>()));
 
   // 🔹 Repositories
   sl.registerLazySingleton<RegisterRepository>(() => RegisterRepoImpl(sl()));
@@ -48,25 +47,13 @@ void setup() {
   sl.registerLazySingleton<ForgetPasswordRepository>(
     () => ForgetPasswordRepoImpl(sl()),
   );
-
-  sl.registerLazySingleton<ApiService>(() => ApiService(sl<Dio>()));
-
-  // 🔹 Repository
-  sl.registerLazySingleton<RegisterRepository>(() => RegisterRepoImpl(sl()));
-  sl.registerLazySingleton<ForgetPasswordRepository>(
-    () => ForgetPasswordRepoImpl(sl()),
-  );
-  sl.registerLazySingleton<LoginRepository>(() => LoginRepoImpl(sl()));
-
   sl.registerLazySingleton<ConfirmEmailRepository>(
     () => ConfirmEmailRepoImpl(sl()),
   );
   sl.registerLazySingleton<VerifyResetCodeRepository>(
     () => VerifyResetCodeRepoImpl(sl()),
   );
-
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
-
   sl.registerLazySingleton<ChangePassRepo>(() => ChangePassRepoImpl(sl()));
 
   // 🔹 Cubits
@@ -75,8 +62,6 @@ void setup() {
   sl.registerFactory(() => ForgetPasswordCubit(sl()));
   sl.registerFactory(() => ConfirmEmailCubit(sl()));
   sl.registerFactory(() => VerifyResetCodeCubit(sl()));
-
   sl.registerFactory(() => HomeCubit());
-
   sl.registerFactory(() => ChangePassCubit(sl()));
 }

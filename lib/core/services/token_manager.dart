@@ -1,15 +1,15 @@
+import 'package:brand/core/services/cache_helper.dart';
+
 class TokenManager {
-  static String? token;
-
-  static void saveToken(String newToken) {
-    token = newToken;
+  static Future<void> saveToken(String token) async {
+    await CacheHelper.saveData(key: 'token', value: token);
   }
 
-  static String? getToken() {
-    return token;
+  static Future<String?> getToken() async {
+    return CacheHelper.getData('token');
   }
 
-  static void clear() {
-    token = null;
+  static Future<void> clear() async {
+    CacheHelper.removeData('token');
   }
 }

@@ -4,6 +4,7 @@ import 'package:brand/features/brand_profile/presentation/views/brand_profile_sc
 import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
 import 'package:brand/features/help_support/presentation/views/help_support_view.dart';
+import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/notifications/presentation/views/notifications_view.dart';
 import 'package:brand/features/orders/presentation/views/orders_view.dart';
@@ -99,7 +100,10 @@ class MyApp extends StatelessWidget {
               '/brandProfile': (context) => BrandProfileScreen(),
               '/forgetPassword': (context) => ForgetPassword(),
 
-              '/home': (context) => HomeScreen(),
+              '/home': (context) => BlocProvider(
+                create: (context) => sl<HomeCubit>()..loadHomeData(),
+                child: const HomeScreen(),
+              ),
               '/mainlayout': (context) => Mainlayout(),
               '/resetPassword': (context) {
                 final email =
