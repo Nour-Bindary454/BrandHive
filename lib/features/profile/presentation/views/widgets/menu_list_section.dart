@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'menu_item_tile.dart';
 import '../../../../../core/sharedWidgets/basic_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MenuListSection extends StatelessWidget {
   final List<MenuItemModel> items;
@@ -43,12 +44,18 @@ class MenuListSection extends StatelessWidget {
           return MenuItemTile(
             item: item,
             onTap: () {
-              if (item.title == 'Payment Methods') {
+              if (item.title == 'payment_methods'.tr()) {
                 Navigator.pushNamed(context, '/paymentMethods');
-              } else if (item.title == 'Wishlist') {
+              } else if (item.title == 'wishlist'.tr()) {
                 Navigator.pushNamed(context, '/wishlist');
-              } else {
-                // Handle other taps
+              } else if (item.title == 'my_orders'.tr()) {
+                Navigator.pushNamed(context, '/orders');
+              } else if (item.title == 'notifications'.tr()) {
+                Navigator.pushNamed(context, '/notifications');
+              } else if (item.title == 'settings'.tr()) {
+                Navigator.pushNamed(context, '/settings');
+              } else if (item.title == 'help_support'.tr()) {
+                Navigator.pushNamed(context, '/helpSupport');
               }
             },
           );

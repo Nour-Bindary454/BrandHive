@@ -4,6 +4,7 @@ import 'package:brand/features/resetPassword/view/reset_password.dart';
 import 'package:brand/features/verify/presentation/view/widgets/custom_keyboard.dart';
 import 'package:brand/features/verify/presentation/view/widgets/otp_inputs.dart';
 import 'package:brand/features/verify/presentation/view/widgets/verify_button_section.dart';
+import 'package:brand/features/verify/presentation/view/widgets/verify_header.dart';
 import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_cubit.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_states.dart';
@@ -113,6 +114,8 @@ class _VerifyState extends State<Verify> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      VerifyHeader(email: email),
+                      const SizedBox(height: 40),
                       OtpInputs(otpCode: otpCode),
                       const SizedBox(height: 40),
 

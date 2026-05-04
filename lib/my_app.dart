@@ -3,7 +3,12 @@ import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/brand_profile/presentation/views/brand_profile_screen.dart';
 import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
+import 'package:brand/features/help_support/presentation/views/help_support_view.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
+import 'package:brand/features/notifications/presentation/views/notifications_view.dart';
+import 'package:brand/features/orders/presentation/views/orders_view.dart';
+import 'package:brand/features/settings/presentation/views/settings_view.dart';
+import 'package:brand/features/settings/presentation/viewmodels/settings_view_model.dart';
 import 'package:brand/features/login/presentation/views/login_view.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
 import 'package:brand/features/onboarding/presentation/views/onboarding.dart';
@@ -33,6 +38,8 @@ import 'package:brand/features/checkout/data/data_sources/checkout_remote_data_s
 import 'package:brand/features/checkout/data/repository/checkout_repository.dart';
 import 'package:brand/features/checkout/presentation/viewmodels/checkout_view_model.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -61,6 +68,7 @@ class MyApp extends StatelessWidget {
               CheckoutViewModel(context.read<CheckoutRepository>()),
           update: (_, repo, viewModel) => viewModel ?? CheckoutViewModel(repo),
         ),
+        ChangeNotifierProvider(create: (_) => SettingsViewModel()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -69,6 +77,9 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             initialRoute: '/',
             routes: {
               '/': (context) => Splash(),
@@ -90,7 +101,11 @@ class MyApp extends StatelessWidget {
 
               '/home': (context) => HomeScreen(),
               '/mainlayout': (context) => Mainlayout(),
-              '/resetPassword': (context) => ResetPassword(),
+              '/resetPassword': (context) {
+                final email =
+                    ModalRoute.of(context)?.settings.arguments as String? ?? '';
+                return ResetPassword(email: email);
+              },
               '/verify': (context) => MultiBlocProvider(
                 providers: [
                   BlocProvider(create: (_) => sl<ConfirmEmailCubit>()),
@@ -104,6 +119,10 @@ class MyApp extends StatelessWidget {
                   const SellerRegistrationSuccessView(),
               '/paymentMethods': (context) => const PaymentMethodsView(),
               '/wishlist': (context) => const WishlistView(),
+              '/helpSupport': (context) => const HelpSupportView(),
+              '/settings': (context) => const SettingsView(),
+              '/notifications': (context) => const NotificationsView(),
+              '/orders': (context) => const OrdersView(),
             },
           );
         },

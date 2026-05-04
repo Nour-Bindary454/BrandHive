@@ -1,0 +1,20 @@
+{
+  "notifications_section": "NOTIFICATIONS",
+  "push_notifications": "Push Notifications",
+  "email_promotions": "Email Promotions",
+  "order_updates": "Order Updates",
+  "preferences_section": "PREFERENCES",
+  "language": "Language",
+  "currency": "Currency",
+  "dark_mode": "Dark Mode",
+  "account_section": "ACCOUNT",
+  "edit_profile": "Edit Profile",
+  "privacy_security": "Privacy & Security",
+  "sign_out": "Sign Out",
+  "my_orders": "My Orders",
+  "wishlist": "Wishlist",
+  "payment_methods": "Payment Methods",
+  "notifications": "Notifications",
+  "settings": "Settings",
+  "help_support": "Help & Support"
+}

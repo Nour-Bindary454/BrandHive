@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VerifyHeader extends StatelessWidget {
-  const VerifyHeader({super.key});
+  final String email;
+  const VerifyHeader({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,6 @@ class VerifyHeader extends StatelessWidget {
 
         // Title
         BasicText(
-          fontFamily: 'Poppins',
-
           text: 'Please check your\nemail',
           fontSize: 30,
           color: const Color(0xFF333333),
@@ -34,11 +33,11 @@ class VerifyHeader extends StatelessWidget {
               fontSize: 13.sp,
               fontFamily: 'Poppins',
             ),
-            children: const [
-              TextSpan(text: "We've sent a code to "),
+            children: [
+              const TextSpan(text: "We've sent a code to "),
               TextSpan(
-                text: 'helloworld@gmail.com',
-                style: TextStyle(
+                text: email,
+                style: const TextStyle(
                   color: Color(0xFF333333),
                   fontWeight: FontWeight.bold,
                 ),

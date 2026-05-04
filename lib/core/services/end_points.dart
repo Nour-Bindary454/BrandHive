@@ -12,4 +12,6 @@ class EndPoints {
   static String getall = "brand";
   static String getone = "brand/get one";
   //static String products = "product";
+
+  static const String resetPassword = "auth/reset-password";
 }
