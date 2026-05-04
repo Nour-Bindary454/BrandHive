@@ -1,7 +1,9 @@
+import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 
 import 'package:brand/features/cart/presentation/cart_screen.dart';
 import 'package:brand/features/explore/explore.dart';
+import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';
 import 'package:brand/features/profile/presentation/views/profile_screen.dart';
@@ -23,8 +25,11 @@ class Mainlayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LayoutCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LayoutCubit()),
+        BlocProvider(create: (_) => sl<HomeCubit>()..loadHomeData()),
+      ],
       child: BlocBuilder<LayoutCubit, int>(
         builder: (context, currentIndex) {
           return Scaffold(

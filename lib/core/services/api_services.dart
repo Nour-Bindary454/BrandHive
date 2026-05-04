@@ -20,7 +20,7 @@ class ApiService {
 
           options.headers["Accept"] = "application/json";
 
-          final token = TokenManager.getToken();
+          final token = await TokenManager.getToken();
 
           if (token != null && token.isNotEmpty) {
             options.headers["Authorization"] = "Bearer $token";
