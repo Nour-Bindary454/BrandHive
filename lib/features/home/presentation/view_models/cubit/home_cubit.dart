@@ -1,0 +1,121 @@
+import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/home/data/repository/home_repo.dart';
+import 'package:brand/features/home/data/models/home_models.dart';
+import 'package:brand/features/home/presentation/view_models/cubit/home_states.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class HomeCubit extends Cubit<HomeState> {
+  HomeCubit() : super(HomeState());
+
+  Future<void> loadHomeData() async {
+    emit(state.copyWith(isLoading: true, error: null));
+
+    try {
+      /// 1. USER
+      final user = UserProfile(
+        name: 'Mustafa Kamal',
+        profileImageUrl: 'https://i.pravatar.cc/150?img=11',
+        greeting: 'Good Morning,',
+      );
+
+      /// 2. BANNER
+      final banner = BannerModel(
+        id: '1',
+        label: 'New Arrival',
+        title: 'Ramadan Collection',
+        subtitle: 'Handcrafted Lanterns & Decor',
+        imageUrl: 'https://placehold.co/1000x500/png',
+      );
+
+      /// 3. CATEGORIES (زي ViewModel)
+      final categories = [
+        CategoryModel(
+          id: 'c1',
+          name: 'Fashion',
+          imageUrl: 'https://placehold.co/300x300/png',
+        ),
+        CategoryModel(
+          id: 'c2',
+          name: 'Home Decor',
+          imageUrl: 'https://placehold.co/300x300/png',
+        ),
+      ];
+
+      /// 4. EVENTS
+      final events = [
+        EventModel(
+          id: 'e1',
+          title: 'Cairo Artisan Bazaar',
+          date: 'Dec 15-17',
+          location: 'Khan El Khalili',
+        ),
+      ];
+
+      /// 5. BRANDS (API + fallback)
+      List<BrandModel> allBrands = [];
+
+      for (int i = 1; i <= 5; i++) {
+        final result = await sl<HomeRepository>().getAllBrands(page: i);
+
+        result.fold((failure) {}, (data) {
+          allBrands.addAll(
+            data.map(
+              (e) => BrandModel(
+                id: e.id,
+                name: e.name,
+                description: e.description,
+                country: e.country,
+                isActive: e.isActive,
+                logoUrl: e.logoUrl,
+                slug: e.slug,
+              ),
+            ),
+          );
+        });
+      }
+
+      /// 6. RECOMMENDED (زي ViewModel)
+      final recommended = [
+        HomeProduct(
+          id: 'rp1',
+          brandName: 'PHARAONIC JEWELRY',
+          category: 'Jewelry',
+          name: 'Silver Necklace',
+          imageUrl: 'https://placehold.co/300x300/png',
+          price: 450,
+          matchPercentage: 98,
+        ),
+      ];
+
+      /// 7. FEATURED
+      final featured = [
+        HomeProduct(
+          id: 'fp1',
+          brandName: 'JELLAVU',
+          category: 'Fashion',
+          name: 'Jeans',
+          imageUrl: 'https://placehold.co/400x400/png',
+          price: 900,
+          rating: 4.8,
+        ),
+      ];
+
+      /// ✅ FINAL EMIT
+      emit(
+        state.copyWith(
+          isLoading: false,
+          user: user,
+          banner: banner,
+          categories: categories,
+          events: events,
+          brands: allBrands,
+          recommended: recommended,
+          featured: featured,
+        ),
+      );
+    } catch (e) {
+      print("🔥 ERROR: $e");
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
+}

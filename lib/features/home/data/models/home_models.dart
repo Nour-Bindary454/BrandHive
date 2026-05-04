@@ -48,22 +48,6 @@ class BannerModel {
   });
 }
 
-class HomeBrand {
-  final String id;
-  final String name;
-  final String category;
-  final String coverImageUrl;
-  final String logoText;
-
-  HomeBrand({
-    required this.id,
-    required this.name,
-    required this.category,
-    required this.coverImageUrl,
-    required this.logoText,
-  });
-}
-
 class HomeProduct {
   final String id;
   final String brandName;
@@ -94,6 +78,38 @@ class HomeProduct {
       imageUrl: json['mainImage'] ?? '',
       price: (json['price'] ?? 0).toDouble(),
       rating: (json['stats']?['averageRating'] ?? 0).toDouble(),
+    );
+  }
+}
+
+class BrandModel {
+  final String id;
+  final String name;
+  final String slug;
+  final String description;
+  final String country;
+  final String logoUrl;
+  final bool isActive;
+
+  BrandModel({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.description,
+    required this.country,
+    required this.logoUrl,
+    required this.isActive,
+  });
+
+  factory BrandModel.fromJson(Map<String, dynamic> json) {
+    return BrandModel(
+      id: json['_id'],
+      name: json['name'],
+      slug: json['slug'],
+      description: json['description'],
+      country: json['country'],
+      logoUrl: json['logo']['url'],
+      isActive: json['isActive'],
     );
   }
 }

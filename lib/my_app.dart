@@ -1,5 +1,6 @@
 import 'package:brand/core/services/api_services.dart';
 import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/brand_profile/presentation/views/brand_profile_screen.dart';
 import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
@@ -83,6 +84,10 @@ class MyApp extends StatelessWidget {
                 create: (_) => sl<ForgetPasswordCubit>(),
                 child: ForgetPassword(),
               ),
+
+              '/brandProfile': (context) => BrandProfileScreen(),
+              '/forgetPassword': (context) => ForgetPassword(),
+
               '/home': (context) => HomeScreen(),
               '/mainlayout': (context) => Mainlayout(),
               '/resetPassword': (context) => ResetPassword(),
@@ -93,8 +98,10 @@ class MyApp extends StatelessWidget {
                 ],
                 child: Verify(),
               ),
-              '/sellerRegistration': (context) => const SellerRegistrationView(),
-              '/sellerRegistrationSuccess': (context) => const SellerRegistrationSuccessView(),
+              '/sellerRegistration': (context) =>
+                  const SellerRegistrationView(),
+              '/sellerRegistrationSuccess': (context) =>
+                  const SellerRegistrationSuccessView(),
               '/paymentMethods': (context) => const PaymentMethodsView(),
               '/wishlist': (context) => const WishlistView(),
             },

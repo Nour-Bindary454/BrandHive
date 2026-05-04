@@ -1,5 +1,6 @@
 import 'package:brand/core/errors/failure.dart';
 import 'package:brand/core/services/end_points.dart';
+import 'package:brand/core/services/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,12 +20,11 @@ class ApiService {
 
           options.headers["Accept"] = "application/json";
 
-          // Add user token if available
-          // if (CacheTokenManger.userToken != null &&
-          //     CacheTokenManger.userToken!.isNotEmpty) {
-          //   options.headers["Authorization"] =
-          //       "Bearer ${CacheTokenManger.userToken}";
-          // }
+          final token = TokenManager.getToken();
+
+          if (token != null && token.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
 
           debugPrint("➡️ [REQUEST] ${options.method} ${options.uri}");
           debugPrint("Headers: ${options.headers}");

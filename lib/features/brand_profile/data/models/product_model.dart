@@ -1,6 +1,7 @@
 class Product {
   final String id;
   final String brandId;
+  final String brandName;
   final String name;
   final String image;
   final double rating;
@@ -11,6 +12,7 @@ class Product {
   Product({
     required this.id,
     required this.brandId,
+    required this.brandName,
     required this.name,
     required this.image,
     required this.rating,
@@ -23,6 +25,7 @@ class Product {
     return Product(
       id: json['id'],
       brandId: json['brandId'],
+      brandName: json['brandName'] ?? '',
       name: json['name'],
       image: json['image'],
       rating: (json['rating'] as num).toDouble(),
@@ -36,6 +39,7 @@ class Product {
     return Product(
       id: id,
       brandId: brandId,
+      brandName: brandName,
       name: name,
       image: image,
       rating: rating,

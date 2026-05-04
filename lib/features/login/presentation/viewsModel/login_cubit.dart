@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:brand/features/login/data/repository/login_repos.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_states.dart';
+
 import 'package:brand/core/services/cache_helper.dart';
+
+import 'package:brand/core/services/token_manager.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   final LoginRepository repo;
@@ -31,6 +34,8 @@ class LoginCubit extends Cubit<LoginStates> {
       (response) {
         if (response.accessToken != null) {
           CacheHelper.saveData(key: 'token', value: response.accessToken!);
+
+          TokenManager.saveToken(response.accessToken!);
         }
         emit(LoginSuccess(response));
       },

@@ -1,224 +1,161 @@
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
+import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
+import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../view_models/home_view_model.dart';
+import '../view_models/cubit/home_cubit.dart';
+import '../view_models/cubit/home_states.dart';
+
 import 'widgets/home_header.dart';
 import 'widgets/home_hero_banner.dart';
-import 'widgets/action_buttons_section.dart';
 import 'widgets/categories_section.dart';
 import 'widgets/bazaars_events_section.dart';
 import 'widgets/promotional_banner.dart';
 import 'widgets/home_shimmer_loading.dart';
-import 'widgets/top_local_brands_section.dart';
 import 'widgets/recommended_for_you_section.dart';
 import 'widgets/featured_products_section.dart';
 import 'package:brand/features/category/presentation/views/category_view.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final HomeViewModel _viewModel = HomeViewModel();
-
-  @override
-  void initState() {
-    super.initState();
-    _viewModel.loadHomeData();
-    _viewModel.addListener(_onViewModelChange);
-  }
-
-  void _onViewModelChange() {
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    _viewModel.removeListener(_onViewModelChange);
-    _viewModel.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BasicColors.white,
       body: SafeArea(
-        child: _viewModel.isLoading
-            ? const HomeShimmerLoading()
-            : _viewModel.error != null
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _viewModel.error!,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    SizedBox(height: 16.h),
-                    ElevatedButton(
-                      onPressed: _viewModel.loadHomeData,
-                      child: Text('Retry'),
-                    ),
-                  ],
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            /// 🔄 Loading
+            if (state.isLoading) {
+              return const HomeShimmerLoading();
+            }
+
+            /// ❌ Error
+            if (state.error != null) {
+              return Center(
+                child: Text(
+                  state.error!,
+                  style: const TextStyle(color: Colors.red),
                 ),
-              )
-            : RefreshIndicator(
-                onRefresh: _viewModel.loadHomeData,
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 13.w,
-                        vertical: 16.h,
-                      ),
-                      sliver: SliverList(
-                        delegate: SliverChildListDelegate([
-                          // 1. Header Section
-                          if (_viewModel.userProfile != null) ...[
-                            HomeHeader(
-                              user: _viewModel.userProfile!,
-                              onNotificationTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Notifications tapped'),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 20.h),
-                          ],
+              );
+            }
 
-                          // 2. Search Bar
-                          CusSearchBar(hintText: 'Search local brands...'),
-
+            /// ✅ Success UI
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<HomeCubit>().loadHomeData();
+              },
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                slivers: [
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 13.w,
+                      vertical: 16.h,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        /// 1. Header
+                        if (state.user != null) ...[
+                          HomeHeader(
+                            user: state.user!,
+                            onNotificationTap: () {},
+                          ),
                           SizedBox(height: 20.h),
+                        ],
 
-                          // 3. Hero Banner
-                          if (_viewModel.heroBanner != null) ...[
-                            HomeHeroBanner(
-                              banner: _viewModel.heroBanner!,
-                              onShopNowTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Shop Now tapped'),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 20.h),
-                          ],
+                        /// 2. Search
+                        const CusSearchBar(hintText: 'Search local brands...'),
+                        SizedBox(height: 20.h),
 
-                          // 4. Action Buttons
-                          ActionButtonsSection(
-                            onShopNowTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Shop Now (Primary) tapped'),
+                        /// 3. Banner
+                        if (state.banner != null) ...[
+                          HomeHeroBanner(
+                            banner: state.banner!,
+                            onShopNowTap: () {},
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
+
+                        SizedBox(height: 32.h),
+
+                        /// 4. Categories
+                        if (state.categories.isNotEmpty) ...[
+                          CategoriesSection(
+                            categories: state.categories,
+                            onCategoryTap: (id) {},
+                          ),
+                          SizedBox(height: 32.h),
+                        ],
+
+                        /// 5. Events
+                        if (state.events.isNotEmpty) ...[
+                          BazaarsEventsSection(
+                            events: state.events,
+                            onViewAllTap: () {},
+                          ),
+                          SizedBox(height: 32.h),
+                        ],
+
+                        /// 7. Top Local Brands
+                        if (state.brands.isNotEmpty) ...[
+                          TopLocalBrandsSection(
+                            brands: state.brands.take(10).toList(),
+                            onViewAllTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllBrandsScreen(brands: state.brands),
                                 ),
                               );
                             },
-                            onSellNowTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Sell Now tapped'),
-                                ),
+                            onBrandTap: (brand) {
+                              Navigator.pushNamed(
+                                context,
+                                '/brandProfile',
+                                arguments: brand,
                               );
                             },
                           ),
                           SizedBox(height: 32.h),
+                        ],
 
-                          // 5. Categories Section
-                          if (_viewModel.categories.isNotEmpty) ...[
-                            CategoriesSection(
-                              categories: _viewModel.categories,
-                              onCategoryTap: (id) {
-                                final category = _viewModel.categories.firstWhere((c) => c.id == id);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CategoryView(
-                                      categoryName: category.name,
-                                      categoryImage: category.imageUrl,
-                                      productsCount: 120, // Dummy count
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 32.h),
-                          ],
-
-                          // 6. Bazaars & Events
-                          if (_viewModel.events.isNotEmpty) ...[
-                            BazaarsEventsSection(
-                              events: _viewModel.events,
-                              onViewAllTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('View All Events tapped'),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 32.h),
-                          ],
-
-                          // 7. Promotional Banner
-                          PromotionalBanner(
-                            onGoTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Go tapped')),
-                              );
-                            },
+                        /// 7. Recommended
+                        if (state.recommended.isNotEmpty) ...[
+                          RecommendedForYouSection(
+                            products: state.recommended,
+                            onViewMoreTap: () {},
+                            onProductTap: (id) {},
                           ),
                           SizedBox(height: 32.h),
+                        ],
 
-                          // 8. Top Local Brands
-                          if (_viewModel.topBrands.isNotEmpty) ...[
-                            TopLocalBrandsSection(
-                              brands: _viewModel.topBrands,
-                              onViewAllTap: () {},
-                              onBrandTap: (id) {},
-                            ),
-                            SizedBox(height: 32.h),
-                          ],
-
-                          // 9. Recommended For You
-                          if (_viewModel.recommendedProducts.isNotEmpty) ...[
-                            RecommendedForYouSection(
-                              products: _viewModel.recommendedProducts,
-                              onViewMoreTap: () {},
-                              onProductTap: (id) {},
-                            ),
-                            SizedBox(height: 32.h),
-                          ],
-
-                          // 10. Featured Products
-                          if (_viewModel.featuredProducts.isNotEmpty) ...[
-                            FeaturedProductsSection(
-                              products: _viewModel.featuredProducts,
-                              onViewAllTap: () {},
-                              onProductTap: (id) {},
-                              onAddToCartTap: (id) {},
-                              onFavoriteTap: (id) {},
-                            ),
-                            SizedBox(height: 32.h),
-                          ],
-                        ]),
-                      ),
+                        /// 8. Featured
+                        if (state.featured.isNotEmpty) ...[
+                          FeaturedProductsSection(
+                            products: state.featured,
+                            onViewAllTap: () {},
+                            onProductTap: (id) {},
+                            onAddToCartTap: (id) {},
+                            onFavoriteTap: (id) {},
+                          ),
+                          SizedBox(height: 32.h),
+                        ],
+                      ]),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            );
+          },
+        ),
       ),
     );
   }

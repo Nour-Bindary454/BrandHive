@@ -1,9 +1,8 @@
+import 'package:brand/features/brand_profile/presentation/views/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 import '../../data/models/product_model.dart';
-import 'common_widgets.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -51,7 +50,9 @@ class ProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
                       color: Colors.grey[100],
-                      child: const Center(child: Icon(Icons.image_not_supported)),
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported),
+                      ),
                     ),
                   ),
                 ),

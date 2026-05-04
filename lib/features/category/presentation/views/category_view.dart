@@ -36,6 +36,7 @@ class _CategoryViewState extends State<CategoryView> {
     final List<Product> categoryProducts = List.generate(
       6,
       (index) => Product(
+        brandName: 'Brand Name',
         id: 'p$index',
         brandId: '1',
         name: index % 2 == 0 ? 'Single Hanging Chair' : 'Classic Glass Vase',

@@ -3,7 +3,7 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
-import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
+import 'package:brand/features/brand_profile/presentation/views/widgets/product_card.dart';
 import 'package:brand/features/explore/widgets/browse_all_cat.dart';
 import 'package:brand/features/explore/widgets/category_selector.dart';
 import 'package:brand/features/explore/widgets/collections_container.dart';
@@ -20,6 +20,7 @@ class Explore extends StatelessWidget {
   final List<Product> _products = List.generate(
     10,
     (index) => Product(
+      brandName: String.fromCharCode(65 + index % 3),
       id: 'p$index',
       brandId: '1',
       name: index % 2 == 0 ? 'Classic Tote Bag' : 'Leather Wallet',
@@ -187,11 +188,7 @@ class Explore extends StatelessWidget {
                         ),
                         itemCount: _products.length,
                         itemBuilder: (context, index) {
-                          return ProductCard(
-                            product: _products[index],
-                            onFavoritePressed: () {},
-                            onAddToCartPressed: () {},
-                          );
+                          return ProductCard();
                         },
                       ),
                       SizedBox(height: 20.h),

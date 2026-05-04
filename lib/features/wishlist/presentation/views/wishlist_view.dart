@@ -13,6 +13,7 @@ class WishlistView extends StatelessWidget {
     final List<Product> wishlistProducts = List.generate(
       4,
       (index) => Product(
+        brandName: 'Brand Name',
         id: 'p$index',
         brandId: '1',
         name: index % 2 == 0 ? 'Single Hanging Chair' : 'Classic Glass Vase',
@@ -110,7 +111,9 @@ class WishlistView extends StatelessWidget {
                       Text(
                         'Clear All',
                         style: TextStyle(
-                          color: const Color(0xFFC85B33), // Orangeish-red from image
+                          color: const Color(
+                            0xFFC85B33,
+                          ), // Orangeish-red from image
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Poppins',
@@ -121,7 +124,9 @@ class WishlistView extends StatelessWidget {
                   SizedBox(height: 20.h),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w), // Extra padding to make items smaller
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                      ), // Extra padding to make items smaller
                       child: GridView.builder(
                         padding: EdgeInsets.only(bottom: 20.h),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -57,8 +57,8 @@ class FollowButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isFollowed ? Colors.white : const Color(0xFF1A1A1A),
-          foregroundColor: isFollowed ? const Color(0xFF1A1A1A) : Colors.white,
+          backgroundColor: isFollowed ? Colors.white : const Color(0xFF2B4C7E),
+          foregroundColor: isFollowed ? const Color(0xFF2B4C7E) : Colors.white,
           elevation: 0,
           side: isFollowed ? const BorderSide(color: Color(0xFFE0E0E0)) : null,
           shape: RoundedRectangleBorder(
@@ -83,7 +83,7 @@ class AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFF1A237E), // Deep Blue
+      color: const Color(0xFF2B4C7E), // Deep Blue
       shape: const CircleBorder(),
       elevation: 2,
       child: InkWell(

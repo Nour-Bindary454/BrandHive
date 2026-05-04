@@ -1,142 +1,118 @@
+import 'package:brand/features/brand_profile/data/models/product_model.dart';
+import 'package:brand/features/cart/presentation/cart_screen.dart';
+import 'package:brand/features/home/data/models/home_models.dart';
+import 'package:brand/features/seller/add/widgets/product_details_section.dart';
+import 'package:brand/features/seller/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../view_models/brand_profile_view_model.dart';
-import '../widgets/brand_header_section.dart';
-import '../widgets/loading_skeleton.dart';
-import '../widgets/product_card.dart';
+import 'widgets/brand_header_section.dart';
+import 'widgets/product_card.dart';
 
-class BrandProfileScreen extends StatefulWidget {
+class BrandProfileScreen extends StatelessWidget {
   const BrandProfileScreen({super.key});
 
   @override
-  State<BrandProfileScreen> createState() => _BrandProfileScreenState();
-}
-
-class _BrandProfileScreenState extends State<BrandProfileScreen> {
-  final _viewModel = BrandProfileViewModel();
-
-  @override
-  void initState() {
-    super.initState();
-    _viewModel.addListener(_onViewModelUpdate);
-    _viewModel.loadData();
-  }
-
-  @override
-  void dispose() {
-    _viewModel.removeListener(_onViewModelUpdate);
-    _viewModel.dispose();
-    super.dispose();
-  }
-
-  void _onViewModelUpdate() {
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final brand = ModalRoute.of(context)!.settings.arguments as BrandModel;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FB),
-      body: _viewModel.isLoading
-          ? const LoadingSkeleton()
-          : _viewModel.error != null
-          ? Center(child: Text(_viewModel.error!))
-          : CustomScrollView(
-              slivers: [
-                // Sticky Header with Cover Image
-                SliverAppBar(
-                  expandedHeight: 200,
-                  pinned: true,
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () =>
-                        Navigator.of(context).pop(), // Need meaningful nav
-                    style: IconButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.8),
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.share_outlined,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {},
-                      style: IconButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8),
-                        shape: const CircleBorder(),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Cover Image + Header Overlap
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    // Cover Image
+                    SizedBox(
+                      width: double.infinity,
+                      height: 250.h,
+                      child: Transform.scale(
+                        scale: 1.35,
+                        child: Image.network(brand.logoUrl, fit: BoxFit.cover),
                       ),
                     ),
-                    SizedBox(width: 8.w),
+
+                    // Brand Header
+                    Positioned(
+                      bottom: -130.h,
+                      left: 0,
+                      right: 0,
+                      child: BrandHeaderSection(brand: brand),
+                    ),
                   ],
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: _viewModel.brand != null
-                        ? Image.asset(
-                            _viewModel.brand!.coverImage,
-                            fit: BoxFit.cover,
-                          )
-                        : Container(color: Colors.grey),
-                  ),
-                  bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(20),
-                    child: Container(
-                      height: 20.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF8F9FB),
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(32.r),
+                ),
+
+                SizedBox(height: 150.h),
+                // Collection Title
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Collection',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
+                      SizedBox(width: 6.w),
+                      Text(
+                        '(12)',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
-                // Brand Info & Header
-                if (_viewModel.brand != null)
-                  BrandHeaderSection(
-                    brand: _viewModel.brand!,
-                    onFollowPressed: _viewModel.toggleFollow,
-                  ),
+                SizedBox(height: 12.h),
 
-                // Product Grid
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
-                  sliver: SliverGrid(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.65,
+                          childAspectRatio: 0.59,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16,
                         ),
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final product = _viewModel.products[index];
-                      return ProductCard(
-                        product: product,
-                        onFavoritePressed: () =>
-                            _viewModel.toggleFavorite(product.id),
-                        onAddToCartPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Added ${product.name} to cart'),
-                              duration: const Duration(milliseconds: 500),
-                            ),
-                          );
-                        },
-                      );
-                    }, childCount: _viewModel.products.length),
+                    itemCount: 6,
+                    itemBuilder: (context, index) => const ProductCard(),
                   ),
                 ),
-                SliverToBoxAdapter(child: SizedBox(height: 32.h)),
+                SizedBox(height: 32.h),
               ],
             ),
+          ),
+
+          // Pinned Back Button
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 8.h,
+            left: 16.w,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.white.withOpacity(0.8),
+                shape: const CircleBorder(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
