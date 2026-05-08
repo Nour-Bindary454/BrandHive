@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesSection extends StatelessWidget {
   final List<CategoryModel> categories;
-  final Function(String id) onCategoryTap;
+  final Function(CategoryModel category) onCategoryTap;
 
   const CategoriesSection({
     Key? key,
@@ -36,7 +36,7 @@ class CategoriesSection extends StatelessWidget {
             itemBuilder: (context, index) {
               final category = categories[index];
               return InkWell(
-                onTap: () => onCategoryTap(category.id),
+                onTap: () => onCategoryTap(category),
                 borderRadius: BorderRadius.circular(16.r),
                 child: Column(
                   children: [
@@ -46,7 +46,10 @@ class CategoriesSection extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.r),
                         image: DecorationImage(
-                          image: NetworkImage(category.imageUrl),
+                          image: NetworkImage(
+                            category.logoUrl ??
+                                'https://placehold.co/300x300/png',
+                          ),
                           fit: BoxFit.cover,
                         ),
                         boxShadow: [

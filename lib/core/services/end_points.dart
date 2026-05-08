@@ -8,7 +8,7 @@ class EndPoints {
   static String login = "auth/login";
 
   static String forgetPassword = "auth/forget-password";
-
+  static String categories = "category";
   static String getall = "brand";
   static String getone = "brand/get one";
   static String products = "product";

@@ -3,19 +3,13 @@ import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_header.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_filters.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_products_grid.dart';
+import 'package:brand/features/home/data/models/home_models.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CategoryView extends StatefulWidget {
-  final String categoryName;
-  final String categoryImage;
-  final int productsCount;
-
-  const CategoryView({
-    super.key,
-    required this.categoryName,
-    required this.categoryImage,
-    required this.productsCount,
-  });
+  final CategoryModel category;
+  const CategoryView({super.key, required this.category});
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
@@ -53,9 +47,10 @@ class _CategoryViewState extends State<CategoryView> {
       body: Column(
         children: [
           CategoryHeader(
-            categoryName: widget.categoryName,
-            categoryImage: widget.categoryImage,
-            productsCount: widget.productsCount,
+            categoryName: widget.category.name,
+            categoryImage:
+                widget.category.logoUrl ?? 'https://placehold.co/300x300/png',
+            productsCount: categoryProducts.length,
           ),
           CategoryFilters(
             filters: filters,

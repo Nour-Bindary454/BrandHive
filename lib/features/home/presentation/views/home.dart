@@ -92,7 +92,15 @@ class HomeScreen extends StatelessWidget {
                         if (state.categories.isNotEmpty) ...[
                           CategoriesSection(
                             categories: state.categories,
-                            onCategoryTap: (id) {},
+                            onCategoryTap: (category) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CategoryView(category: category),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(height: 32.h),
                         ],
@@ -138,13 +146,16 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllProductsScreen(products: state.recommended),
+                                  builder: (context) => AllProductsScreen(
+                                    products: state.recommended,
+                                  ),
                                 ),
                               );
                             },
                             onProductTap: (id) {
-                              final homeProduct = state.recommended.firstWhere((p) => p.id == id);
+                              final homeProduct = state.recommended.firstWhere(
+                                (p) => p.id == id,
+                              );
                               final product = Product(
                                 id: homeProduct.id,
                                 brandId: '',
@@ -159,7 +170,8 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(product: product),
+                                  builder: (context) =>
+                                      ProductDetailsScreen(product: product),
                                 ),
                               );
                             },
@@ -175,13 +187,16 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllProductsScreen(products: state.featured),
+                                  builder: (context) => AllProductsScreen(
+                                    products: state.featured,
+                                  ),
                                 ),
                               );
                             },
                             onProductTap: (id) {
-                              final homeProduct = state.featured.firstWhere((p) => p.id == id);
+                              final homeProduct = state.featured.firstWhere(
+                                (p) => p.id == id,
+                              );
                               final product = Product(
                                 id: homeProduct.id,
                                 brandId: '',
@@ -196,7 +211,8 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(product: product),
+                                  builder: (context) =>
+                                      ProductDetailsScreen(product: product),
                                 ),
                               );
                             },
