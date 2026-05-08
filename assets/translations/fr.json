@@ -16,5 +16,20 @@
   "payment_methods": "Méthodes de paiement",
   "notifications": "Notifications",
   "settings": "Paramètres",
-  "help_support": "Aide & Support"
+  "help_support": "Aide & Support",
+  "featured_products": "Produits en vedette",
+  "view_all": "Voir tout",
+  "recommended_for_you": "Recommandé pour vous",
+  "top_local_brands": "Top Marques Locales",
+  "categories": "Catégories",
+  "bazaars_events": "Bazars & Événements",
+  "search_local_brands": "Rechercher...",
+  "collection": "Collection",
+  "description": "Description",
+  "total_price": "Prix Total",
+  "add_to_cart": "Ajouter au panier",
+  "unknown_brand": "Marque Inconnue",
+  "egp": "EGP",
+  "no_description": "Aucune description.",
+  "no_products_brand": "Aucun produit trouvé."
 }

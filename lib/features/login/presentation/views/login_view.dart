@@ -5,15 +5,8 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/core/sharedWidgets/shared_stack.dart';
 import 'package:brand/core/utils/toast/toast.dart';
-
-import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
-import 'package:brand/features/login/presentation/views/widgets/continue_with_face.dart';
-import 'package:brand/features/login/presentation/views/widgets/continue_with_google.dart';
-import 'package:brand/features/login/presentation/views/widgets/remember_me.dart';
-
 import 'package:brand/features/login/presentation/viewsModel/login_cubit.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_states.dart';
-import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

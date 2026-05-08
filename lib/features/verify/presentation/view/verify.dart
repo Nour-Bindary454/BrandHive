@@ -1,6 +1,5 @@
 import 'package:brand/core/utils/toast/toast.dart';
 import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
-import 'package:brand/features/resetPassword/view/reset_password.dart';
 import 'package:brand/features/verify/presentation/view/widgets/custom_keyboard.dart';
 import 'package:brand/features/verify/presentation/view/widgets/otp_inputs.dart';
 import 'package:brand/features/verify/presentation/view/widgets/verify_button_section.dart';
@@ -56,7 +55,8 @@ class _VerifyState extends State<Verify> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => const Center(child: CircularProgressIndicator()),
+                builder: (_) =>
+                    const Center(child: CircularProgressIndicator()),
               );
             }
 
@@ -85,14 +85,19 @@ class _VerifyState extends State<Verify> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => const Center(child: CircularProgressIndicator()),
+                builder: (_) =>
+                    const Center(child: CircularProgressIndicator()),
               );
             }
 
             if (state is VerifyResetCodeSuccess) {
               Navigator.pop(context);
 
-              Navigator.pushReplacementNamed(context, '/resetPassword', arguments: email);
+              Navigator.pushReplacementNamed(
+                context,
+                '/resetPassword',
+                arguments: email,
+              );
             }
 
             if (state is VerifyResetCodeError) {
@@ -119,7 +124,11 @@ class _VerifyState extends State<Verify> {
                       OtpInputs(otpCode: otpCode),
                       const SizedBox(height: 40),
 
-                      VerifyButtonSection(otpCode: otpCode, email: email, isForgetPassword: isForgetPassword),
+                      VerifyButtonSection(
+                        otpCode: otpCode,
+                        email: email,
+                        isForgetPassword: isForgetPassword,
+                      ),
                     ],
                   ),
                 ),

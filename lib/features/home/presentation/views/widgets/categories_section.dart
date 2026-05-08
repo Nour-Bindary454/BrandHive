@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,12 +19,13 @@ class CategoriesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Categories',
+          'categories'.tr(),
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20.sp,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.5,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
         SizedBox(height: 16.h),
@@ -64,7 +66,7 @@ class CategoriesSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w300,
-                        color: Colors.grey[800],
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                         fontFamily: 'Poppins',
                       ),
                     ),

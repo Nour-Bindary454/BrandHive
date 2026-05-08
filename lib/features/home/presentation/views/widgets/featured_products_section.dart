@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,18 +28,18 @@ class FeaturedProductsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Featured Products',
+              'featured_products'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             TextButton(
               onPressed: onViewAllTap,
               child: Text(
-                'View All',
+                'view_all'.tr(),
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12.sp,
@@ -68,7 +69,7 @@ class FeaturedProductsSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
                     BoxShadow(
@@ -111,7 +112,7 @@ class FeaturedProductsSection extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.all(6.r),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
+                                  color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
@@ -178,7 +179,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Colors.black87,
+                                color: Theme.of(context).textTheme.bodyLarge?.color,
                                 height: 1.2.h,
                               ),
                               maxLines: 2,
@@ -203,7 +204,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                     ),
                                     SizedBox(width: 2.w),
                                     Text(
-                                      'EGP',
+                                      'egp'.tr(),
                                       style: TextStyle(
                                         fontSize: 8.sp,
                                         fontWeight: FontWeight.w900,

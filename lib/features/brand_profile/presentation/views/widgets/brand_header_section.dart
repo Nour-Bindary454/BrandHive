@@ -15,7 +15,7 @@ class BrandHeaderSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 19.w),
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -56,7 +56,7 @@ class BrandHeaderSection extends StatelessWidget {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         letterSpacing: -0.5,
-                        color: Colors.black87,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

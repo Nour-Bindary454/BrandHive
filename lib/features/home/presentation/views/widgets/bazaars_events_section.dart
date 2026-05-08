@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +23,19 @@ class BazaarsEventsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Bazaars & Events',
+              'bazaars_events'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
                 letterSpacing: -0.5,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             TextButton(
               onPressed: onViewAllTap,
               child: Text(
-                'View All',
+                'view_all'.tr(),
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontWeight: FontWeight.bold,
@@ -54,7 +56,9 @@ class BazaarsEventsSection extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 212, 228, 254),
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? const Color(0xFF1E293B) 
+                    : const Color.fromARGB(255, 212, 228, 254),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(
@@ -87,7 +91,7 @@ class BazaarsEventsSection extends StatelessWidget {
                       fontFamily: 'Outfit',
                       fontSize: 19.sp,
                       fontWeight: FontWeight.w800,
-                      color: Colors.black87,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                   SizedBox(height: 6.h),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
@@ -27,7 +28,7 @@ class Explore extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<ExploreCubit>()..getProducts(),
       child: Scaffold(
-        backgroundColor: BasicColors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(
@@ -42,9 +43,9 @@ class Explore extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BasicText(
-                          text: 'Explore',
+                          text: 'explore'.tr(),
                           fontSize: 24,
-                          color: BasicColors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 10.h),
@@ -54,7 +55,7 @@ class Explore extends StatelessWidget {
                             Container(
                               width: 0.8.sw,
                               child: CusSearchBar(
-                                hintText: 'Search products, brands...',
+                                hintText: 'search_products'.tr(),
                               ),
                             ),
                             GestureDetector(
@@ -71,7 +72,7 @@ class Explore extends StatelessWidget {
                                 height: 45.h,
                                 width: 0.13.sw,
                                 decoration: BoxDecoration(
-                                  color: BasicColors.white,
+                                  color: Theme.of(context).cardColor,
                                   borderRadius: BorderRadius.circular(20.r),
                                   boxShadow: [
                                     BoxShadow(
@@ -85,8 +86,9 @@ class Explore extends StatelessWidget {
                                     color: Colors.grey.shade200,
                                   ),
                                 ),
-                                child: const ImageIcon(
-                                  AssetImage(PngImages.filter),
+                                child: ImageIcon(
+                                  const AssetImage(PngImages.filter),
+                                  color: Theme.of(context).iconTheme.color,
                                 ),
                               ),
                             ),
@@ -100,9 +102,9 @@ class Explore extends StatelessWidget {
 
                         //Collections
                         BasicText(
-                          text: "Collections",
+                          text: "collections".tr(),
                           fontSize: 18,
-                          color: BasicColors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 10.h),
@@ -118,9 +120,9 @@ class Explore extends StatelessWidget {
                               size: 25.w,
                             ),
                             BasicText(
-                              text: ' Trending Now',
+                              text: ' ${'trending_now'.tr()}',
                               fontSize: 18,
-                              color: BasicColors.black,
+                              color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
                               isBold: true,
                             ),
                           ],
@@ -140,9 +142,9 @@ class Explore extends StatelessWidget {
                         SizedBox(height: 20.h),
                         //Browse All Categories
                         BasicText(
-                          text: 'Browse All Categories',
+                          text: 'browse_all_categories'.tr(),
                           fontSize: 18,
-                          color: BasicColors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 20.h),
@@ -159,9 +161,9 @@ class Explore extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 BasicText(
-                                  text: 'All Products',
+                                  text: 'all_products'.tr(),
                                   fontSize: 18,
-                                  color: BasicColors.black,
+                                  color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
                                   isBold: true,
                                 ),
                                 Row(
@@ -186,7 +188,7 @@ class Explore extends StatelessWidget {
                                         );
                                       },
                                       child: Text(
-                                        'View All',
+                                        'view_all'.tr(),
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           fontSize: 12.sp,

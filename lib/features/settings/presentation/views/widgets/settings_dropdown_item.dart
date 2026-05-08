@@ -32,7 +32,7 @@ class SettingsDropdownItem extends StatelessWidget {
       trailing: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
         decoration: BoxDecoration(
-          color: const Color(0xFFF1F5F9),
+          color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Row(
@@ -41,13 +41,13 @@ class SettingsDropdownItem extends StatelessWidget {
             BasicText(
               text: value,
               fontSize: 13.sp,
-              color: const Color(0xFF475569),
+              color: Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF475569),
               isBold: false,
             ),
             SizedBox(width: 4.w),
             Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: const Color(0xFF475569),
+              color: Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF475569),
               size: 16.sp,
             ),
           ],

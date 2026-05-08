@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/brand_profile/presentation/views/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +34,7 @@ class ProductCard extends StatelessWidget {
         height: 200.h,
 
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
@@ -87,7 +88,7 @@ class ProductCard extends StatelessWidget {
                     top: 8.h,
                     right: 8.w,
                     child: Material(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: Theme.of(context).cardColor.withValues(alpha: 0.9),
                       shape: const CircleBorder(),
                       child: InkWell(
                         customBorder: const CircleBorder(),
@@ -125,7 +126,7 @@ class ProductCard extends StatelessWidget {
                       Text(
                         product.brandName.isNotEmpty
                             ? product.brandName.toUpperCase()
-                            : 'UNKNOWN BRAND',
+                            : 'unknown_brand'.tr(),
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
@@ -143,6 +144,7 @@ class ProductCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w600,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                           height: 1.2.h,
                         ),
                       ),
@@ -166,9 +168,9 @@ class ProductCard extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: '${product.price.toInt()} ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                                style: TextStyle(
+                                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                                  fontWeight: FontWeight.bold,
                                 fontSize: 16.sp,
                               ),
                             ),

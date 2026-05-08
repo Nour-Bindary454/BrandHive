@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/brand_profile/presentation/view_models/brand_profile_cubit.dart';
@@ -20,7 +21,7 @@ class BrandProfileScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<BrandProfileCubit>()..getBrandProducts(brand.id),
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FB),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -83,11 +84,11 @@ class BrandProfileScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  'Collection',
+                                  'collection'.tr(),
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: Theme.of(context).textTheme.bodyLarge?.color,
                                   ),
                                 ),
                                 SizedBox(width: 6.w),
@@ -108,7 +109,7 @@ class BrandProfileScreen extends StatelessWidget {
                           if (state.products.isEmpty)
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 50.h),
-                              child: const Center(child: Text("No products found for this brand.")),
+                              child: Center(child: Text('no_products_brand'.tr())),
                             )
                           else
                             Padding(
@@ -160,10 +161,10 @@ class BrandProfileScreen extends StatelessWidget {
               top: MediaQuery.of(context).padding.top + 8.h,
               left: 16.w,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
                 onPressed: () => Navigator.of(context).pop(),
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.white.withOpacity(0.8),
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
                   shape: const CircleBorder(),
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,12 @@ class RecommendedForYouSection extends StatelessWidget {
             Icon(Icons.star),
             SizedBox(width: 8.w),
             Text(
-              'Recommended for You',
+              'recommended_for_you'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
           ],
@@ -53,7 +54,7 @@ class RecommendedForYouSection extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
@@ -100,7 +101,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
-                                color: BasicColors.black,
+                                color: Theme.of(context).textTheme.bodyLarge?.color,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -149,12 +150,12 @@ class RecommendedForYouSection extends StatelessWidget {
                                         fontFamily: 'Poppins',
                                         fontSize: 17.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Colors.black,
+                                        color: Theme.of(context).textTheme.bodyLarge?.color,
                                       ),
                                     ),
                                     SizedBox(width: 2.w),
                                     Text(
-                                      'EGP',
+                                      'egp'.tr(),
                                       style: TextStyle(
                                         fontSize: 11.sp,
                                         fontWeight: FontWeight.w400,
@@ -186,7 +187,7 @@ class RecommendedForYouSection extends StatelessWidget {
                         child: Icon(
                           Icons.star_border,
                           size: 18.sp,
-                          color: Colors.black54,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],
@@ -204,7 +205,7 @@ class RecommendedForYouSection extends StatelessWidget {
           child: InkWell(
             onTap: onViewMoreTap,
             child: Text(
-              'View more recommendations',
+              'view_all'.tr(),
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 12.sp,

@@ -43,7 +43,7 @@ class SettingsItemContainer extends StatelessWidget {
               child: BasicText(
                 text: title,
                 fontSize: 15.sp,
-                color: const Color(0xFF1E293B),
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? const Color(0xFF1E293B),
                 isBold: false,
               ),
             ),

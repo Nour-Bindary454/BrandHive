@@ -34,7 +34,7 @@ class SettingsBody extends StatelessWidget {
                       BasicText(
                         text: "settings".tr(),
                         fontSize: 20.sp,
-                        color: const Color(0xFF1E293B),
+                        color: Theme.of(context).textTheme.bodyLarge?.color ?? const Color(0xFF1E293B),
                         isBold: true,
                       ),
                     ],
@@ -42,7 +42,7 @@ class SettingsBody extends StatelessWidget {
                   SizedBox(height: 30.h),
 
                   // Notifications Section
-                  _buildSectionTitle("notifications_section".tr()),
+                  _buildSectionTitle(context, "notifications_section".tr()),
                   SettingsCard(
                     children: [
                       SettingsSwitchItem(
@@ -54,7 +54,7 @@ class SettingsBody extends StatelessWidget {
                         onChanged: (val) =>
                             viewModel.togglePushNotifications(val),
                       ),
-                      _buildDivider(),
+                      _buildDivider(context),
                       SettingsSwitchItem(
                         icon: Icons.email_outlined,
                         iconBgColor: const Color(0xFFFFEDD5),
@@ -64,7 +64,7 @@ class SettingsBody extends StatelessWidget {
                         onChanged: (val) =>
                             viewModel.toggleEmailPromotions(val),
                       ),
-                      _buildDivider(),
+                      _buildDivider(context),
                       SettingsSwitchItem(
                         icon: Icons.inventory_2_outlined,
                         iconBgColor: const Color(0xFFD1FAE5),
@@ -78,7 +78,7 @@ class SettingsBody extends StatelessWidget {
                   SizedBox(height: 25.h),
 
                   // Preferences Section
-                  _buildSectionTitle("preferences_section".tr()),
+                  _buildSectionTitle(context, "preferences_section".tr()),
                   SettingsCard(
                     children: [
                       SettingsDropdownItem(
@@ -91,7 +91,7 @@ class SettingsBody extends StatelessWidget {
                           _showLanguageBottomSheet(context, viewModel);
                         },
                       ),
-                      _buildDivider(),
+                      _buildDivider(context),
                       SettingsDropdownItem(
                         icon: Icons.payments_outlined,
                         iconBgColor: const Color(0xFFDBEAFE),
@@ -99,7 +99,7 @@ class SettingsBody extends StatelessWidget {
                         title: "currency".tr(),
                         value: "EGP",
                       ),
-                      _buildDivider(),
+                      _buildDivider(context),
                       SettingsSwitchItem(
                         icon: Icons.dark_mode_outlined,
                         iconBgColor: const Color(0xFFEDE9FE),
@@ -113,7 +113,7 @@ class SettingsBody extends StatelessWidget {
                   SizedBox(height: 25.h),
 
                   // Account Section
-                  _buildSectionTitle("account_section".tr()),
+                  _buildSectionTitle(context, "account_section".tr()),
                   SettingsCard(
                     children: [
                       SettingsArrowItem(
@@ -123,7 +123,7 @@ class SettingsBody extends StatelessWidget {
                         title: "edit_profile".tr(),
                         onTap: () {},
                       ),
-                      _buildDivider(),
+                      _buildDivider(context),
                       SettingsArrowItem(
                         icon: Icons.lock_outline,
                         iconBgColor: const Color(0xFFFCE7F3),
@@ -182,7 +182,7 @@ class SettingsBody extends StatelessWidget {
                 text: "language".tr(),
                 fontSize: 18.sp,
                 isBold: true,
-                color: Colors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               ),
               SizedBox(height: 20.h),
               _buildLangOption(context, viewModel, 'English', 'en'),
@@ -221,21 +221,21 @@ class SettingsBody extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String title) {
     return Padding(
       padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
       child: BasicText(
         text: title,
         fontSize: 12.sp,
-        color: const Color(0xFF64748B),
+        color: Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF64748B),
         isBold: true,
       ),
     );
   }
 
-  Widget _buildDivider() {
+  Widget _buildDivider(BuildContext context) {
     return Divider(
-      color: const Color(0xFFF1F5F9),
+      color: Theme.of(context).dividerColor.withValues(alpha: 0.2),
       height: 1,
       thickness: 1,
       indent: 60.w,

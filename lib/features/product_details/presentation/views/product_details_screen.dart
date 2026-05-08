@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Content
@@ -48,7 +49,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
@@ -57,7 +58,7 @@ class ProductDetailsScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: Icon(Icons.arrow_back_ios_new, size: 20.sp, color: Colors.black),
+                          child: Icon(Icons.arrow_back_ios_new, size: 20.sp, color: Theme.of(context).iconTheme.color),
                         ),
                       ),
                     ),
@@ -70,7 +71,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
@@ -98,7 +99,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     children: [
                       // Brand
                       Text(
-                        product.brandName.isNotEmpty ? product.brandName.toUpperCase() : 'UNKNOWN BRAND',
+                        product.brandName.isNotEmpty ? product.brandName.toUpperCase() : 'unknown_brand'.tr(),
                         style: TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 14.sp,
@@ -116,7 +117,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                           height: 1.2,
                         ),
                       ),
@@ -132,7 +133,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -149,24 +150,24 @@ class ProductDetailsScreen extends StatelessWidget {
 
                       // Description
                       Text(
-                        'Description',
+                        'description'.tr(),
                         style: TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
                       SizedBox(height: 8.h),
                       Text(
                         product.description.isNotEmpty 
                             ? product.description 
-                            : 'Discover the finest quality and craftsmanship with this exceptional product. Designed to elevate your everyday lifestyle, combining elegance, durability, and functionality. Perfect for your collection or as a special gift.',
+                            : 'no_description'.tr(),
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14.sp,
                           height: 1.5,
-                          color: Colors.grey[700],
+                          color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey[700],
                         ),
                       ),
                       SizedBox(height: 100.h), // Space for bottom bar
@@ -185,7 +186,7 @@ class ProductDetailsScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.05),
@@ -204,7 +205,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Total Price',
+                        'total_price'.tr(),
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Colors.grey[600],
@@ -217,7 +218,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             TextSpan(
                               text: '${product.price.toInt()} ',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Theme.of(context).textTheme.bodyLarge?.color,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
                                 fontFamily: 'Outfit',
@@ -243,7 +244,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
                       decoration: BoxDecoration(
-                        color: BasicColors.black,
+                        color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).colorScheme.primary : BasicColors.black,
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Row(
@@ -251,7 +252,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 20.sp),
                           SizedBox(width: 8.w),
                           Text(
-                            'Add to Cart',
+                            'add_to_cart'.tr(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.sp,

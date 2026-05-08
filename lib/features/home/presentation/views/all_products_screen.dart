@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
@@ -13,27 +14,27 @@ class AllProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: BasicColors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: BasicColors.black,
+            color: Theme.of(context).iconTheme.color,
             size: 20.sp,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'All Products',
+          'all_products'.tr(),
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
       ),

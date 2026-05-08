@@ -1,10 +1,10 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/product_details/presentation/views/product_details_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,11 +16,10 @@ import 'widgets/home_header.dart';
 import 'widgets/home_hero_banner.dart';
 import 'widgets/categories_section.dart';
 import 'widgets/bazaars_events_section.dart';
-import 'widgets/promotional_banner.dart';
+
 import 'widgets/home_shimmer_loading.dart';
 import 'widgets/recommended_for_you_section.dart';
 import 'widgets/featured_products_section.dart';
-import 'package:brand/features/category/presentation/views/category_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,7 +27,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
@@ -74,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                         ],
 
                         /// 2. Search
-                        const CusSearchBar(hintText: 'Search local brands...'),
+                        CusSearchBar(hintText: 'search_local_brands'.tr()),
                         SizedBox(height: 20.h),
 
                         /// 3. Banner
@@ -138,13 +137,16 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllProductsScreen(products: state.recommended),
+                                  builder: (context) => AllProductsScreen(
+                                    products: state.recommended,
+                                  ),
                                 ),
                               );
                             },
                             onProductTap: (id) {
-                              final homeProduct = state.recommended.firstWhere((p) => p.id == id);
+                              final homeProduct = state.recommended.firstWhere(
+                                (p) => p.id == id,
+                              );
                               final product = Product(
                                 id: homeProduct.id,
                                 brandId: '',
@@ -159,7 +161,8 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(product: product),
+                                  builder: (context) =>
+                                      ProductDetailsScreen(product: product),
                                 ),
                               );
                             },
@@ -175,13 +178,16 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllProductsScreen(products: state.featured),
+                                  builder: (context) => AllProductsScreen(
+                                    products: state.featured,
+                                  ),
                                 ),
                               );
                             },
                             onProductTap: (id) {
-                              final homeProduct = state.featured.firstWhere((p) => p.id == id);
+                              final homeProduct = state.featured.firstWhere(
+                                (p) => p.id == id,
+                              );
                               final product = Product(
                                 id: homeProduct.id,
                                 brandId: '',
@@ -196,7 +202,8 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(product: product),
+                                  builder: (context) =>
+                                      ProductDetailsScreen(product: product),
                                 ),
                               );
                             },
