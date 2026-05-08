@@ -2,7 +2,7 @@ import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 
 import 'package:brand/features/cart/presentation/cart_screen.dart';
-import 'package:brand/features/explore/explore.dart';
+import 'package:brand/features/explore/presentaion/views/explore.dart';
 import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';

@@ -3,6 +3,7 @@ class Product {
   final String brandId;
   final String brandName;
   final String name;
+  final String description;
   final String image;
   final double rating;
   final double price;
@@ -14,6 +15,7 @@ class Product {
     required this.brandId,
     required this.brandName,
     required this.name,
+    this.description = '',
     required this.image,
     required this.rating,
     required this.price,
@@ -27,6 +29,7 @@ class Product {
       brandId: json['brandId'],
       brandName: json['brandName'] ?? '',
       name: json['name'],
+      description: json['description'] ?? '',
       image: json['image'],
       rating: (json['rating'] as num).toDouble(),
       price: (json['price'] as num).toDouble(),
@@ -41,6 +44,7 @@ class Product {
       brandId: brandId,
       brandName: brandName,
       name: name,
+      description: description,
       image: image,
       rating: rating,
       price: price,

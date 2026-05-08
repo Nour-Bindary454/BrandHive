@@ -2,6 +2,9 @@ import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
+import 'package:brand/features/home/presentation/views/all_products_screen.dart';
+import 'package:brand/features/brand_profile/data/models/product_model.dart';
+import 'package:brand/features/product_details/presentation/views/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -130,9 +133,36 @@ class HomeScreen extends StatelessWidget {
                         /// 7. Recommended
                         if (state.recommended.isNotEmpty) ...[
                           RecommendedForYouSection(
-                            products: state.recommended,
-                            onViewMoreTap: () {},
-                            onProductTap: (id) {},
+                            products: state.recommended.take(10).toList(),
+                            onViewMoreTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllProductsScreen(products: state.recommended),
+                                ),
+                              );
+                            },
+                            onProductTap: (id) {
+                              final homeProduct = state.recommended.firstWhere((p) => p.id == id);
+                              final product = Product(
+                                id: homeProduct.id,
+                                brandId: '',
+                                brandName: homeProduct.brandName,
+                                name: homeProduct.name,
+                                description: homeProduct.description,
+                                image: homeProduct.imageUrl,
+                                rating: homeProduct.rating,
+                                price: homeProduct.price,
+                                currency: 'EGP',
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailsScreen(product: product),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(height: 32.h),
                         ],
@@ -140,9 +170,36 @@ class HomeScreen extends StatelessWidget {
                         /// 8. Featured
                         if (state.featured.isNotEmpty) ...[
                           FeaturedProductsSection(
-                            products: state.featured,
-                            onViewAllTap: () {},
-                            onProductTap: (id) {},
+                            products: state.featured.take(10).toList(),
+                            onViewAllTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllProductsScreen(products: state.featured),
+                                ),
+                              );
+                            },
+                            onProductTap: (id) {
+                              final homeProduct = state.featured.firstWhere((p) => p.id == id);
+                              final product = Product(
+                                id: homeProduct.id,
+                                brandId: '',
+                                brandName: homeProduct.brandName,
+                                name: homeProduct.name,
+                                description: homeProduct.description,
+                                image: homeProduct.imageUrl,
+                                rating: homeProduct.rating,
+                                price: homeProduct.price,
+                                currency: 'EGP',
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailsScreen(product: product),
+                                ),
+                              );
+                            },
                             onAddToCartTap: (id) {},
                             onFavoriteTap: (id) {},
                           ),

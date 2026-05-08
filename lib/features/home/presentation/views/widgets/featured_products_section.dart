@@ -94,7 +94,11 @@ class FeaturedProductsSection extends StatelessWidget {
                                 topRight: Radius.circular(20.r),
                               ),
                               image: DecorationImage(
-                                image: NetworkImage(product.imageUrl),
+                                image: NetworkImage(
+                                  product.imageUrl.isEmpty 
+                                      ? 'https://placehold.co/300x300/png' 
+                                      : product.imageUrl
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),

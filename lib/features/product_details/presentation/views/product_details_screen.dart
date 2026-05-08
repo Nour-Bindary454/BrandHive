@@ -1,0 +1,274 @@
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:brand/features/brand_profile/data/models/product_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class ProductDetailsScreen extends StatelessWidget {
+  final Product product;
+
+  const ProductDetailsScreen({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: BasicColors.white,
+      body: Stack(
+        children: [
+          // Content
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Product Image
+                Stack(
+                  children: [
+                    SizedBox(
+                      height: 400.h,
+                      width: double.infinity,
+                      child: product.image.startsWith('http')
+                          ? Image.network(
+                              product.image.isEmpty ? 'https://placehold.co/400x500/png' : product.image,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              product.image,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) => Container(
+                                color: Colors.grey[200],
+                                child: const Icon(Icons.image_not_supported, size: 50),
+                              ),
+                            ),
+                    ),
+                    // Back Button
+                    Positioned(
+                      top: 50.h,
+                      left: 20.w,
+                      child: InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: EdgeInsets.all(8.r),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10.r,
+                              ),
+                            ],
+                          ),
+                          child: Icon(Icons.arrow_back_ios_new, size: 20.sp, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    // Favorite Button
+                    Positioned(
+                      top: 50.h,
+                      right: 20.w,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: EdgeInsets.all(8.r),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10.r,
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            product.isFavorite ? Icons.favorite : Icons.favorite_border,
+                            size: 22.sp,
+                            color: product.isFavorite ? Colors.red : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Details Section
+                Padding(
+                  padding: EdgeInsets.all(20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Brand
+                      Text(
+                        product.brandName.isNotEmpty ? product.brandName.toUpperCase() : 'UNKNOWN BRAND',
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff64748B),
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      
+                      // Product Name
+                      Text(
+                        product.name,
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          height: 1.2,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+
+                      // Rating & Reviews
+                      Row(
+                        children: [
+                          Icon(Icons.star, color: Colors.amber, size: 20.sp),
+                          SizedBox(width: 4.w),
+                          Text(
+                            product.rating.toStringAsFixed(1),
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            '(120 Reviews)',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24.h),
+
+                      // Description
+                      Text(
+                        'Description',
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        product.description.isNotEmpty 
+                            ? product.description 
+                            : 'Discover the finest quality and craftsmanship with this exceptional product. Designed to elevate your everyday lifestyle, combining elegance, durability, and functionality. Perfect for your collection or as a special gift.',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14.sp,
+                          height: 1.5,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      SizedBox(height: 100.h), // Space for bottom bar
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Bottom Bar (Price & Add to Cart)
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    offset: const Offset(0, -4),
+                    blurRadius: 16.r,
+                  ),
+                ],
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Price
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Total Price',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${product.price.toInt()} ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.sp,
+                                fontFamily: 'Outfit',
+                              ),
+                            ),
+                            TextSpan(
+                              text: product.currency,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  // Add to Cart Button
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
+                      decoration: BoxDecoration(
+                        color: BasicColors.black,
+                        borderRadius: BorderRadius.circular(30.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 20.sp),
+                          SizedBox(width: 8.w),
+                          Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Outfit',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

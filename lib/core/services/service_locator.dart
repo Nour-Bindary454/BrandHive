@@ -2,6 +2,9 @@ import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.da
 import 'package:brand/features/login/data/repository/login_repos.dart';
 import 'package:brand/features/login/data/repository/login_repository_impl.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_cubit.dart';
+import 'package:brand/features/brand_profile/data/repository/brand_profile_repo.dart';
+import 'package:brand/features/brand_profile/data/repository/brand_profile_repo_impl.dart';
+import 'package:brand/features/brand_profile/presentation/view_models/brand_profile_cubit.dart';
 
 import 'package:brand/features/resetPassword/viewsModel/change_pass_cubit.dart';
 
@@ -33,6 +36,9 @@ import '../../features/home/data/repository/home_repository_impl.dart';
 
 import '../../features/resetPassword/data/repository/chang_pass_repo.dart';
 import '../../features/resetPassword/data/repository/chang_pass_repo_impl.dart';
+import '../../features/explore/data/repository/explore_repo.dart';
+import '../../features/explore/data/repository/explore_repo_impl.dart';
+import '../../features/explore/presentaion/viewsModel/explore_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -55,6 +61,12 @@ void setup() {
   );
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
   sl.registerLazySingleton<ChangePassRepo>(() => ChangePassRepoImpl(sl()));
+  sl.registerLazySingleton<ExploreRepository>(
+    () => ExploreRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<BrandProfileRepository>(
+    () => BrandProfileRepositoryImpl(sl<ApiService>()),
+  );
 
   // 🔹 Cubits
   sl.registerFactory(() => RegisterCubit(sl()));
@@ -64,4 +76,6 @@ void setup() {
   sl.registerFactory(() => VerifyResetCodeCubit(sl()));
   sl.registerFactory(() => HomeCubit());
   sl.registerFactory(() => ChangePassCubit(sl()));
+  sl.registerFactory<ExploreCubit>(() => ExploreCubit());
+  sl.registerFactory<BrandProfileCubit>(() => BrandProfileCubit());
 }
