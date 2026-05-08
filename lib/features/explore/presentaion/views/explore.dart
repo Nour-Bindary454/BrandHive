@@ -147,7 +147,7 @@ class Explore extends StatelessWidget {
                         ),
                         SizedBox(height: 20.h),
                         //containers
-                        BrowseAllCat(),
+                        // BrowseAllCat(),
                         SizedBox(height: 20.h),
 
                         const SubcategoryTabs(),

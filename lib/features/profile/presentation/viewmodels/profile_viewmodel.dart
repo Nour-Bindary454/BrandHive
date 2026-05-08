@@ -28,13 +28,10 @@ class ProfileViewModel extends ChangeNotifier {
       _profileData = ProfileModel(
         name: 'Mustafa Kamal',
         email: 'mustafa.kamal@example.com',
-        imageUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704d', // Placeholder 
+        imageUrl:
+            'https://i.pravatar.cc/150?u=a042581f4e29026704d', // Placeholder
         membership: 'Gold Member',
-        stats: ProfileStats(
-          orders: 12,
-          reviews: 5,
-          points: 240,
-        ),
+        stats: ProfileStats(orders: 12, reviews: 5, points: 240),
         menuItems: [
           MenuItemModel(
             title: 'my_orders'.tr(),
@@ -56,14 +53,8 @@ class ProfileViewModel extends ChangeNotifier {
             badgeText: 'New',
             isBadgeRed: true,
           ),
-          MenuItemModel(
-            title: 'settings'.tr(),
-            icon: Icons.settings_outlined,
-          ),
-          MenuItemModel(
-            title: 'help_support'.tr(),
-            icon: Icons.help_outline,
-          ),
+          MenuItemModel(title: 'settings'.tr(), icon: Icons.settings_outlined),
+          MenuItemModel(title: 'help_support'.tr(), icon: Icons.help_outline),
         ],
       );
     } catch (e) {
@@ -77,10 +68,10 @@ class ProfileViewModel extends ChangeNotifier {
   void signOut(BuildContext context) {
     // Clear token
     CacheHelper.removeData('token');
-    
+
     // Navigate to Login and clear stack
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    
+
     debugPrint("Signing out...");
   }
 }

@@ -13,9 +13,24 @@ class UserProfile {
 class CategoryModel {
   final String id;
   final String name;
-  final String imageUrl;
+  final String slug;
+  final String? logoUrl;
 
-  CategoryModel({required this.id, required this.name, required this.imageUrl});
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.slug,
+    this.logoUrl,
+  });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['_id'],
+      name: json['name'],
+      slug: json['slug'],
+      logoUrl: json['logo'] != null ? json['logo']['url'] : null,
+    );
+  }
 }
 
 class EventModel {
@@ -80,7 +95,9 @@ class HomeProduct {
       category: json['category']?['name'] ?? '',
       imageUrl: json['mainImage'] ?? '',
       price: double.tryParse(json['price']?.toString() ?? '0') ?? 0.0,
-      rating: double.tryParse(json['stats']?['averageRating']?.toString() ?? '0') ?? 0.0,
+      rating:
+          double.tryParse(json['stats']?['averageRating']?.toString() ?? '0') ??
+          0.0,
     );
   }
 }
