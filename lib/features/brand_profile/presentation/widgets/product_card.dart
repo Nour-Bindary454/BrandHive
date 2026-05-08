@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/models/product_model.dart';
 
+import 'package:brand/features/product_details/presentation/views/product_details_screen.dart';
+
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback onFavoritePressed;
@@ -18,145 +20,177 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200.h,
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 16.r,
-            offset: Offset(0, 4),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsScreen(product: product),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image Section
-          Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(16.r),
-                  ),
-                  child: Image.asset(
-                    product.image,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: Colors.grey[100],
-                      child: const Center(
-                        child: Icon(Icons.image_not_supported),
-                      ),
+        );
+      },
+      child: Container(
+        height: 200.h,
+
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 16.r,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Section
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16.r),
                     ),
+                    child: product.image.startsWith('http')
+                        ? Image.network(
+                            product.image.isEmpty
+                                ? 'https://placehold.co/300x300/png'
+                                : product.image,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                                  color: Colors.grey[100],
+                                  child: const Center(
+                                    child: Icon(Icons.image_not_supported),
+                                  ),
+                                ),
+                          )
+                        : Image.asset(
+                            product.image,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                                  color: Colors.grey[100],
+                                  child: const Center(
+                                    child: Icon(Icons.image_not_supported),
+                                  ),
+                                ),
+                          ),
                   ),
-                ),
-                Positioned(
-                  top: 8.h,
-                  right: 8.w,
-                  child: Material(
-                    color: Colors.white.withValues(alpha: 0.9),
-                    shape: const CircleBorder(),
-                    child: InkWell(
-                      customBorder: const CircleBorder(),
-                      onTap: onFavoritePressed,
-                      child: Padding(
-                        padding: EdgeInsets.all(6.0.r),
-                        child: Icon(
-                          product.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          size: 18.sp,
-                          color: product.isFavorite ? Colors.red : Colors.grey,
+                  Positioned(
+                    top: 8.h,
+                    right: 8.w,
+                    child: Material(
+                      color: Colors.white.withValues(alpha: 0.9),
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: onFavoritePressed,
+                        child: Padding(
+                          padding: EdgeInsets.all(6.0.r),
+                          child: Icon(
+                            product.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 18.sp,
+                            color: product.isFavorite
+                                ? Colors.red
+                                : Colors.grey,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          // Info Section
-          Padding(
-            padding: EdgeInsets.all(12.r),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'CAIRO LEATHER', // Static or dynamic
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5,
+            // Info Section
+            Padding(
+              padding: EdgeInsets.all(12.r),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.brandName.isNotEmpty
+                            ? product.brandName.toUpperCase()
+                            : 'UNKNOWN BRAND',
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      product.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2.h,
+                      SizedBox(height: 4.h),
+                      Text(
+                        product.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2.h,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 4.h),
-                    RatingWidget(
-                      rating: product.rating,
-                      textStyle: TextStyle(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 4.h),
+                      RatingWidget(
+                        rating: product.rating,
+                        textStyle: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        starColor: Colors.amber,
                       ),
-                      starColor: Colors.amber,
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${product.price.toInt()} ',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${product.price.toInt()} ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: product.currency,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
+                            TextSpan(
+                              text: product.currency,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    AddToCartButton(onPressed: onAddToCartPressed),
-                  ],
-                ),
-              ],
+                      AddToCartButton(onPressed: onAddToCartPressed),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

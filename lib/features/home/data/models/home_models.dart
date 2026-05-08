@@ -53,6 +53,7 @@ class HomeProduct {
   final String brandName;
   final String category;
   final String name;
+  final String description;
   final String imageUrl;
   final double price;
   final int matchPercentage;
@@ -63,6 +64,7 @@ class HomeProduct {
     required this.brandName,
     required this.category,
     required this.name,
+    this.description = '',
     required this.imageUrl,
     required this.price,
     this.matchPercentage = 0,
@@ -71,13 +73,14 @@ class HomeProduct {
 
   factory HomeProduct.fromJson(Map<String, dynamic> json) {
     return HomeProduct(
-      id: json['id'] ?? '',
+      id: json['_id'] ?? json['id'] ?? '',
       name: json['name'] ?? '',
+      description: json['description'] ?? '',
       brandName: json['brand']?['name'] ?? '',
       category: json['category']?['name'] ?? '',
       imageUrl: json['mainImage'] ?? '',
-      price: (json['price'] ?? 0).toDouble(),
-      rating: (json['stats']?['averageRating'] ?? 0).toDouble(),
+      price: double.tryParse(json['price']?.toString() ?? '0') ?? 0.0,
+      rating: double.tryParse(json['stats']?['averageRating']?.toString() ?? '0') ?? 0.0,
     );
   }
 }

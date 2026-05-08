@@ -87,18 +87,18 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       ];
 
-      /// 7. FEATURED
-      final featured = [
-        HomeProduct(
-          id: 'fp1',
-          brandName: 'JELLAVU',
-          category: 'Fashion',
-          name: 'Jeans',
-          imageUrl: 'https://placehold.co/400x400/png',
-          price: 900,
-          rating: 4.8,
-        ),
-      ];
+      /// 7. FEATURED (API)
+      List<HomeProduct> featured = [];
+      final productsResult = await sl<HomeRepository>().getAllProducts(page: 1);
+      productsResult.fold(
+        (failure) {
+          print("Failed to load products: ${failure.errMessage}");
+          throw Exception(failure.errMessage);
+        },
+        (data) {
+          featured = data;
+        },
+      );
 
       /// ✅ FINAL EMIT
       emit(

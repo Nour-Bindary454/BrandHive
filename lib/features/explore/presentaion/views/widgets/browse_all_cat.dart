@@ -1,5 +1,5 @@
 import 'package:brand/core/utils/appImages/png_images.dart';
-import 'package:brand/features/explore/widgets/categ_container.dart';
+import 'package:brand/features/explore/presentaion/views/widgets/categ_container.dart';
 import 'package:brand/features/category/presentation/views/category_view.dart';
 import 'package:flutter/material.dart';
 
@@ -62,4 +62,3 @@ class BrowseAllCat extends StatelessWidget {
     );
   }
 }
-

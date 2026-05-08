@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/sharedWidgets/basic_colors.dart';
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
 
 class SubcategoryTabs extends StatefulWidget {
   const SubcategoryTabs({super.key});
@@ -20,7 +20,7 @@ class _SubcategoryTabsState extends State<SubcategoryTabs> {
     'Others',
   ];
   int selectedIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -49,7 +49,9 @@ class _SubcategoryTabsState extends State<SubcategoryTabs> {
               child: Text(
                 subcategories[index],
                 style: TextStyle(
-                  fontWeight: selectedIndex == index ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: selectedIndex == index
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                   color: selectedIndex == index ? Colors.white : Colors.black87,
                 ),
               ),
