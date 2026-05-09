@@ -1,10 +1,11 @@
-import 'package:brand/features/brand_profile/data/models/product_model.dart';
-import 'package:brand/core/utils/appImages/png_images.dart';
+import 'package:brand/features/category/presentation/view_models/category_cubit.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_header.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_filters.dart';
 import 'package:brand/features/category/presentation/views/widgets/category_products_grid.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryView extends StatefulWidget {
   final CategoryModel category;
@@ -23,45 +24,94 @@ class _CategoryViewState extends State<CategoryView> {
     'Top Rated',
   ];
 
+  List<HomeProduct> _applyFilter(List<HomeProduct> products) {
+    final sorted = List<HomeProduct>.from(products);
+    switch (selectedFilter) {
+      case 'Price: Low':
+        sorted.sort((a, b) => a.price.compareTo(b.price));
+        break;
+      case 'Price: High':
+        sorted.sort((a, b) => b.price.compareTo(a.price));
+        break;
+      case 'Top Rated':
+        sorted.sort((a, b) => b.rating.compareTo(a.rating));
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Dummy products
-    final List<Product> categoryProducts = List.generate(
-      6,
-      (index) => Product(
-        brandName: 'Brand Name',
-        id: 'p$index',
-        brandId: '1',
-        name: index % 2 == 0 ? 'Single Hanging Chair' : 'Classic Glass Vase',
-        image: index % 2 == 0 ? PngImages.fashion : PngImages.homeDecor,
-        rating: 4.8,
-        price: index % 2 == 0 ? 600.0 : 450.0,
-        currency: 'EGP',
-        isFavorite: false,
-      ),
-    );
+    return BlocProvider(
+      create: (context) => CategoryCubit()..fetchProducts(widget.category.id),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: BlocBuilder<CategoryCubit, CategoryState>(
+          builder: (context, state) {
+            if (state is CategoryLoading) {
+              return Column(
+                children: [
+                  CategoryHeader(
+                    categoryName: widget.category.name,
+                    categoryImage:
+                        widget.category.logoUrl ?? 'https://placehold.co/300x300/png',
+                    productsCount: 0,
+                  ),
+                  const Expanded(
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ],
+              );
+            }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Column(
-        children: [
-          CategoryHeader(
-            categoryName: widget.category.name,
-            categoryImage:
-                widget.category.logoUrl ?? 'https://placehold.co/300x300/png',
-            productsCount: categoryProducts.length,
-          ),
-          CategoryFilters(
-            filters: filters,
-            selectedFilter: selectedFilter,
-            onFilterSelected: (filter) {
-              setState(() {
-                selectedFilter = filter;
-              });
-            },
-          ),
-          Expanded(child: CategoryProductsGrid(products: categoryProducts)),
-        ],
+            if (state is CategoryError) {
+              return Column(
+                children: [
+                  CategoryHeader(
+                    categoryName: widget.category.name,
+                    categoryImage:
+                        widget.category.logoUrl ?? 'https://placehold.co/300x300/png',
+                    productsCount: 0,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        state.message,
+                        style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            final rawProducts = state is CategoryLoaded ? state.products : <HomeProduct>[];
+            final products = _applyFilter(rawProducts);
+
+            return Column(
+              children: [
+                CategoryHeader(
+                  categoryName: widget.category.name,
+                  categoryImage:
+                      widget.category.logoUrl ?? 'https://placehold.co/300x300/png',
+                  productsCount: products.length,
+                ),
+                CategoryFilters(
+                  filters: filters,
+                  selectedFilter: selectedFilter,
+                  onFilterSelected: (filter) {
+                    setState(() {
+                      selectedFilter = filter;
+                    });
+                  },
+                ),
+                Expanded(child: CategoryProductsGrid(products: products)),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

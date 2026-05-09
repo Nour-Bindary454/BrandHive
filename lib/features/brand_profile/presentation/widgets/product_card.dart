@@ -39,11 +39,9 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color:
-                  (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
-                      .withOpacity(0.1),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
               blurRadius: 16.r,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -68,7 +66,7 @@ class ProductCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 Container(
-                                  color: Colors.grey[100],
+                                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                                   child: const Center(
                                     child: Icon(Icons.image_not_supported),
                                   ),
@@ -80,7 +78,7 @@ class ProductCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 Container(
-                                  color: Colors.grey[100],
+                                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                                   child: const Center(
                                     child: Icon(Icons.image_not_supported),
                                   ),
@@ -137,9 +135,7 @@ class ProductCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w600,
-                          color:
-                              Theme.of(context).textTheme.bodyLarge?.color ??
-                              Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                           height: 1.2.h,
                         ),
                       ),
@@ -165,10 +161,7 @@ class ProductCard extends StatelessWidget {
                               text: '${product.price.toInt()} ',
                               style: TextStyle(
                                 color:
-                                    Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color ??
-                                    Colors.black,
+                                    Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.sp,
                               ),
@@ -176,7 +169,7 @@ class ProductCard extends StatelessWidget {
                             TextSpan(
                               text: product.currency,
                               style: TextStyle(
-                                color: Colors.grey[600],
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w500,
                               ),

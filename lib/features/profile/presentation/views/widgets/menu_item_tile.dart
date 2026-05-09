@@ -28,14 +28,14 @@ class MenuItemTile extends StatelessWidget {
             Icon(
               item.icon,
               size: 24.sp,
-              color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.8),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
             ),
             SizedBox(width: 16.w),
             Expanded(
               child: BasicText(
                 text: item.title,
                 fontSize: 14.sp,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color: Theme.of(context).colorScheme.onSurface,
                 isBold: true,
               ),
             ),
@@ -45,20 +45,20 @@ class MenuItemTile extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: item.isBadgeRed
-                      ? const Color(0xFFFFE5E5)
-                      : const Color(0xFFE2EAF8),
+                      ? Colors.red.withOpacity(0.1)
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: BasicText(
                   text: item.badgeText!,
                   fontSize: 10.sp,
                   color: item.isBadgeRed
-                      ? const Color(0xFFFF4D4D)
-                      : BasicColors.buttonColorDark,
+                      ? Colors.red
+                      : Theme.of(context).colorScheme.primary,
                   isBold: true,
                 ),
               ),
-            Icon(Icons.chevron_right, size: 20.sp, color: Theme.of(context).textTheme.bodyMedium?.color),
+            Icon(Icons.chevron_right, size: 20.sp, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
           ],
         ),
       ),

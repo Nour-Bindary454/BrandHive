@@ -30,7 +30,7 @@ class WishlistView extends StatelessWidget {
               right: 20.w,
             ),
             decoration: BoxDecoration(
-              color: const Color(0xFF2D4373),
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(24.r),
                 bottomRight: Radius.circular(24.r),
@@ -51,7 +51,7 @@ class WishlistView extends StatelessWidget {
                         ),
                         child: Icon(
                           Icons.arrow_back,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           size: 20.sp,
                         ),
                       ),
@@ -63,7 +63,7 @@ class WishlistView extends StatelessWidget {
                 Text(
                   'My Wishlist',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 24.sp,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Poppins',
@@ -73,7 +73,7 @@ class WishlistView extends StatelessWidget {
                 Text(
                   'saved item',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                     fontSize: 14.sp,
                     fontFamily: 'Poppins',
                   ),
@@ -95,7 +95,7 @@ class WishlistView extends StatelessWidget {
                       Text(
                         '${wishlistProducts.length} item saved',
                         style: TextStyle(
-                          color: const Color(0xFF5B5B5C),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           fontSize: 14.sp,
                           fontFamily: 'Poppins',
                         ),

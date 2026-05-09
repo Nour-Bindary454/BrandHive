@@ -25,9 +25,7 @@ class OrderSummaryWidget extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color:
-                    (Theme.of(context).textTheme.bodyLarge?.color ??
-                            Colors.black)
-                        .withOpacity(0.04),
+                    Theme.of(context).colorScheme.onSurface.withOpacity(0.04),
                 blurRadius: 10,
                 offset: const Offset(0, -4),
               ),
@@ -42,8 +40,7 @@ class OrderSummaryWidget extends StatelessWidget {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color:
-                      Theme.of(context).textTheme.bodyLarge?.color ??
-                      Colors.black,
+                      Theme.of(context).colorScheme.onSurface,
                 ),
               ),
 
@@ -61,7 +58,7 @@ class OrderSummaryWidget extends StatelessWidget {
 
               SizedBox(height: 16.h),
 
-              const Divider(color: Color(0xFFEEEEEE)),
+              Divider(color: Theme.of(context).dividerColor),
 
               SizedBox(height: 16.h),
 
@@ -74,8 +71,7 @@ class OrderSummaryWidget extends StatelessWidget {
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color:
-                          Theme.of(context).textTheme.bodyLarge?.color ??
-                          Colors.black,
+                          Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   Text(
@@ -83,7 +79,7 @@ class OrderSummaryWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w900,
-                      color: const Color(0xFF2B3A5A),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -118,7 +114,7 @@ class OrderSummaryWidget extends StatelessWidget {
                           );
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2B3A5A),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -129,7 +125,7 @@ class OrderSummaryWidget extends StatelessWidget {
                           height: 24.h,
                           width: 24.h,
                           child: CircularProgressIndicator(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         )
                       : Text(
@@ -137,7 +133,7 @@ class OrderSummaryWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                 ),
@@ -159,7 +155,7 @@ class OrderSummaryWidget extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 14.sp,
-            color: Colors.grey[600],
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -167,7 +163,7 @@ class OrderSummaryWidget extends StatelessWidget {
           value,
           style: TextStyle(
             fontSize: 14.sp,
-            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.w600,
           ),
         ),

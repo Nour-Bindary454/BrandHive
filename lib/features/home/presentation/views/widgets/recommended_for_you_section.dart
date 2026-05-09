@@ -32,7 +32,7 @@ class RecommendedForYouSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
@@ -58,7 +58,7 @@ class RecommendedForYouSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.08),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.08),
                         blurRadius: 10.r,
                         offset: const Offset(0, 4),
                       ),
@@ -91,7 +91,7 @@ class RecommendedForYouSection extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w700,
-                                color: const Color.fromARGB(255, 88, 123, 160),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             SizedBox(height: 4.h),
@@ -101,9 +101,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
+                                  color: Theme.of(context).colorScheme.onSurface,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -129,12 +127,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                   child: Text(
                                     '${product.matchPercentage}% Match',
                                     style: TextStyle(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        54,
-                                        123,
-                                        57,
-                                      ),
+                                        color: Colors.green,
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -152,9 +145,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                         fontFamily: 'Poppins',
                                         fontSize: 17.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(width: 2.w),
@@ -163,12 +154,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 11.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: const Color.fromARGB(
-                                          255,
-                                          124,
-                                          123,
-                                          123,
-                                        ),
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                       ),
                                     ),
                                   ],
@@ -185,7 +171,7 @@ class RecommendedForYouSection extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.grey.shade300),
+                          border: Border.all(color: Theme.of(context).dividerColor),
                         ),
                         child: FavoriteButton(
                           productId: product.id,
@@ -214,7 +200,7 @@ class RecommendedForYouSection extends StatelessWidget {
                 fontFamily: 'Poppins',
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
               ),
             ),
           ),

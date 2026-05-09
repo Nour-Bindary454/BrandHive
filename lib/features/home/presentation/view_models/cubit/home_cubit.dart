@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/home/data/repository/home_repo.dart';
@@ -51,12 +52,12 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       ];
 
-      /// 5. BRANDS (API + fallback)
+      /// 5. BRANDS — fetch all 5 pages IN PARALLEL
       List<BrandModel> allBrands = [];
-
-      for (int i = 1; i <= 5; i++) {
-        final result = await sl<HomeRepository>().getAllBrands(page: i);
-
+      final brandResults = await Future.wait(
+        List.generate(5, (i) => sl<HomeRepository>().getAllBrands(page: i + 1)),
+      );
+      for (final result in brandResults) {
         result.fold((failure) {}, (data) {
           allBrands.addAll(
             data.map(
@@ -74,7 +75,7 @@ class HomeCubit extends Cubit<HomeState> {
         });
       }
 
-      /// 6. RECOMMENDED (زي ViewModel)
+      /// 6. RECOMMENDED
       final recommended = [
         HomeProduct(
           id: 'rp1',
@@ -87,16 +88,19 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       ];
 
-      /// 7. FEATURED (API)
+      /// 7. FEATURED + CATEGORIES — fetch in parallel
       List<HomeProduct> featured = [];
-      final productsResult = await sl<HomeRepository>().getAllProducts(page: 1);
-      productsResult.fold(
+      final results = await Future.wait([
+        sl<HomeRepository>().getAllProducts(page: 1),
+      ]);
+
+      results[0].fold(
         (failure) {
           print("Failed to load products: ${failure.errMessage}");
           throw Exception(failure.errMessage);
         },
         (data) {
-          featured = data;
+          featured = List.from(data)..shuffle(Random());
         },
       );
 
@@ -113,9 +117,39 @@ class HomeCubit extends Cubit<HomeState> {
           featured: featured,
         ),
       );
+
+      /// 8. Load products for the first category if categories are not empty
+      if (categories.isNotEmpty) {
+        selectCategory(categories.first.id);
+      }
     } catch (e) {
       print("🔥 ERROR: $e");
       emit(state.copyWith(isLoading: false, error: e.toString()));
     }
+  }
+
+  Future<void> selectCategory(String categoryId) async {
+    // Only update if it's a new category or we don't have products yet
+    if (state.selectedCategoryId == categoryId && state.categoryProducts.isNotEmpty) return;
+
+    emit(state.copyWith(
+      selectedCategoryId: categoryId,
+      isCategoryProductsLoading: true,
+    ));
+
+    final result = await sl<HomeRepository>().getProductsByCategory(categoryId);
+    
+    result.fold(
+      (failure) {
+        print("Failed to load category products: ${failure.errMessage}");
+        emit(state.copyWith(isCategoryProductsLoading: false));
+      },
+      (products) {
+        emit(state.copyWith(
+          isCategoryProductsLoading: false,
+          categoryProducts: products,
+        ));
+      },
+    );
   }
 }

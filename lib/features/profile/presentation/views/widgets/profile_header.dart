@@ -34,7 +34,7 @@ class ProfileHeader extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -43,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
               child: CircleAvatar(
                 radius: 45.r,
                 backgroundImage: NetworkImage(imageUrl),
-                backgroundColor: BasicColors.grey.withOpacity(0.2),
+                backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
               ),
             ),
             Positioned(
@@ -52,7 +52,7 @@ class ProfileHeader extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(4.r),
                 decoration: BoxDecoration(
-                  color: BasicColors.buttonColorDark,
+                  color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
                   border: Border.all(color: Theme.of(context).cardColor, width: 2.w),
                 ),
@@ -69,27 +69,27 @@ class ProfileHeader extends StatelessWidget {
         BasicText(
           text: name,
           fontSize: 20.sp,
-          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+          color: Theme.of(context).colorScheme.onSurface,
           isBold: true,
         ),
         SizedBox(height: 4.h),
         BasicText(
           text: email,
           fontSize: 14.sp,
-          color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
           isBold: false,
         ),
         SizedBox(height: 12.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: const Color(0xFFE2EAF8), // Light blue background
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: BasicText(
             text: membership,
             fontSize: 12.sp,
-            color: BasicColors.buttonColorDark,
+            color: Theme.of(context).colorScheme.primary,
             isBold: true,
           ),
         ),

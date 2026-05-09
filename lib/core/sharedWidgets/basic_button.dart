@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class BasicButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -20,7 +19,7 @@ class BasicButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 44.h,
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         // التدريجة شغالة دايماً

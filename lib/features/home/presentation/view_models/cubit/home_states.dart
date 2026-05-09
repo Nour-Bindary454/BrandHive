@@ -13,6 +13,10 @@ class HomeState {
   final List<HomeProduct> recommended;
   final List<HomeProduct> featured;
 
+  final String? selectedCategoryId;
+  final List<HomeProduct> categoryProducts;
+  final bool isCategoryProductsLoading;
+
   HomeState({
     this.isLoading = false,
     this.error,
@@ -23,6 +27,9 @@ class HomeState {
     this.brands = const [],
     this.recommended = const [],
     this.featured = const [],
+    this.selectedCategoryId,
+    this.categoryProducts = const [],
+    this.isCategoryProductsLoading = false,
   });
 
   HomeState copyWith({
@@ -35,6 +42,9 @@ class HomeState {
     List<BrandModel>? brands,
     List<HomeProduct>? recommended,
     List<HomeProduct>? featured,
+    String? selectedCategoryId,
+    List<HomeProduct>? categoryProducts,
+    bool? isCategoryProductsLoading,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
@@ -46,6 +56,9 @@ class HomeState {
       brands: brands ?? this.brands,
       recommended: recommended ?? this.recommended,
       featured: featured ?? this.featured,
+      selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
+      categoryProducts: categoryProducts ?? this.categoryProducts,
+      isCategoryProductsLoading: isCategoryProductsLoading ?? this.isCategoryProductsLoading,
     );
   }
 }

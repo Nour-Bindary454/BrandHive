@@ -29,9 +29,7 @@ class TopLocalBrandsSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.color, // Dark slate
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             TextButton(
@@ -42,7 +40,7 @@ class TopLocalBrandsSection extends StatelessWidget {
                   fontFamily: 'Outfit',
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A78B8),
+                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -132,9 +130,7 @@ class TopLocalBrandsSection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                                      color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ),
@@ -148,9 +144,7 @@ class TopLocalBrandsSection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
-                          color:
-                              Theme.of(context).textTheme.bodyLarge?.color ??
-                              Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -161,7 +155,7 @@ class TopLocalBrandsSection extends StatelessWidget {
                           fontFamily: 'Poppins',
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w100,
-                          color: Colors.grey[700],
+                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

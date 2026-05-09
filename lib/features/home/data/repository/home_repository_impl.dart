@@ -65,4 +65,25 @@ class HomeRepositoryImpl implements HomeRepository {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<HomeProduct>>> getProductsByCategory(
+      String categoryId, {
+      int page = 1,
+  }) async {
+    try {
+      final response = await apiService.getData(
+        endPoint: "${EndPoints.products}?category=$categoryId&page=$page&limit=10",
+      );
+
+      final List<dynamic> data = response.data['data'] ?? [];
+      final List<HomeProduct> products = data
+          .map((p) => HomeProduct.fromJson(p))
+          .toList();
+
+      return right(products);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

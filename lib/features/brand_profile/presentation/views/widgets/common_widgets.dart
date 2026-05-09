@@ -12,7 +12,7 @@ class RatingWidget extends StatelessWidget {
     super.key,
     required this.rating,
     this.reviewCount,
-    this.starColor = const Color(0xFFFFC107), // Amber
+    this.starColor = const Color(0xFFFFC107),
     this.textStyle,
   });
 
@@ -31,8 +31,8 @@ class RatingWidget extends StatelessWidget {
           SizedBox(width: 4.w),
           Text(
             '($reviewCount reviews)',
-            style: textStyle?.copyWith(color: Colors.grey) ?? 
-                TextStyle(color: Colors.grey, fontSize: 12.sp),
+            style: textStyle?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)) ?? 
+                TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), fontSize: 12.sp),
           ),
         ],
       ],
@@ -57,10 +57,10 @@ class FollowButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isFollowed ? Colors.white : const Color(0xFF2B4C7E),
-          foregroundColor: isFollowed ? const Color(0xFF2B4C7E) : Colors.white,
+          backgroundColor: isFollowed ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.primary,
+          foregroundColor: isFollowed ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onPrimary,
           elevation: 0,
-          side: isFollowed ? const BorderSide(color: Color(0xFFE0E0E0)) : null,
+          side: isFollowed ? BorderSide(color: Theme.of(context).dividerColor) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.r),
           ),
@@ -83,7 +83,7 @@ class AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFF2B4C7E), // Deep Blue
+      color: Theme.of(context).colorScheme.primary,
       shape: const CircleBorder(),
       elevation: 2,
       child: InkWell(
@@ -91,7 +91,7 @@ class AddToCartButton extends StatelessWidget {
         onTap: onPressed,
         child: Padding(
           padding: EdgeInsets.all(8.0.r),
-          child: Icon(Icons.add, color: Colors.white, size: 20.sp),
+          child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary, size: 20.sp),
         ),
       ),
     );

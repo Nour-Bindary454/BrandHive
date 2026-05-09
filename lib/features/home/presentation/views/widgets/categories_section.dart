@@ -6,11 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CategoriesSection extends StatelessWidget {
   final List<CategoryModel> categories;
   final Function(CategoryModel category) onCategoryTap;
+  final String? selectedCategoryId;
 
   const CategoriesSection({
     Key? key,
     required this.categories,
     required this.onCategoryTap,
+    this.selectedCategoryId,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class CategoriesSection extends StatelessWidget {
             fontSize: 20.sp,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.5,
-            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         SizedBox(height: 16.h),
@@ -37,6 +39,7 @@ class CategoriesSection extends StatelessWidget {
             separatorBuilder: (context, index) => SizedBox(width: 16.w),
             itemBuilder: (context, index) {
               final category = categories[index];
+              final isSelected = selectedCategoryId == category.id;
               return InkWell(
                 onTap: () => onCategoryTap(category),
                 borderRadius: BorderRadius.circular(16.r),
@@ -47,6 +50,12 @@ class CategoriesSection extends StatelessWidget {
                       height: 70.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.r),
+                        border: isSelected
+                            ? Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                                width: 2.5.w,
+                              )
+                            : null,
                         image: DecorationImage(
                           image: NetworkImage(
                             category.logoUrl ??
@@ -56,7 +65,7 @@ class CategoriesSection extends StatelessWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                             blurRadius: 5.r,
                             offset: Offset(0, 2),
                           ),
@@ -68,8 +77,10 @@ class CategoriesSection extends StatelessWidget {
                       category.name,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        fontWeight: FontWeight.w300,
-                        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.w300,
+                        color: isSelected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurface,
                         fontFamily: 'Poppins',
                       ),
                     ),

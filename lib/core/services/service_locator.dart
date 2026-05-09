@@ -5,6 +5,7 @@ import 'package:brand/features/login/presentation/viewsModel/login_cubit.dart';
 import 'package:brand/features/brand_profile/data/repository/brand_profile_repo.dart';
 import 'package:brand/features/brand_profile/data/repository/brand_profile_repo_impl.dart';
 import 'package:brand/features/brand_profile/presentation/view_models/brand_profile_cubit.dart';
+import 'package:brand/features/category/presentation/view_models/category_cubit.dart';
 
 import 'package:brand/features/resetPassword/viewsModel/change_pass_cubit.dart';
 
@@ -80,5 +81,6 @@ void setup() {
   sl.registerFactory(() => ChangePassCubit(sl()));
   sl.registerFactory<ExploreCubit>(() => ExploreCubit());
   sl.registerFactory<BrandProfileCubit>(() => BrandProfileCubit());
+  sl.registerFactory<CategoryCubit>(() => CategoryCubit());
   sl.registerFactory(() => WishlistCubit(sl()));
 }

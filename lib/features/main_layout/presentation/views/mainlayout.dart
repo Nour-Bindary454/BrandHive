@@ -41,9 +41,9 @@ class Mainlayout extends StatelessWidget {
                 elevation: 0,
                 selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 type: BottomNavigationBarType.fixed,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                selectedItemColor: BasicColors.linearGradientDark,
-                unselectedItemColor: BasicColors.grey,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                selectedItemColor: Theme.of(context).colorScheme.primary,
+                unselectedItemColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
                 currentIndex: currentIndex,
                 onTap: (index) {
                   context.read<LayoutCubit>().changeIndex(index);

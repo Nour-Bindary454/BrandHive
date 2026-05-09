@@ -1,4 +1,5 @@
 import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/core/theme/app_theme.dart';
 import 'package:brand/features/brand_profile/presentation/views/brand_profile_screen.dart';
 import 'package:brand/features/forgetPassword/presentaion/views/forget_password.dart';
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
@@ -83,49 +84,8 @@ class MyApp extends StatelessWidget {
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,
                 themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
-                theme: ThemeData.light().copyWith(
-                  scaffoldBackgroundColor: Colors.white,
-                  appBarTheme: const AppBarTheme(
-                    backgroundColor: Colors.white,
-                    iconTheme: IconThemeData(color: Colors.black),
-                    titleTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    elevation: 0,
-                  ),
-                  colorScheme: const ColorScheme.light(
-                    primary: Color(0xFF4A78B8),
-                    surface: Colors.white,
-                  ),
-                  textTheme: const TextTheme(
-                    bodyLarge: TextStyle(color: Colors.black),
-                    bodyMedium: TextStyle(color: Colors.black87),
-                  ),
-                ),
-                darkTheme: ThemeData.dark().copyWith(
-                  scaffoldBackgroundColor: const Color(0xFF121212),
-                  cardColor: const Color(0xFF1E1E1E),
-                  appBarTheme: const AppBarTheme(
-                    backgroundColor: Color(0xFF121212),
-                    iconTheme: IconThemeData(color: Colors.white),
-                    titleTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    elevation: 0,
-                  ),
-                  colorScheme: const ColorScheme.dark(
-                    primary: Color(0xFF4A78B8),
-                    surface: Color(0xFF1E1E1E),
-                  ),
-                  textTheme: const TextTheme(
-                    bodyLarge: TextStyle(color: Colors.white),
-                    bodyMedium: TextStyle(color: Colors.white70),
-                  ),
-                ),
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
                 initialRoute: '/',
                 routes: {
                   '/': (context) => Splash(),
@@ -143,7 +103,6 @@ class MyApp extends StatelessWidget {
                   ),
 
                   '/brandProfile': (context) => BrandProfileScreen(),
-                  '/forgetPassword': (context) => ForgetPassword(),
 
                   '/home': (context) => BlocProvider(
                     create: (context) => sl<HomeCubit>()..loadHomeData(),

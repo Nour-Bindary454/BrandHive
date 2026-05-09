@@ -36,7 +36,7 @@ class ProductDetailsScreen extends StatelessWidget {
                               product.image,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) => Container(
-                                color: Colors.grey[200],
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                                 child: const Icon(Icons.image_not_supported, size: 50),
                               ),
                             ),
@@ -54,7 +54,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.1),
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                                 blurRadius: 10.r,
                               ),
                             ],
@@ -73,7 +73,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.1),
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                               blurRadius: 10.r,
                             ),
                           ],
@@ -102,7 +102,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xff64748B),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           letterSpacing: 1.5,
                         ),
                       ),
@@ -115,7 +115,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                           height: 1.2,
                         ),
                       ),
@@ -131,7 +131,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -139,7 +139,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             '(120 Reviews)',
                             style: TextStyle(
                               fontSize: 14.sp,
-                              color: Colors.grey[600],
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                             ),
                           ),
                         ],
@@ -153,7 +153,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -165,7 +165,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Poppins',
                           fontSize: 14.sp,
                           height: 1.5,
-                          color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey[700],
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
                         ),
                       ),
                       SizedBox(height: 100.h), // Space for bottom bar
@@ -187,7 +187,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
-                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                     offset: const Offset(0, -4),
                     blurRadius: 16.r,
                   ),
@@ -206,7 +206,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         'total_price'.tr(),
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: Colors.grey[600],
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -216,7 +216,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             TextSpan(
                               text: '${product.price.toInt()} ',
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
                                 fontFamily: 'Outfit',
@@ -225,7 +225,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             TextSpan(
                               text: product.currency,
                               style: TextStyle(
-                                color: Colors.grey[600],
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -242,17 +242,17 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).colorScheme.primary : BasicColors.black,
+                        color: Theme.of(context).colorScheme.primary,
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 20.sp),
+                          Icon(Icons.shopping_bag_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 20.sp),
                           SizedBox(width: 8.w),
                           Text(
                             'add_to_cart'.tr(),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Outfit',

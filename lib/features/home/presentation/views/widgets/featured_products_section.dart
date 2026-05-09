@@ -34,7 +34,7 @@ class FeaturedProductsSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             TextButton(
@@ -45,7 +45,7 @@ class FeaturedProductsSection extends StatelessWidget {
                   fontFamily: 'Outfit',
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A78B8),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -74,12 +74,12 @@ class FeaturedProductsSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.05),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                       blurRadius: 10.r,
                       offset: Offset(0, 4),
                     ),
                   ],
-                  border: Border.all(color: Colors.grey.shade100),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,12 +141,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.w800,
-                                    color: const Color.fromARGB(
-                                      255,
-                                      88,
-                                      123,
-                                      160,
-                                    ),
+                                    color: Theme.of(context).colorScheme.primary,
                                     letterSpacing: 0.5,
                                   ),
                                 ),
@@ -163,7 +158,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.orange[700],
+                                        color: Colors.orange,
                                       ),
                                     ),
                                   ],
@@ -177,7 +172,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 height: 1.2.h,
                               ),
                               maxLines: 2,
@@ -206,7 +201,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 8.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Colors.grey,
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                       ),
                                     ),
                                   ],
@@ -216,13 +211,13 @@ class FeaturedProductsSection extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.all(4.r),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF2C5A9C), // Dark blue
+                                      color: Theme.of(context).colorScheme.primary,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.add,
                                       size: 16.sp,
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                     ),
                                   ),
                                 ),

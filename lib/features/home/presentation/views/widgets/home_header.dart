@@ -21,7 +21,7 @@ class HomeHeader extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: BasicColors.linearGradientLight.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
               width: 8.w,
             ),
           ),
@@ -38,7 +38,7 @@ class HomeHeader extends StatelessWidget {
               Text(
                 user.greeting,
                 style: TextStyle(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                 ),
@@ -48,7 +48,7 @@ class HomeHeader extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.sp,
 
-                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontFamily: 'Outfit',
                 ),
               ),

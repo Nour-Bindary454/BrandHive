@@ -74,7 +74,9 @@ class HomeScreen extends StatelessWidget {
                         ],
 
                         /// 2. Search
-                        CusSearchBar(hintText: 'search_local_brands'.tr().tr().tr()),
+                        CusSearchBar(
+                          hintText: 'search_local_brands'.tr().tr().tr(),
+                        ),
                         SizedBox(height: 20.h),
 
                         /// 3. Banner
