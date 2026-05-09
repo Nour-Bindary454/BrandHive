@@ -29,12 +29,12 @@ class ProfileHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: BasicColors.white,
+                  color: Theme.of(context).cardColor,
                   width: 3.w,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -54,11 +54,11 @@ class ProfileHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: BasicColors.buttonColorDark,
                   shape: BoxShape.circle,
-                  border: Border.all(color: BasicColors.white, width: 2.w),
+                  border: Border.all(color: Theme.of(context).cardColor, width: 2.w),
                 ),
                 child: Icon(
                   Icons.settings_outlined,
-                  color: BasicColors.white,
+                  color: Theme.of(context).cardColor,
                   size: 16.sp,
                 ),
               ),
@@ -69,14 +69,14 @@ class ProfileHeader extends StatelessWidget {
         BasicText(
           text: name,
           fontSize: 20.sp,
-          color: BasicColors.black,
+          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           isBold: true,
         ),
         SizedBox(height: 4.h),
         BasicText(
           text: email,
           fontSize: 14.sp,
-          color: BasicColors.grey,
+          color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
           isBold: false,
         ),
         SizedBox(height: 12.h),

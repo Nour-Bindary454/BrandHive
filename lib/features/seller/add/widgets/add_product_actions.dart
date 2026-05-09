@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class AddProductActions extends StatelessWidget {
                 ),
               ),
               child: BasicText(
-                text: 'Cancel',
+                text: 'cancel'.tr().tr(),
                 fontSize: 14,
                 color: const Color(0xFF2D4373),
                 isBold: true,
@@ -42,7 +43,7 @@ class AddProductActions extends StatelessWidget {
                 elevation: 0,
               ),
               child: BasicText(
-                text: 'Publish Product',
+                text: 'publish_product'.tr().tr(),
                 fontSize: 14,
                 color: Colors.white,
                 isBold: true,

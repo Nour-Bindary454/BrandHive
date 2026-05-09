@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
@@ -34,7 +33,7 @@ class AllProductsScreen extends StatelessWidget {
             fontFamily: 'Outfit',
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
-            color: Theme.of(context).textTheme.bodyLarge?.color,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           ),
         ),
       ),

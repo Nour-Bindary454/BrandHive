@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/orderSuccess/widgets/items_ordered_card.dart';
@@ -39,21 +40,21 @@ class OrderSuccess extends StatelessWidget {
               
               // Titles
               BasicText(
-                text: 'Order Placed !',
+                text: 'order_placed'.tr().tr(),
                 fontSize: 24,
                 color: Color(0xFF2D4373), // Dark Blue
                 isBold: true,
               ),
               SizedBox(height: 10.h),
               BasicText(
-                text: 'Thank you for your purchase.',
+                text: 'thank_you_for_your_purchase'.tr().tr(),
                 fontSize: 14,
                 color: Colors.grey.shade800,
                 isBold: false, 
               ),
               SizedBox(height: 5.h),
               BasicText(
-                text: 'Order #EGY-8839201 confirmed',
+                text: 'order_egy_8839201_confirmed'.tr().tr(),
                 fontSize: 12,
                 color: Colors.grey.shade500,
                 isBold: false, 
@@ -95,7 +96,7 @@ class OrderSuccess extends StatelessWidget {
               
               // Continue Shopping Filled Button
               BasicButton(
-                text: 'Continue Shopping',
+                text: 'continue_shopping'.tr().tr(),
                 colors: const [Color(0xFF2D4373)],
                 radius: 25.r,
                 onPressed: () {},

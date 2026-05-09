@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
@@ -28,7 +29,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     return BlocProvider(
       create: (_) => sl<ChangePassCubit>(),
       child: Scaffold(
-        backgroundColor: BasicColors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -57,14 +58,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                     SizedBox(height: 45.h),
 
                     BasicText(
-                      text: 'Reset Password',
+                      text: 'reset_password'.tr(),
                       fontSize: 28,
-                      color: BasicColors.black,
+                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                       isBold: true,
                     ),
 
                     BasicText(
-                      text: 'Please type something you’ll remember',
+                      text: 'please_type_something_you_ll_remember'.tr(),
                       fontSize: 12,
                       color: const Color.fromARGB(255, 28, 28, 28),
                       isBold: false,
@@ -97,15 +98,15 @@ class _ResetPasswordState extends State<ResetPassword> {
                         state is ChangePassLoading
                             ? const CircularProgressIndicator()
                             : BasicButton(
-                                text: 'Reset Password',
+                                text: 'reset_password'.tr(),
                                 colors: const [Color(0xFF2D4373)],
                                 radius: 12.r,
                                 onPressed: () {
                                   if (passwordController.text !=
                                       confirmPasswordController.text) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Passwords don't match"),
+                                      SnackBar(
+                                        content: Text('passwords_don_t_match'.tr()),
                                       ),
                                     );
                                     return;

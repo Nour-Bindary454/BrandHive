@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/add/widgets/add_product_actions.dart';
 import 'package:brand/features/seller/add/widgets/pricing_stock_section.dart';
@@ -30,7 +31,7 @@ class _AddState extends State<Add> {
               child: Row(
                 children: [
                   BasicText(
-                    text: 'Add New Product',
+                    text: 'add_new_product'.tr().tr(),
                     fontSize: 18,
                     color: const Color(0xFF0F172A),
                     isBold: true,

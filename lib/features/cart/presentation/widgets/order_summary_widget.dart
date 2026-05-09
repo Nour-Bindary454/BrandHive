@@ -3,7 +3,6 @@ import 'package:brand/features/checkout/presentation/views/checkout_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/sharedWidgets/basic_colors.dart';
 
 import '../../../checkout/data/models/order_item_model.dart';
 
@@ -21,11 +20,14 @@ class OrderSummaryWidget extends StatelessWidget {
         return Container(
           padding: EdgeInsets.all(20.r),
           decoration: BoxDecoration(
-            color: BasicColors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(24.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color:
+                    (Theme.of(context).textTheme.bodyLarge?.color ??
+                            Colors.black)
+                        .withOpacity(0.04),
                 blurRadius: 10,
                 offset: const Offset(0, -4),
               ),
@@ -39,22 +41,30 @@ class OrderSummaryWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: BasicColors.black,
+                  color:
+                      Theme.of(context).textTheme.bodyLarge?.color ??
+                      Colors.black,
                 ),
               ),
+
               SizedBox(height: 16.h),
+
               _buildSummaryRow(
+                context,
                 'Subtotal',
-                '${viewModel.subtotal.toStringAsFixed(0)} EGP',
+                '${viewModel.total.toStringAsFixed(0)} EGP',
               ),
+
               SizedBox(height: 10.h),
-              _buildSummaryRow(
-                'Shipping',
-                '${viewModel.shippingCost.toStringAsFixed(0)} EGP',
-              ),
+
+              _buildSummaryRow(context, 'Shipping', 'Free'),
+
               SizedBox(height: 16.h),
+
               const Divider(color: Color(0xFFEEEEEE)),
+
               SizedBox(height: 16.h),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -63,7 +73,9 @@ class OrderSummaryWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
-                      color: BasicColors.black,
+                      color:
+                          Theme.of(context).textTheme.bodyLarge?.color ??
+                          Colors.black,
                     ),
                   ),
                   Text(
@@ -71,12 +83,14 @@ class OrderSummaryWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w900,
-                      color: const Color(0xFF2B3A5A), // Similar to design
+                      color: const Color(0xFF2B3A5A),
                     ),
                   ),
                 ],
               ),
+
               SizedBox(height: 24.h),
+
               SizedBox(
                 width: double.infinity,
                 height: 52.h,
@@ -84,8 +98,7 @@ class OrderSummaryWidget extends StatelessWidget {
                   onPressed: viewModel.isLoading
                       ? null
                       : () {
-                          // Map Cart models to Order item models for checkout
-                          viewModel.items
+                          final orderItems = viewModel.items
                               .map(
                                 (e) => OrderItemModel(
                                   id: e.id,
@@ -97,9 +110,6 @@ class OrderSummaryWidget extends StatelessWidget {
                               )
                               .toList();
 
-                          // Initialize Checkout Feature state
-
-                          // Navigate to step 1
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -119,7 +129,7 @@ class OrderSummaryWidget extends StatelessWidget {
                           height: 24.h,
                           width: 24.h,
                           child: CircularProgressIndicator(
-                            color: BasicColors.white,
+                            color: Theme.of(context).cardColor,
                           ),
                         )
                       : Text(
@@ -127,11 +137,12 @@ class OrderSummaryWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
-                            color: BasicColors.white,
+                            color: Theme.of(context).cardColor,
                           ),
                         ),
                 ),
               ),
+
               SizedBox(height: MediaQuery.of(context).padding.bottom + 8.h),
             ],
           ),
@@ -140,7 +151,7 @@ class OrderSummaryWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(String title, String value) {
+  Widget _buildSummaryRow(BuildContext context, String title, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -156,7 +167,7 @@ class OrderSummaryWidget extends StatelessWidget {
           value,
           style: TextStyle(
             fontSize: 14.sp,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),

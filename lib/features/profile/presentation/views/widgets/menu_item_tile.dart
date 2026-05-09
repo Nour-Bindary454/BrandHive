@@ -28,14 +28,14 @@ class MenuItemTile extends StatelessWidget {
             Icon(
               item.icon,
               size: 24.sp,
-              color: BasicColors.black.withOpacity(0.8),
+              color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.8),
             ),
             SizedBox(width: 16.w),
             Expanded(
               child: BasicText(
                 text: item.title,
                 fontSize: 14.sp,
-                color: BasicColors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold: true,
               ),
             ),
@@ -58,7 +58,7 @@ class MenuItemTile extends StatelessWidget {
                   isBold: true,
                 ),
               ),
-            Icon(Icons.chevron_right, size: 20.sp, color: BasicColors.grey),
+            Icon(Icons.chevron_right, size: 20.sp, color: Theme.of(context).textTheme.bodyMedium?.color),
           ],
         ),
       ),

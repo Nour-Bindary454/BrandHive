@@ -41,7 +41,7 @@ class Mainlayout extends StatelessWidget {
                 elevation: 0,
                 selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 type: BottomNavigationBarType.fixed,
-                backgroundColor: BasicColors.white,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 selectedItemColor: BasicColors.linearGradientDark,
                 unselectedItemColor: BasicColors.grey,
                 currentIndex: currentIndex,

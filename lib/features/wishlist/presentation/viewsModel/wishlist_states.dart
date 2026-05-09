@@ -1,19 +1,21 @@
-part of 'wishlist_cubit.dart';
+import 'package:brand/features/wishlist/data/model/wishlist_model.dart';
 
 abstract class WishlistState {}
 
 class WishlistInitial extends WishlistState {}
 
-class AddWishlistLoading extends WishlistState {}
+class WishlistUpdatedState extends WishlistState {}
 
-class AddWishlistSuccess extends WishlistState {
+class WishlistLoading extends WishlistState {}
+
+class WishlistSuccess extends WishlistState {
   final WishlistModel wishlist;
 
-  AddWishlistSuccess(this.wishlist);
+  WishlistSuccess(this.wishlist);
 }
 
-class AddWishlistError extends WishlistState {
+class WishlistError extends WishlistState {
   final String error;
 
-  AddWishlistError(this.error);
+  WishlistError(this.error);
 }

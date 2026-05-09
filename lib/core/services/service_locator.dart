@@ -35,6 +35,9 @@ import '../../features/resetPassword/data/repository/chang_pass_repo_impl.dart';
 import '../../features/explore/data/repository/explore_repo.dart';
 import '../../features/explore/data/repository/explore_repo_impl.dart';
 import '../../features/explore/presentaion/viewsModel/explore_cubit.dart';
+import '../../features/wishlist/data/repository/wishlist_repo.dart';
+import '../../features/wishlist/data/repository/wishlist_repo_impl.dart';
+import '../../features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -63,6 +66,9 @@ void setup() {
   sl.registerLazySingleton<BrandProfileRepository>(
     () => BrandProfileRepositoryImpl(sl<ApiService>()),
   );
+  sl.registerLazySingleton<WishlistRepository>(
+    () => WishlistRepositoryImpl(sl()),
+  );
 
   // 🔹 Cubits
   sl.registerFactory(() => RegisterCubit(sl()));
@@ -74,4 +80,5 @@ void setup() {
   sl.registerFactory(() => ChangePassCubit(sl()));
   sl.registerFactory<ExploreCubit>(() => ExploreCubit());
   sl.registerFactory<BrandProfileCubit>(() => BrandProfileCubit());
+  sl.registerFactory(() => WishlistCubit(sl()));
 }

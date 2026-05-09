@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/products/widgets/card.dart';
@@ -15,7 +16,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -24,9 +25,9 @@ class _ProductsState extends State<Products> {
             children: [
               SizedBox(height: 20.h),
               BasicText(
-                text: 'My Products',
+                text: 'my_products'.tr().tr(),
                 fontSize: 20,
-                color: BasicColors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold: true,
               ),
               SizedBox(height: 20.h),

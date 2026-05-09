@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
@@ -110,7 +111,7 @@ class _SignupState extends State<Signup> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BasicText(
-                        text: 'Already have an account?',
+                        text: 'already_have_an_account'.tr().tr(),
                         fontSize: 14.sp,
                         isBold: false,
                         color: BasicColors.linearGradientDark,

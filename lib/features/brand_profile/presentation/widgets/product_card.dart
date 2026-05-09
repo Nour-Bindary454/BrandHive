@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/models/product_model.dart';
 
 import 'package:brand/features/product_details/presentation/views/product_details_screen.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -38,7 +39,9 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
+              color:
+                  (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
+                      .withOpacity(0.1),
               blurRadius: 16.r,
               offset: Offset(0, 4),
             ),
@@ -90,21 +93,11 @@ class ProductCard extends StatelessWidget {
                     child: Material(
                       color: Theme.of(context).cardColor.withValues(alpha: 0.9),
                       shape: const CircleBorder(),
-                      child: InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: onFavoritePressed,
-                        child: Padding(
-                          padding: EdgeInsets.all(6.0.r),
-                          child: Icon(
-                            product.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            size: 18.sp,
-                            color: product.isFavorite
-                                ? Colors.red
-                                : Colors.grey,
-                          ),
-                        ),
+                      child: FavoriteButton(
+                        productId: product.id,
+                        initialIsFavorite: product.isFavorite,
+                        size: 18.sp,
+                        padding: EdgeInsets.all(6.0.r),
                       ),
                     ),
                   ),
@@ -144,7 +137,9 @@ class ProductCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          color:
+                              Theme.of(context).textTheme.bodyLarge?.color ??
+                              Colors.black,
                           height: 1.2.h,
                         ),
                       ),
@@ -168,9 +163,13 @@ class ProductCard extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: '${product.price.toInt()} ',
-                                style: TextStyle(
-                                  color: Theme.of(context).textTheme.bodyLarge?.color,
-                                  fontWeight: FontWeight.bold,
+                              style: TextStyle(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge?.color ??
+                                    Colors.black,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16.sp,
                               ),
                             ),

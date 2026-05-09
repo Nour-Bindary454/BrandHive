@@ -43,9 +43,11 @@ class Explore extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BasicText(
-                          text: 'explore'.tr(),
+                          text: 'explore'.tr().tr().tr(),
                           fontSize: 24,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
+                          color:
+                              Theme.of(context).textTheme.bodyLarge?.color ??
+                              BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 10.h),
@@ -55,7 +57,7 @@ class Explore extends StatelessWidget {
                             Container(
                               width: 0.8.sw,
                               child: CusSearchBar(
-                                hintText: 'search_products'.tr(),
+                                hintText: 'search_products'.tr().tr().tr(),
                               ),
                             ),
                             GestureDetector(
@@ -104,7 +106,9 @@ class Explore extends StatelessWidget {
                         BasicText(
                           text: "collections".tr(),
                           fontSize: 18,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
+                          color:
+                              Theme.of(context).textTheme.bodyLarge?.color ??
+                              BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 10.h),
@@ -122,7 +126,11 @@ class Explore extends StatelessWidget {
                             BasicText(
                               text: ' ${'trending_now'.tr()}',
                               fontSize: 18,
-                              color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
+                              color:
+                                  Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color ??
+                                  BasicColors.black,
                               isBold: true,
                             ),
                           ],
@@ -142,14 +150,16 @@ class Explore extends StatelessWidget {
                         SizedBox(height: 20.h),
                         //Browse All Categories
                         BasicText(
-                          text: 'browse_all_categories'.tr(),
+                          text: 'browse_all_categories'.tr().tr().tr(),
                           fontSize: 18,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
+                          color:
+                              Theme.of(context).textTheme.bodyLarge?.color ??
+                              BasicColors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 20.h),
                         //containers
-                        BrowseAllCat(),
+                        // BrowseAllCat(),
                         SizedBox(height: 20.h),
 
                         const SubcategoryTabs(),
@@ -161,9 +171,13 @@ class Explore extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 BasicText(
-                                  text: 'all_products'.tr(),
+                                  text: 'all_products'.tr().tr().tr(),
                                   fontSize: 18,
-                                  color: Theme.of(context).textTheme.bodyLarge?.color ?? BasicColors.black,
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color ??
+                                      BasicColors.black,
                                   isBold: true,
                                 ),
                                 Row(
@@ -216,8 +230,8 @@ class Explore extends StatelessWidget {
                                 child: Text("Error: ${state.error}"),
                               );
                             } else if (state.products.isEmpty) {
-                              return const Center(
-                                child: Text("No products found"),
+                              return Center(
+                                child: Text('no_products_found'.tr()),
                               );
                             }
 

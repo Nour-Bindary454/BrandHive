@@ -16,7 +16,7 @@ class _CusSearchBarState extends State<CusSearchBar> {
       height: 45.h,
 
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
@@ -31,8 +31,8 @@ class _CusSearchBarState extends State<CusSearchBar> {
       child: TextField(
         decoration: InputDecoration(
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: BasicColors.grey),
-          prefixIcon: Icon(Icons.search, color: BasicColors.grey),
+          hintStyle: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+          prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodyMedium?.color),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
         ),

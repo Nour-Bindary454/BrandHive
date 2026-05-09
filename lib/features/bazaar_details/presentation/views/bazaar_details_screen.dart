@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../viewmodels/bazaar_details_viewmodel.dart';
@@ -35,7 +36,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: AnimatedBuilder(
         animation: _viewModel,
         builder: (context, _) {
@@ -58,7 +59,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                   ElevatedButton(
                     onPressed: () =>
                         _viewModel.fetchBazaarDetails(widget.bazaarId),
-                    child: const Text('Try Again'),
+                    child: Text('try_again'.tr()),
                   ),
                 ],
               ),
@@ -98,11 +99,11 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                             vertical: 14.h,
                           ),
                           decoration: BoxDecoration(
-                            color: BasicColors.white,
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(20.r),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.08),
+                                color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.08),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -115,7 +116,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                                 text: details.title,
                                 fontSize: 20.sp,
                                 fontFamily: 'Outfit',
-                                color: BasicColors.black,
+                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                                 isBold: true,
                               ),
                               SizedBox(height: 5.h),
@@ -123,7 +124,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                               BasicText(
                                 text: details.description,
                                 fontSize: 13.sp,
-                                color: BasicColors.grey,
+                                color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
                                 isBold: false,
                               ),
 
@@ -131,7 +132,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.location_on_outlined,
-                                title: 'Location',
+                                title: 'location'.tr().tr(),
                                 subtitle: details.location.split('\n')[0],
                                 thirdLine: details.location.contains('\n')
                                     ? details.location.split('\n')[1]
@@ -142,7 +143,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.phone_outlined,
-                                title: 'Contact',
+                                title: 'contact'.tr().tr(),
                                 subtitle: details.phone,
                               ),
 
@@ -150,7 +151,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.access_time_outlined,
-                                title: 'Hours',
+                                title: 'hours'.tr().tr(),
                                 subtitle: details.time,
                               ),
                             ],
@@ -170,21 +171,21 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (details.upcomingDates.isNotEmpty) ...[
-                        const BazaarSectionTitle(title: 'Upcoming Dates'),
+                        BazaarSectionTitle(title: 'upcoming_dates'.tr().tr()),
                         ...details.upcomingDates.map(
                           (date) => _buildDateCard(date),
                         ),
                       ],
 
                       if (details.participatingBrands.isNotEmpty) ...[
-                        const BazaarSectionTitle(title: 'Participating Brands'),
+                        BazaarSectionTitle(title: 'participating_brands'.tr().tr()),
                         ...details.participatingBrands.map(
                           (brand) => _buildBrandCard(brand),
                         ),
                       ],
 
                       if (details.eventHighlights.isNotEmpty) ...[
-                        const BazaarSectionTitle(title: 'Event Highlights'),
+                        BazaarSectionTitle(title: 'event_highlights'.tr().tr()),
                         Wrap(
                           spacing: 8.w,
                           runSpacing: 8.h,
@@ -213,7 +214,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFFFD166), width: 1.5.w),
       ),
@@ -226,14 +227,14 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
               BasicText(
                 text: date.dateRange,
                 fontSize: 14.sp,
-                color: BasicColors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold: true,
               ),
               SizedBox(height: 4.h),
               BasicText(
                 text: date.fullDateString,
                 fontSize: 12.sp,
-                color: BasicColors.grey,
+                color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
                 isBold: false,
               ),
             ],
@@ -277,7 +278,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
           BasicText(
             text: brand.name,
             fontSize: 14.sp,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             isBold: true,
           ),
           if (brand.isFeatured)
@@ -288,9 +289,9 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: BasicText(
-                text: 'Featured',
+                text: 'featured'.tr().tr(),
                 fontSize: 10.sp,
-                color: BasicColors.white,
+                color: Theme.of(context).cardColor,
                 isBold: true,
               ),
             ),
@@ -303,14 +304,14 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(color: BasicColors.grey.withOpacity(0.2)),
+        border: Border.all(color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black).withOpacity(0.2)),
       ),
       child: BasicText(
         text: text,
         fontSize: 12.sp,
-        color: BasicColors.black,
+        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
         isBold: true,
       ),
     );

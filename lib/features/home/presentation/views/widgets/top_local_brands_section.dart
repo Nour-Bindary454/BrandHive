@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +29,9 @@ class TopLocalBrandsSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(context).textTheme.bodyLarge?.color, // Dark slate
+                color: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.color, // Dark slate
               ),
             ),
             TextButton(
@@ -49,7 +50,7 @@ class TopLocalBrandsSection extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         SizedBox(
-          height: 130.h, // Container for cards
+          height: 160.h, // Container for cards
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: brands.length,
@@ -59,93 +60,114 @@ class TopLocalBrandsSection extends StatelessWidget {
               return InkWell(
                 onTap: () => onBrandTap(brand),
                 // borderRadius: BorderRadius.circular(16.r),
-                child: Column(
-                  children: [
-                    // Image and logo stack
-                    Stack(
-                      clipBehavior: Clip.none,
-                      // alignment: Alignment.bottomCenter,
-                      children: [
-                        CircleAvatar(
-                          radius: 40.r,
-                          backgroundImage: NetworkImage(brand.logoUrl),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle, // Make it circular
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2.w,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 4.r,
-                                  offset: Offset(0, 2),
+                child: SizedBox(
+                  width: 85.w,
+                  child: Column(
+                    children: [
+                      // Image and logo stack
+                      Stack(
+                        clipBehavior: Clip.none,
+                        // alignment: Alignment.bottomCenter,
+                        children: [
+                          CircleAvatar(
+                            radius: 40.r,
+                            backgroundImage: NetworkImage(brand.logoUrl),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle, // Make it circular
+                                border: Border.all(
+                                  color: Theme.of(context).cardColor,
+                                  width: 2.w,
                                 ),
-                              ],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        (Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color ??
+                                                Colors.black)
+                                            .withOpacity(0.1),
+                                    blurRadius: 4.r,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
 
-                        // Small Circular Logo overlapping bottom edge
-                        Positioned(
-                          bottom: -12.h,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            width: 30.w,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              shape: BoxShape.circle,
-                              border: Border.all(
+                          // Small Circular Logo overlapping bottom edge
+                          Positioned(
+                            bottom: -12.h,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              width: 30.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
                                 color: Theme.of(context).cardColor,
-                                width: 2.w,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 4.r,
-                                  offset: Offset(0, 2),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Theme.of(context).cardColor,
+                                  width: 2.w,
                                 ),
-                              ],
-                            ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        (Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color ??
+                                                Colors.black)
+                                            .withOpacity(0.1),
+                                    blurRadius: 4.r,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
 
-                            child: Center(
-                              child: Text(
-                                brand.name.isNotEmpty ? brand.name[0].toUpperCase() : '',
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                              child: Center(
+                                child: Text(
+                                  brand.name.isNotEmpty
+                                      ? brand.name[0].toUpperCase()
+                                      : '',
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge?.color,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                      SizedBox(height: 15.h),
+                      Text(
+                        brand.name,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).textTheme.bodyLarge?.color ??
+                              Colors.black,
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 15.h),
-                    Text(
-                      brand.name,
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      brand.description,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.grey[700],
+                      Text(
+                        brand.description,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.grey[700],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

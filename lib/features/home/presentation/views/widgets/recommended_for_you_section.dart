@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 
 class RecommendedForYouSection extends StatelessWidget {
   final List<HomeProduct> products;
@@ -32,7 +32,7 @@ class RecommendedForYouSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(context).textTheme.bodyLarge?.color,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               ),
             ),
           ],
@@ -101,7 +101,9 @@ class RecommendedForYouSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Theme.of(context).textTheme.bodyLarge?.color,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -150,7 +152,9 @@ class RecommendedForYouSection extends StatelessWidget {
                                         fontFamily: 'Poppins',
                                         fontSize: 17.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge?.color,
                                       ),
                                     ),
                                     SizedBox(width: 2.w),
@@ -177,17 +181,17 @@ class RecommendedForYouSection extends StatelessWidget {
 
                       SizedBox(width: 12.w),
 
-                      // 🔸 Star
+                      // 🔸 Favorite Button
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.grey.shade300),
                         ),
-                        padding: EdgeInsets.all(5.r),
-                        child: Icon(
-                          Icons.star_border,
+                        child: FavoriteButton(
+                          productId: product.id,
+                          initialIsFavorite: false,
                           size: 18.sp,
-                          color: Theme.of(context).iconTheme.color,
+                          padding: EdgeInsets.all(5.r),
                         ),
                       ),
                     ],

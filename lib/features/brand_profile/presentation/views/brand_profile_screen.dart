@@ -88,7 +88,7 @@ class BrandProfileScreen extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                                   ),
                                 ),
                                 SizedBox(width: 6.w),

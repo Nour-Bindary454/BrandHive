@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/orders/widgets/management_order_card.dart';
 import 'package:brand/features/seller/orders/widgets/order_status.dart';
@@ -26,7 +27,7 @@ class _OrdersState extends State<Orders> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: BasicText(
-                text: 'Orders Management',
+                text: 'orders_management'.tr().tr(),
                 fontSize: 18,
                 color: const Color(0xFF0F172A),
                 isBold: true,

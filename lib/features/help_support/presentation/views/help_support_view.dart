@@ -80,11 +80,11 @@ class _HelpSupportViewState extends State<HelpSupportView> {
                 Container(
                   padding: EdgeInsets.all(20.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.03),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -178,7 +178,7 @@ class _HelpSupportViewState extends State<HelpSupportView> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: const Color(0xFFE5E7EB), width: 1),
       ),

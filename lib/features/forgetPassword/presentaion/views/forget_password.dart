@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
@@ -28,7 +29,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
         padding: EdgeInsets.only(
@@ -45,7 +46,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             BasicText(
               text: "Forget Password?",
               fontSize: 32.sp,
-              color: Colors.black,
+              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               isBold: true,
             ),
             SizedBox(height: 10.h),
@@ -57,13 +58,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   BasicText(
                     text: "Don’t worry! It happens. Please enter the email",
                     fontSize: 11.5.sp,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                     isBold: false,
                   ),
                   BasicText(
                     text: "associated with your account.",
                     fontSize: 12.sp,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                     isBold: false,
                   ),
                 ],
@@ -102,13 +103,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return BasicButton(
-                  text: 'Send Code',
+                  text: 'send_code'.tr().tr(),
                   onPressed: () {
                     if (_emailController.text.isNotEmpty) {
                       context.read<ForgetPasswordCubit>().forgetPassword(_emailController.text);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter an email')),
+                        SnackBar(content: Text('please_enter_an_email'.tr())),
                       );
                     }
                   },
@@ -122,7 +123,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BasicText(
-                  text: 'Remember password?',
+                  text: 'remember_password'.tr().tr(),
                   fontSize: 14.sp,
                   isBold: false,
                   color: BasicColors.linearGradientDark,

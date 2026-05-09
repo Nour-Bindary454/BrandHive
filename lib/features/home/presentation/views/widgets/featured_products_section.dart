@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 
 class FeaturedProductsSection extends StatelessWidget {
   final List<HomeProduct> products;
@@ -33,7 +34,7 @@ class FeaturedProductsSection extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Theme.of(context).textTheme.bodyLarge?.color,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               ),
             ),
             TextButton(
@@ -107,19 +108,16 @@ class FeaturedProductsSection extends StatelessWidget {
                           Positioned(
                             top: 8.h,
                             right: 8.w,
-                            child: InkWell(
-                              onTap: () => onFavoriteTap(product.id),
-                              child: Container(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: FavoriteButton(
+                                productId: product.id,
+                                initialIsFavorite: false,
+                                size: 18.sp,
                                 padding: EdgeInsets.all(6.r),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  size: 18.sp,
-                                  color: Colors.black54,
-                                ),
                               ),
                             ),
                           ),
@@ -179,7 +177,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Theme.of(context).textTheme.bodyLarge?.color,
+                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                                 height: 1.2.h,
                               ),
                               maxLines: 2,

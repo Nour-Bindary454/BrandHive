@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/add/widgets/add_product_text_field.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -14,7 +15,7 @@ class PricingStockSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Pricing & Stock',
+            text: 'pricing_stock'.tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
@@ -23,10 +24,10 @@ class PricingStockSection extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: AddProductTextField(
                   label: 'Price (EGP) *',
-                  hintText: '1200',
+                  hintText: '1200'.tr(),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -34,7 +35,7 @@ class PricingStockSection extends StatelessWidget {
               Expanded(
                 child: AddProductTextField(
                   label: 'Stock Quantity *',
-                  hintText: '6',
+                  hintText: '6'.tr(),
                   keyboardType: TextInputType.number,
                   suffixIcon: Icon(Icons.unfold_more, color: Colors.grey.shade400, size: 18.sp),
                 ),
@@ -44,7 +45,7 @@ class PricingStockSection extends StatelessWidget {
           SizedBox(height: 12.h),
           AddProductTextField(
             label: 'Cost Price (EGP) (Optional)',
-            hintText: '800',
+            hintText: '800'.tr(),
             keyboardType: TextInputType.number,
             suffixIcon: Icon(Icons.unfold_more, color: Colors.grey.shade400, size: 18.sp),
           ),

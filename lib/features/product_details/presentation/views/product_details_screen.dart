@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -53,7 +54,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.1),
                                 blurRadius: 10.r,
                               ),
                             ],
@@ -66,25 +67,22 @@ class ProductDetailsScreen extends StatelessWidget {
                     Positioned(
                       top: 50.h,
                       right: 20.w,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.1),
+                              blurRadius: 10.r,
+                            ),
+                          ],
+                        ),
+                        child: FavoriteButton(
+                          productId: product.id,
+                          initialIsFavorite: product.isFavorite,
+                          size: 22.sp,
                           padding: EdgeInsets.all(8.r),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 10.r,
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            product.isFavorite ? Icons.favorite : Icons.favorite_border,
-                            size: 22.sp,
-                            color: product.isFavorite ? Colors.red : Colors.grey,
-                          ),
                         ),
                       ),
                     ),
@@ -117,7 +115,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                           height: 1.2,
                         ),
                       ),
@@ -133,7 +131,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -155,7 +153,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           fontFamily: 'Outfit',
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -189,7 +187,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
                     offset: const Offset(0, -4),
                     blurRadius: 16.r,
                   ),
@@ -218,7 +216,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             TextSpan(
                               text: '${product.price.toInt()} ',
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.bodyLarge?.color,
+                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
                                 fontFamily: 'Outfit',

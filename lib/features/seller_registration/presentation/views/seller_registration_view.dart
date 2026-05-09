@@ -84,7 +84,7 @@ class _SellerRegistrationViewState extends State<SellerRegistrationView> {
                           width: 40.w,
                           height: 40.w,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Theme.of(context).cardColor.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -146,14 +146,14 @@ class _SellerRegistrationViewState extends State<SellerRegistrationView> {
                   child: Container(
                     margin: EdgeInsets.only(top: 24.h),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(32.r),
                         topRight: Radius.circular(32.r),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
                           blurRadius: 10,
                           offset: const Offset(0, -5),
                         ),

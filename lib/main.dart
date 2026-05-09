@@ -1,3 +1,4 @@
+import 'package:brand/core/services/dio_helper.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/my_app.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await CacheHelper.init();
+  await DioHelper.init();
   setup();
-  
+
   runApp(
     EasyLocalization(
       supportedLocales: const [
@@ -18,7 +20,8 @@ void main() async {
         Locale('de'),
         Locale('fr'),
       ],
-      path: 'assets/translations', // <-- change the path of the translation files 
+      path:
+          'assets/translations', // <-- change the path of the translation files
       fallbackLocale: const Locale('en'),
       child: const MyApp(),
     ),

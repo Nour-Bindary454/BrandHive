@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,26 +11,26 @@ class DocumentsStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
+        SectionHeader(
           stepNumber: '04',
-          title: 'Documents',
+          title: 'documents'.tr().tr(),
           icon: Icons.description_outlined,
         ),
-        _buildUploadField('National ID / Passport'),
+        _buildUploadField(context, 'National ID / Passport'),
         SizedBox(height: 16.h),
-        _buildUploadField('Commercial Register (Optional)'),
+        _buildUploadField(context, 'Commercial Register (Optional)'),
         SizedBox(height: 16.h),
-        _buildUploadField('Tax Card (Optional)'),
+        _buildUploadField(context, 'Tax Card (Optional)'),
       ],
     );
   }
 
-  Widget _buildUploadField(String title) {
+  Widget _buildUploadField(BuildContext context, String title) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: const Color(0xFFE5E5E5),

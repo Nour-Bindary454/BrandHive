@@ -51,13 +51,13 @@ class _CollectionsContainerState extends State<CollectionsContainer> {
                   BasicText(
                     text: CollectionName[index],
                     fontSize: 17,
-                    color: BasicColors.white,
+                    color: Theme.of(context).cardColor,
                     isBold: true,
                   ),
                   BasicText(
                     text: "${itemsNumber[index]} items",
                     fontSize: 15,
-                    color: BasicColors.white,
+                    color: Theme.of(context).cardColor,
                     isBold: false,
                   ),
                 ],

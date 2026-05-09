@@ -48,7 +48,7 @@ class HomeHeader extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.sp,
 
-                  color: BasicColors.black,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                   fontFamily: 'Outfit',
                 ),
               ),
@@ -60,7 +60,7 @@ class HomeHeader extends StatelessWidget {
             IconButton(
               onPressed: onNotificationTap,
               icon: Icon(Icons.notifications_none_rounded, size: 28.sp),
-              color: Colors.black87,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
             Positioned(
               right: 12.w,

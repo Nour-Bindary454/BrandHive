@@ -32,13 +32,13 @@ class CategContainer extends StatelessWidget {
             BasicText(
               text: title,
               fontSize: 14,
-              color: BasicColors.white,
+              color: Theme.of(context).cardColor,
               isBold: true,
             ),
             BasicText(
               text: discription,
               fontSize: 10,
-              color: BasicColors.white,
+              color: Theme.of(context).cardColor,
               isBold: false,
             ),
           ],

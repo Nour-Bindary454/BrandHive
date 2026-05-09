@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/add/widgets/add_product_text_field.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -21,15 +22,15 @@ class _SeoVisibilitySectionState extends State<SeoVisibilitySection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'SEO & Visibility',
+            text: 'seo_visibility'.tr().tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
           ),
           SizedBox(height: 15.h),
-          const AddProductTextField(
+          AddProductTextField(
             label: 'Tags (Comma separated)',
-            hintText: 'e.g., handmade, egyptian, kilim, rug',
+            hintText: 'e_g_handmade_egyptian_kilim_rug'.tr().tr(),
           ),
           SizedBox(height: 15.h),
           GestureDetector(
@@ -55,11 +56,11 @@ class _SeoVisibilitySectionState extends State<SeoVisibilitySection> {
                       border: Border.all(color: isPublishImmediately ? Colors.transparent : Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(2.r),
                     ),
-                    child: isPublishImmediately ? Icon(Icons.check, color: Colors.black, size: 12.sp) : const SizedBox(),
+                    child: isPublishImmediately ? Icon(Icons.check, color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black, size: 12.sp) : const SizedBox(),
                   ),
                   SizedBox(width: 10.w),
                   BasicText(
-                    text: 'Publish this product immediately',
+                    text: 'publish_this_product_immediately'.tr().tr(),
                     fontSize: 11,
                     color: const Color(0xFF0F172A),
                     isBold: true,

@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/home/data/repository/home_repo.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/home/presentation/view_models/cubit/home_states.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -22,30 +24,28 @@ class HomeCubit extends Cubit<HomeState> {
       final banner = BannerModel(
         id: '1',
         label: 'New Arrival',
-        title: 'Ramadan Collection',
-        subtitle: 'Handcrafted Lanterns & Decor',
+        title: 'ramadan_collection'.tr().tr(),
+        subtitle: 'handcrafted_lanterns_decor'.tr().tr(),
         imageUrl: 'https://placehold.co/1000x500/png',
       );
 
-      /// 3. CATEGORIES (زي ViewModel)
-      final categories = [
-        CategoryModel(
-          id: 'c1',
-          name: 'Fashion',
-          imageUrl: 'https://placehold.co/300x300/png',
-        ),
-        CategoryModel(
-          id: 'c2',
-          name: 'Home Decor',
-          imageUrl: 'https://placehold.co/300x300/png',
-        ),
-      ];
+      /// 3. CATEGORIES (from API)
+      List<CategoryModel> categories = [];
+      final categoryResult = await sl<HomeRepository>().getAllCategories();
+      categoryResult.fold(
+        (failure) {
+          print("Failed to load categories: ${failure.errMessage}");
+        },
+        (data) {
+          categories = data;
+        },
+      );
 
       /// 4. EVENTS
       final events = [
         EventModel(
           id: 'e1',
-          title: 'Cairo Artisan Bazaar',
+          title: 'cairo_artisan_bazaar'.tr().tr(),
           date: 'Dec 15-17',
           location: 'Khan El Khalili',
         ),

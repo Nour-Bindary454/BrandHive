@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,14 @@ class OverviewHeader extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w, bottom: 25.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(24.r),
           bottomRight: Radius.circular(24.r),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.01),
+            color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.01),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -35,14 +36,14 @@ class OverviewHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BasicText(
-                    text: 'Welcome back,',
+                    text: 'welcome_back'.tr().tr(),
                     fontSize: 12,
                     color: Colors.grey.shade600,
                     isBold: false,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'Nile Weavers',
+                    text: 'nile_weavers'.tr().tr(),
                     fontSize: 22,
                     color: const Color(0xFF0F172A), // Deep blue/black
                     isBold: true,
@@ -60,7 +61,7 @@ class OverviewHeader extends StatelessWidget {
                     ),
                     child: Center(
                       child: BasicText(
-                        text: 'NW',
+                        text: 'nw'.tr().tr(),
                         fontSize: 14,
                         color: const Color(0xFF4C79BD),
                         isBold: true,
@@ -72,7 +73,7 @@ class OverviewHeader extends StatelessWidget {
                     width: 44.r,
                     height: 44.r,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.grey.shade300),
                     ),
@@ -109,7 +110,7 @@ class OverviewHeader extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(6.r),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Theme.of(context).cardColor.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
                               child: ImageIcon(AssetImage(PngImages.dollar), color: Colors.white, size: 18.sp),
@@ -117,13 +118,13 @@ class OverviewHeader extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Theme.of(context).cardColor.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
                               child: Row(
                                 children: [
                                   BasicText(
-                                    text: '+12%',
+                                    text: '12'.tr().tr(),
                                     fontSize: 11,
                                     color: Colors.white,
                                     isBold: true,
@@ -140,7 +141,7 @@ class OverviewHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BasicText(
-                              text: 'Total Revenue',
+                              text: 'total_revenue'.tr().tr(),
                               fontSize: 13,
                               color: Colors.white,
                               isBold: true,
@@ -151,14 +152,14 @@ class OverviewHeader extends StatelessWidget {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 BasicText(
-                                  text: '45,200',
+                                  text: '45_200'.tr().tr(),
                                   fontSize: 24,
                                   color: Colors.white,
                                   isBold: true,
                                 ),
                                 SizedBox(width: 6.w),
                                 BasicText(
-                                  text: 'EGP',
+                                  text: 'egp'.tr().tr(),
                                   fontSize: 13,
                                   color: Colors.white.withOpacity(0.9),
                                   isBold: true,
@@ -178,12 +179,12 @@ class OverviewHeader extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(16.r),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(color: Colors.grey.shade200),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.01),
+                          color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.01),
                           blurRadius: 4,
                         )
                       ]
@@ -202,14 +203,14 @@ class OverviewHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BasicText(
-                              text: 'Active Orders',
+                              text: 'active_orders'.tr().tr(),
                               fontSize: 13,
                               color: const Color(0xFF475467),
                               isBold: true,
                             ),
                             SizedBox(height: 4.h),
                             BasicText(
-                              text: '12',
+                              text: '12'.tr().tr(),
                               fontSize: 24,
                               color: const Color(0xFF0F172A),
                               isBold: true,

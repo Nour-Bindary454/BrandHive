@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:brand/features/seller/settings/widgets/settings_text_field.dart';
@@ -14,7 +15,7 @@ class StoreInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Store Information',
+            text: 'store_information'.tr().tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,

@@ -21,17 +21,17 @@ class CustomKeyboard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildKeyboardRow(['1', '2', '3'], ['', 'ABC', 'DEF']),
+          _buildKeyboardRow(context, ['1', '2', '3'], ['', 'ABC', 'DEF']),
           SizedBox(height: 10.h),
-          _buildKeyboardRow(['4', '5', '6'], ['GHI', 'JKL', 'MNO']),
+          _buildKeyboardRow(context, ['4', '5', '6'], ['GHI', 'JKL', 'MNO']),
           SizedBox(height: 10.h),
-          _buildKeyboardRow(['7', '8', '9'], ['PQRS', 'TUV', 'WXYZ']),
+          _buildKeyboardRow(context, ['7', '8', '9'], ['PQRS', 'TUV', 'WXYZ']),
           SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildEmptyKey(),
-              _buildKey('0', ''),
+              _buildKey(context, '0', ''),
               _buildBackspaceKey(),
             ],
           ),
@@ -40,23 +40,23 @@ class CustomKeyboard extends StatelessWidget {
     );
   }
 
-  Widget _buildKeyboardRow(List<String> numbers, List<String> letters) {
+  Widget _buildKeyboardRow(BuildContext context, List<String> numbers, List<String> letters) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(3, (index) {
-        return _buildKey(numbers[index], letters[index]);
+        return _buildKey(context, numbers[index], letters[index]);
       }),
     );
   }
 
-  Widget _buildKey(String number, String letters) {
+  Widget _buildKey(BuildContext context, String number, String letters) {
     return GestureDetector(
       onTap: () => onKeypadPressed(number),
       child: Container(
         width: 100.w,
         height: 48.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Column(
@@ -66,7 +66,7 @@ class CustomKeyboard extends StatelessWidget {
               number,
               style: TextStyle(
                 fontSize: 22.sp,
-                color: Colors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 fontWeight: FontWeight.w400,
                 height: 1.0,
               ),
@@ -76,7 +76,7 @@ class CustomKeyboard extends StatelessWidget {
                 letters,
                 style: TextStyle(
                   fontSize: 8.sp,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
                 ),

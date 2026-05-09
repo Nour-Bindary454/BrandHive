@@ -1,4 +1,5 @@
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
+import 'package:brand/features/category/presentation/views/category_view.dart';
 import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
@@ -73,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                         ],
 
                         /// 2. Search
-                        CusSearchBar(hintText: 'search_local_brands'.tr()),
+                        CusSearchBar(hintText: 'search_local_brands'.tr().tr().tr()),
                         SizedBox(height: 20.h),
 
                         /// 3. Banner
@@ -91,7 +92,15 @@ class HomeScreen extends StatelessWidget {
                         if (state.categories.isNotEmpty) ...[
                           CategoriesSection(
                             categories: state.categories,
-                            onCategoryTap: (id) {},
+                            onCategoryTap: (category) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CategoryView(category: category),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(height: 32.h),
                         ],

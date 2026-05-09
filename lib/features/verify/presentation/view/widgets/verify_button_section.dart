@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'dart:async';
 
 import 'package:brand/core/sharedWidgets/basic_button.dart';
@@ -90,7 +91,7 @@ class _VerifyButtonSectionState extends State<VerifyButtonSection> {
     return Column(
       children: [
         BasicButton(
-          text: 'Verify',
+          text: 'verify'.tr().tr(),
           colors: const [Color(0xFF2D4373)],
           radius: 12,
           onPressed: () {

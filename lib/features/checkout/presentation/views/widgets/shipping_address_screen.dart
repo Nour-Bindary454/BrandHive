@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/svg_images/svg_images.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/custom_shipping_form.dart';
@@ -36,9 +37,9 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                 SvgPicture.asset(SvgImages.locationdark),
                 SizedBox(width: 8.w),
                 BasicText(
-                  text: 'Shipping Address',
+                  text: 'shipping_address'.tr().tr(),
                   fontSize: 17.sp,
-                  color: BasicColors.black,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                   isBold: true,
                   fontFamily: 'Outfit',
                 ),
@@ -139,9 +140,9 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Saved Addresses',
+            text: 'saved_addresses'.tr().tr(),
             fontSize: 16.sp,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             isBold: true,
             fontFamily: 'Outfit',
           ),
@@ -153,7 +154,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
               margin: EdgeInsets.only(bottom: 10.h),
               padding: EdgeInsets.all(14.r),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14.r),
                 border: Border.all(color: Colors.grey.shade300),
               ),
@@ -178,7 +179,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                         BasicText(
                           text: address["title"]!,
                           fontSize: 14.sp,
-                          color: BasicColors.black,
+                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                           isBold: true,
                         ),
                         SizedBox(height: 3.h),

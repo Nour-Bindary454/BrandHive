@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
@@ -13,7 +14,7 @@ class SellerProductCard extends StatelessWidget {
       height: 110.h,
       padding: EdgeInsets.only(left: 9.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey.shade300, width: 1),
       ),
@@ -48,21 +49,21 @@ class SellerProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BasicText(
-                    text: 'Split-Hem Flare Pants',
+                    text: 'split_hem_flare_pants'.tr().tr(),
                     fontSize: 14,
                     color: BasicColors.buttonColorDark, // Dark blue text
                     isBold: true,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'CARENA',
+                    text: 'carena'.tr().tr(),
                     fontSize: 11,
                     color: Colors.blueGrey.shade400, // Light grayish/blue text
                     isBold: true,
                   ),
                   const Spacer(),
                   BasicText(
-                    text: '799 EGP',
+                    text: '799_egp'.tr().tr(),
                     fontSize: 16,
                     color: BasicColors
                         .buttonColorLight, // Core blue color for price

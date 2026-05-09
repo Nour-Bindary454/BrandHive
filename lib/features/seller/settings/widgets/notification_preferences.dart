@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Notification Preferences',
+            text: 'notification_preferences'.tr().tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,
@@ -63,7 +64,7 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         border: Border.all(color: Colors.grey.shade200),
         borderRadius: BorderRadius.circular(8.r),
       ),

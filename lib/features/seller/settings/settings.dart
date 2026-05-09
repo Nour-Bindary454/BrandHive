@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/contact_info.dart';
 import 'package:brand/features/seller/settings/widgets/danger_zone.dart';
@@ -31,7 +32,7 @@ class _SettingsState extends State<Settings> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: BasicText(
-                  text: 'Store Settings',
+                  text: 'store_settings'.tr().tr(),
                   fontSize: 18,
                   color: const Color(0xFF1F2937),
                   isBold: true,

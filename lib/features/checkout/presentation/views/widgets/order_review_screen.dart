@@ -23,7 +23,7 @@ class OrderReviewScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
-                color: BasicColors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               ),
             ),
             SizedBox(height: 20.h),
@@ -31,11 +31,11 @@ class OrderReviewScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(20.r),
               decoration: BoxDecoration(
-                color: BasicColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(16.r),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
+                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.04),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -162,7 +162,7 @@ class OrderReviewScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.local_shipping,
-                    color: BasicColors.black,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                     size: 20.sp,
                   ),
                   SizedBox(width: 12.w),
@@ -171,7 +171,7 @@ class OrderReviewScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.sp,
-                      color: BasicColors.black,
+                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                     ),
                   ),
                 ],

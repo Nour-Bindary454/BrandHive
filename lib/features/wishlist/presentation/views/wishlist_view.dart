@@ -1,7 +1,10 @@
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
+import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
+import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WishlistView extends StatelessWidget {
@@ -9,24 +12,13 @@ class WishlistView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dummy wishlist products
-    final List<Product> wishlistProducts = List.generate(
-      4,
-      (index) => Product(
-        brandName: 'Brand Name',
-        id: 'p$index',
-        brandId: '1',
-        name: index % 2 == 0 ? 'Single Hanging Chair' : 'Classic Glass Vase',
-        image: index % 2 == 0 ? PngImages.fashion : PngImages.homeDecor,
-        rating: 4.8,
-        price: index % 2 == 0 ? 600.0 : 450.0,
-        currency: 'EGP',
-        isFavorite: true,
-      ),
-    );
+    return BlocBuilder<WishlistCubit, WishlistState>(
+      builder: (context, state) {
+        final cubit = context.read<WishlistCubit>();
+        final wishlistProducts = cubit.wishlistProducts;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
+        return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           // Header
@@ -54,7 +46,7 @@ class WishlistView extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(8.r),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Theme.of(context).cardColor.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Icon(
@@ -153,5 +145,7 @@ class WishlistView extends StatelessWidget {
         ],
       ),
     );
+  },
+);
   }
 }

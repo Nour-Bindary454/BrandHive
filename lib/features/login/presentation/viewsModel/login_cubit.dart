@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:brand/core/services/dio_helper.dart';
 import 'package:brand/features/login/data/repository/login_repos.dart';
 import 'package:brand/features/login/presentation/viewsModel/login_states.dart';
 
@@ -26,17 +27,23 @@ class LoginCubit extends Cubit<LoginStates> {
       data: {"email": email, "password": password},
     );
 
-    // 🔥 handle result
+    //  handle result
     result.fold(
       (failure) {
         emit(LoginError(failure.errMessage));
       },
-      (response) {
+      (response) async {
         if (response.accessToken != null) {
-          CacheHelper.saveData(key: 'token', value: response.accessToken!);
+          await CacheHelper.saveData(
+            key: 'token',
+            value: response.accessToken!,
+          );
 
-          TokenManager.saveToken(response.accessToken!);
+          await TokenManager.saveToken(response.accessToken!);
+
+          await DioHelper.updateToken();
         }
+
         emit(LoginSuccess(response));
       },
     );

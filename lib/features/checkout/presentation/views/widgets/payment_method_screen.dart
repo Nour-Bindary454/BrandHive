@@ -30,14 +30,14 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.credit_card, color: BasicColors.black, size: 20.sp),
+                Icon(Icons.credit_card, color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black, size: 20.sp),
                 SizedBox(width: 8.w),
                 Text(
                   'Payment Method',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
-                    color: BasicColors.black,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                   ),
                 ),
               ],
@@ -121,7 +121,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: BasicColors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: isSelected

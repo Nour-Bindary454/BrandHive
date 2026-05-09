@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class VerifyHeader extends StatelessWidget {
 
         // Title
         BasicText(
-          text: 'Please check your\nemail',
+          text: 'please_check_your_nemail'.tr().tr(),
           fontSize: 30,
           color: const Color(0xFF333333),
           isBold: true,

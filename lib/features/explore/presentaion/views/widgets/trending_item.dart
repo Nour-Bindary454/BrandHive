@@ -15,7 +15,7 @@ class TrendingItemName extends StatelessWidget {
       ),
       child: BasicText(
         text: label,
-        color: BasicColors.black,
+        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
         fontSize: 13,
         isBold: true,
       ),

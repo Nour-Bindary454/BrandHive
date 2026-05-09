@@ -11,16 +11,16 @@ class AllBrandsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: BasicColors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             size: 20.sp,
           ),
           onPressed: () => Navigator.pop(context),
@@ -31,7 +31,7 @@ class AllBrandsScreen extends StatelessWidget {
             fontFamily: 'Outfit',
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           ),
         ),
       ),
@@ -58,11 +58,11 @@ class AllBrandsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.r),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(16.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.04),
                         blurRadius: 10.r,
                         offset: const Offset(0, 4),
                       ),
@@ -80,10 +80,10 @@ class AllBrandsScreen extends StatelessWidget {
                             height: 80.r,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white,
+                              color: Theme.of(context).cardColor,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.05),
                                   blurRadius: 8.r,
                                   offset: const Offset(0, 2),
                                 ),
@@ -103,11 +103,11 @@ class AllBrandsScreen extends StatelessWidget {
                                 width: 24.w,
                                 height: 24.w,
                                 decoration: BoxDecoration(
-                                  color: BasicColors.white,
+                                  color: Theme.of(context).cardColor,
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.1),
                                       blurRadius: 4.r,
                                       offset: const Offset(0, 2),
                                     ),
@@ -121,7 +121,7 @@ class AllBrandsScreen extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
-                                      color: BasicColors.black,
+                                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                                     ),
                                   ),
                                 ),
@@ -139,7 +139,7 @@ class AllBrandsScreen extends StatelessWidget {
                             fontFamily: 'Outfit',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700,
-                            color: BasicColors.black,
+                            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

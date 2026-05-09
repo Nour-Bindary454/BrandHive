@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,7 +10,7 @@ class OrderSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BasicColors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -44,7 +45,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w900,
-                  color: BasicColors.black,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 ),
               ),
 
@@ -67,7 +68,7 @@ class OrderSuccessScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
-                  color: BasicColors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: Colors.grey.shade200),
                 ),
@@ -127,7 +128,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: null,
-                  child: const Text('Trace Order'),
+                  child: Text('trace_order'.tr()),
                 ),
               ),
 
@@ -137,7 +138,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: null,
-                  child: const Text('Continue Shopping'),
+                  child: Text('continue_shopping'.tr()),
                 ),
               ),
 

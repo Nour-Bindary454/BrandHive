@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class PasswordChanged extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -37,7 +38,7 @@ class PasswordChanged extends StatelessWidget {
 
               // Title
               BasicText(
-                text: 'Password changed',
+                text: 'password_changed'.tr().tr(),
                 fontSize: 24,
                 color: const Color(0xFF1F1F1F), // Dark text
                 isBold: true,
@@ -47,7 +48,7 @@ class PasswordChanged extends StatelessWidget {
 
               // Subtitle
               BasicText(
-                text: 'Your password has been\nchanged successfully',
+                text: 'your_password_has_been_nchanged_successfully'.tr().tr(),
                 fontSize: 14,
                 color: Colors.grey.shade600,
                 isBold: false,
@@ -59,7 +60,7 @@ class PasswordChanged extends StatelessWidget {
               // Back to login Button
               Center(
                 child: BasicButton(
-                  text: 'Back to login',
+                  text: 'back_to_login'.tr().tr(),
                   colors: const [Color(0xFF2D4373)],
                   radius: 8.r,
                   onPressed: () {

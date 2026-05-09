@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/sharedWidgets/basic_colors.dart';
@@ -35,16 +36,16 @@ class SellerModeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BasicText(
-                    text: 'Switch to Seller Mode',
+                    text: 'switch_to_seller_mode'.tr().tr(),
                     fontSize: 16.sp,
-                    color: BasicColors.white,
+                    color: Theme.of(context).cardColor,
                     isBold: true,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'Manage your store, products, and orders',
+                    text: 'manage_your_store_products_and_orders'.tr().tr(),
                     fontSize: 12.sp,
-                    color: BasicColors.white.withOpacity(0.8),
+                    color: Theme.of(context).cardColor.withOpacity(0.8),
                     isBold: false,
                   ),
                 ],
@@ -53,12 +54,12 @@ class SellerModeCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(12.r),
               decoration: BoxDecoration(
-                color: BasicColors.white.withOpacity(0.2),
+                color: Theme.of(context).cardColor.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.storefront_outlined,
-                color: BasicColors.white,
+                color: Theme.of(context).cardColor,
                 size: 24.sp,
               ),
             ),

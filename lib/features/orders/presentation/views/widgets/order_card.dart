@@ -30,7 +30,7 @@ class OrderCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 15.h),
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: const Color(0xFFE2E8F0), width: 1),
       ),

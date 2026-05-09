@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/order_review_screen.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/order_success_screen.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/payment_method_screen.dart';
@@ -54,9 +55,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         title: BasicText(
-          text: 'Checkout',
+          text: 'checkout'.tr().tr(),
           fontSize: 18.sp,
-          color: BasicColors.black,
+          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           isBold: true,
           fontFamily: 'Outfit',
         ),
@@ -64,7 +65,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: BasicColors.black),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
+          ),
           onPressed: previousStep,
         ),
       ),

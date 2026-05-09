@@ -44,12 +44,12 @@ class BazaarHeroHeader extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(8.r),
               decoration: BoxDecoration(
-                color: BasicColors.white.withOpacity(0.3),
+                color: Theme.of(context).cardColor.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.arrow_back,
-                color: BasicColors.white,
+                color: Theme.of(context).cardColor,
                 size: 24.sp,
               ),
             ),

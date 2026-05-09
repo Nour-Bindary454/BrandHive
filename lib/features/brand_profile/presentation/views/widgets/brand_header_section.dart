@@ -19,7 +19,7 @@ class BrandHeaderSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.04),
             blurRadius: 12.r,
             offset: const Offset(0, 4),
           ),
@@ -56,7 +56,7 @@ class BrandHeaderSection extends StatelessWidget {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         letterSpacing: -0.5,
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

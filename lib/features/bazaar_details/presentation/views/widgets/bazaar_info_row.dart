@@ -39,7 +39,7 @@ class BazaarInfoRow extends StatelessWidget {
                 fontFamily: 'Outfit',
                 text: title,
                 fontSize: 14.sp,
-                color: BasicColors.grey,
+                color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
                 isBold: true,
               ),
               SizedBox(height: 2.h),
@@ -47,7 +47,7 @@ class BazaarInfoRow extends StatelessWidget {
                 fontFamily: 'Outfit',
                 text: subtitle,
                 fontSize: 15.sp,
-                color: BasicColors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold:
                     true, // Specifically bold for location name or phone text
               ),
@@ -56,7 +56,7 @@ class BazaarInfoRow extends StatelessWidget {
                 BasicText(
                   text: thirdLine!,
                   fontSize: 12.sp,
-                  color: BasicColors.grey,
+                  color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
                   isBold: false, // Light description beneath
                 ),
               ],

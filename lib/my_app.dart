@@ -37,6 +37,8 @@ import 'package:brand/features/checkout/presentation/viewmodels/checkout_view_mo
 
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider<WishlistCubit>(create: (_) => sl<WishlistCubit>()),
         Provider<CartRepository>(create: (_) => CartRepository()),
         ProxyProvider<CartRepository, CartService>(
           update: (_, repo, __) => CartService(repo),

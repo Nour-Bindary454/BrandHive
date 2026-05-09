@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_dropdown.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_text_field.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/section_header.dart';
@@ -18,9 +19,9 @@ class _AddressInfoStepState extends State<AddressInfoStep> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
+        SectionHeader(
           stepNumber: '03',
-          title: 'Address Information',
+          title: 'address_information'.tr().tr(),
           icon: Icons.location_on_outlined,
         ),
         RegistrationDropdown(

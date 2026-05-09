@@ -15,7 +15,7 @@ class BazaarSectionTitle extends StatelessWidget {
       child: BasicText(
         text: title,
         fontSize: 18.sp,
-        color: BasicColors.black,
+        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
         isBold: true,
       ),
     );

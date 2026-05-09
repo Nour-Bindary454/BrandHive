@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class FeaturedBrands extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicText(
-              text: 'Featured Brands',
+              text: 'featured_brands'.tr().tr(),
               fontSize: 18,
-              color: BasicColors.black,
+              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               isBold: true,
             ),
             GestureDetector(
@@ -32,7 +33,7 @@ class FeaturedBrands extends StatelessWidget {
               child: Row(
                 children: [
                   BasicText(
-                    text: 'All Brands ',
+                    text: 'all_brands'.tr().tr(),
                     fontSize: 12,
                     color: Color(0xFF2D4373), // Dark blue
                     isBold: true,
@@ -59,11 +60,11 @@ class FeaturedBrands extends StatelessWidget {
                 child: Container(
                   width: 85.w,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(16.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.04),
                         blurRadius: 10,
                         spreadRadius: 1,
                         offset: Offset(0, 2),
@@ -102,7 +103,7 @@ class FeaturedBrands extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
                         ),
                       ),

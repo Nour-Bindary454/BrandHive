@@ -38,7 +38,7 @@ class NotificationItem extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.02),
+                  color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.02),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

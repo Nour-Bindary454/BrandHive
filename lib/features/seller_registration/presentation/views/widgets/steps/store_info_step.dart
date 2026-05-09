@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_dropdown.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_text_field.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/section_header.dart';
@@ -37,11 +39,12 @@ class _StoreInfoStepState extends State<StoreInfoStep> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
+        SectionHeader(
           stepNumber: '02',
-          title: 'Store Information',
-          icon: Icons.store_outlined,
+          title: 'store_information'.tr().tr(),
+          icon: Icons.storefront_outlined,
         ),
+        SizedBox(height: 16.h),
         const RegistrationTextField(
           hint: 'Store name',
           prefixIcon: Icons.store_outlined,

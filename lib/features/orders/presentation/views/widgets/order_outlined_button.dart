@@ -17,7 +17,7 @@ class OrderOutlinedButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: const Color(0xFF1E293B), width: 1),
       ),

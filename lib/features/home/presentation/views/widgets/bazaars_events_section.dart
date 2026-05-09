@@ -29,7 +29,7 @@ class BazaarsEventsSection extends StatelessWidget {
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
                 letterSpacing: -0.5,
-                color: Theme.of(context).textTheme.bodyLarge?.color,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               ),
             ),
             TextButton(
@@ -91,7 +91,7 @@ class BazaarsEventsSection extends StatelessWidget {
                       fontFamily: 'Outfit',
                       fontSize: 19.sp,
                       fontWeight: FontWeight.w800,
-                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                     ),
                   ),
                   SizedBox(height: 6.h),
