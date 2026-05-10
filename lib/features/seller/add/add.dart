@@ -31,7 +31,7 @@ class _AddState extends State<Add> {
               child: Row(
                 children: [
                   BasicText(
-                    text: 'add_new_product'.tr().tr(),
+                    text: 'add_new_product'.tr(),
                     fontSize: 18,
                     color: const Color(0xFF0F172A),
                     isBold: true,

@@ -21,7 +21,7 @@ class _AddressInfoStepState extends State<AddressInfoStep> {
       children: [
         SectionHeader(
           stepNumber: '03',
-          title: 'address_information'.tr().tr(),
+          title: 'address_information'.tr(),
           icon: Icons.location_on_outlined,
         ),
         RegistrationDropdown(

@@ -29,4 +29,22 @@ class ExploreRepositoryImpl implements ExploreRepository {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<HomeProduct>>> searchProducts(String query) async {
+    try {
+      final response = await apiService.getData(
+        endPoint: "search/products?search=$query",
+      );
+
+      final List<dynamic> data = response.data['data'] ?? [];
+      final List<HomeProduct> products = data
+          .map((p) => HomeProduct.fromJson(p))
+          .toList();
+
+      return right(products);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -36,14 +36,14 @@ class OverviewHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BasicText(
-                    text: 'welcome_back'.tr().tr(),
+                    text: 'welcome_back'.tr(),
                     fontSize: 12,
                     color: Colors.grey.shade600,
                     isBold: false,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'nile_weavers'.tr().tr(),
+                    text: 'nile_weavers'.tr(),
                     fontSize: 22,
                     color: const Color(0xFF0F172A), // Deep blue/black
                     isBold: true,
@@ -61,7 +61,7 @@ class OverviewHeader extends StatelessWidget {
                     ),
                     child: Center(
                       child: BasicText(
-                        text: 'nw'.tr().tr(),
+                        text: 'nw'.tr(),
                         fontSize: 14,
                         color: const Color(0xFF4C79BD),
                         isBold: true,
@@ -124,7 +124,7 @@ class OverviewHeader extends StatelessWidget {
                               child: Row(
                                 children: [
                                   BasicText(
-                                    text: '12'.tr().tr(),
+                                    text: '12'.tr(),
                                     fontSize: 11,
                                     color: Colors.white,
                                     isBold: true,
@@ -141,7 +141,7 @@ class OverviewHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BasicText(
-                              text: 'total_revenue'.tr().tr(),
+                              text: 'total_revenue'.tr(),
                               fontSize: 13,
                               color: Colors.white,
                               isBold: true,
@@ -152,14 +152,14 @@ class OverviewHeader extends StatelessWidget {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 BasicText(
-                                  text: '45_200'.tr().tr(),
+                                  text: '45_200'.tr(),
                                   fontSize: 24,
                                   color: Colors.white,
                                   isBold: true,
                                 ),
                                 SizedBox(width: 6.w),
                                 BasicText(
-                                  text: 'egp'.tr().tr(),
+                                  text: 'egp'.tr(),
                                   fontSize: 13,
                                   color: Colors.white.withOpacity(0.9),
                                   isBold: true,
@@ -203,14 +203,14 @@ class OverviewHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BasicText(
-                              text: 'active_orders'.tr().tr(),
+                              text: 'active_orders'.tr(),
                               fontSize: 13,
                               color: const Color(0xFF475467),
                               isBold: true,
                             ),
                             SizedBox(height: 4.h),
                             BasicText(
-                              text: '12'.tr().tr(),
+                              text: '12'.tr(),
                               fontSize: 24,
                               color: const Color(0xFF0F172A),
                               isBold: true,

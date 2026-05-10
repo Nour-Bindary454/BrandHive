@@ -37,7 +37,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                 SvgPicture.asset(SvgImages.locationdark),
                 SizedBox(width: 8.w),
                 BasicText(
-                  text: 'shipping_address'.tr().tr(),
+                  text: 'shipping_address'.tr(),
                   fontSize: 17.sp,
                   color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                   isBold: true,
@@ -140,7 +140,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'saved_addresses'.tr().tr(),
+            text: 'saved_addresses'.tr(),
             fontSize: 16.sp,
             color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             isBold: true,

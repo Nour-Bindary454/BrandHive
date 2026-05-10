@@ -18,7 +18,7 @@ class LegalPolicies extends StatelessWidget {
               Icon(Icons.description_outlined, color: const Color(0xFF4C79BD), size: 18.sp),
               SizedBox(width: 8.w),
               BasicText(
-                text: 'legal_policies'.tr().tr(),
+                text: 'legal_policies'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF1F2937),
                 isBold: true,

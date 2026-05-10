@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CusSearchBar extends StatefulWidget {
-  const CusSearchBar({super.key, required this.hintText});
+  const CusSearchBar({super.key, this.hintText = 'Search...', this.onChanged, this.onSubmitted});
   final String hintText;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   @override
   State<CusSearchBar> createState() => _CusSearchBarState();
 }
@@ -29,6 +31,9 @@ class _CusSearchBarState extends State<CusSearchBar> {
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: TextField(
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
+        textInputAction: widget.onSubmitted != null ? TextInputAction.search : null,
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),

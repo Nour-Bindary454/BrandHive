@@ -24,7 +24,7 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'notification_preferences'.tr().tr(),
+            text: 'notification_preferences'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,

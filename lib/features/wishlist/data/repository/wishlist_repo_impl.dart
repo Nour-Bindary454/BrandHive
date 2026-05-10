@@ -2,20 +2,21 @@ import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/wishlist/data/model/wishlist_model.dart';
 import 'package:brand/features/wishlist/data/repository/wishlist_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:brand/core/services/api_services.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/errors/failure.dart';
 
 class WishlistRepositoryImpl implements WishlistRepository {
-  final Dio dio;
+  final ApiService apiService;
 
-  WishlistRepositoryImpl(this.dio);
+  WishlistRepositoryImpl(this.apiService);
 
   @override
   Future<Either<Failure, WishlistModel>> addToWishlist(String productId) async {
     try {
-      final response = await dio.post(
-        '/wishlist',
+      final response = await apiService.postData(
+        endPoint: '/wishlist',
         data: {"productId": productId},
       );
 
@@ -30,7 +31,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
   @override
   Future<Either<Failure, WishlistModel>> getWishlist() async {
     try {
-      final response = await dio.get('/wishlist');
+      final response = await apiService.getData(endPoint: '/wishlist');
 
       print('====================================');
       print('WISHLIST API RESPONSE:');
@@ -51,7 +52,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
     String productId,
   ) async {
     try {
-      final response = await dio.delete('/wishlist/$productId');
+      final response = await apiService.deleteData(endPoint: '/wishlist/$productId');
 
       final wishlist = WishlistModel.fromJson(response.data['data']);
 
@@ -64,7 +65,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
   @override
   Future<Either<Failure, Product>> getProductDetails(String productId) async {
     try {
-      final response = await dio.get('/product/$productId');
+      final response = await apiService.getData(endPoint: '/product/$productId');
       final data = response.data['data'];
 
       final String brandName = (data['brand'] is Map) 

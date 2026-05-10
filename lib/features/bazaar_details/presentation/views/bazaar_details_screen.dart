@@ -132,7 +132,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.location_on_outlined,
-                                title: 'location'.tr().tr(),
+                                title: 'location'.tr(),
                                 subtitle: details.location.split('\n')[0],
                                 thirdLine: details.location.contains('\n')
                                     ? details.location.split('\n')[1]
@@ -143,7 +143,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.phone_outlined,
-                                title: 'contact'.tr().tr(),
+                                title: 'contact'.tr(),
                                 subtitle: details.phone,
                               ),
 
@@ -151,7 +151,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
 
                               BazaarInfoRow(
                                 icon: Icons.access_time_outlined,
-                                title: 'hours'.tr().tr(),
+                                title: 'hours'.tr(),
                                 subtitle: details.time,
                               ),
                             ],
@@ -171,21 +171,21 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (details.upcomingDates.isNotEmpty) ...[
-                        BazaarSectionTitle(title: 'upcoming_dates'.tr().tr()),
+                        BazaarSectionTitle(title: 'upcoming_dates'.tr()),
                         ...details.upcomingDates.map(
                           (date) => _buildDateCard(date),
                         ),
                       ],
 
                       if (details.participatingBrands.isNotEmpty) ...[
-                        BazaarSectionTitle(title: 'participating_brands'.tr().tr()),
+                        BazaarSectionTitle(title: 'participating_brands'.tr()),
                         ...details.participatingBrands.map(
                           (brand) => _buildBrandCard(brand),
                         ),
                       ],
 
                       if (details.eventHighlights.isNotEmpty) ...[
-                        BazaarSectionTitle(title: 'event_highlights'.tr().tr()),
+                        BazaarSectionTitle(title: 'event_highlights'.tr()),
                         Wrap(
                           spacing: 8.w,
                           runSpacing: 8.h,
@@ -289,7 +289,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: BasicText(
-                text: 'featured'.tr().tr(),
+                text: 'featured'.tr(),
                 fontSize: 10.sp,
                 color: Theme.of(context).cardColor,
                 isBold: true,

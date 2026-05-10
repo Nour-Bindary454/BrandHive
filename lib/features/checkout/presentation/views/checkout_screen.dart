@@ -55,7 +55,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         title: BasicText(
-          text: 'checkout'.tr().tr(),
+          text: 'checkout'.tr(),
           fontSize: 18.sp,
           color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           isBold: true,

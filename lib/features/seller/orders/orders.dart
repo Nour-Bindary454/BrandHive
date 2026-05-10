@@ -27,7 +27,7 @@ class _OrdersState extends State<Orders> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: BasicText(
-                text: 'orders_management'.tr().tr(),
+                text: 'orders_management'.tr(),
                 fontSize: 18,
                 color: const Color(0xFF0F172A),
                 isBold: true,

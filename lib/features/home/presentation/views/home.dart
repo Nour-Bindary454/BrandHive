@@ -1,5 +1,6 @@
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/features/category/presentation/views/category_view.dart';
+import 'package:brand/features/home/presentation/views/search_results_screen.dart';
 import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
@@ -50,7 +51,7 @@ class HomeScreen extends StatelessWidget {
             /// ✅ Success UI
             return RefreshIndicator(
               onRefresh: () async {
-                context.read<HomeCubit>().loadHomeData();
+                context.read<HomeCubit>().loadHomeData(isRefresh: true);
               },
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(
@@ -68,14 +69,28 @@ class HomeScreen extends StatelessWidget {
                         if (state.user != null) ...[
                           HomeHeader(
                             user: state.user!,
-                            onNotificationTap: () {},
+                            onNotificationTap: () {
+                              Navigator.pushNamed(context, '/notifications');
+                            },
                           ),
                           SizedBox(height: 20.h),
                         ],
 
                         /// 2. Search
                         CusSearchBar(
-                          hintText: 'search_local_brands'.tr().tr().tr(),
+                          hintText: 'search_local_brands'.tr(),
+                          onSubmitted: (query) {
+                            if (query.trim().isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchResultsScreen(
+                                    initialQuery: query.trim(),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                         SizedBox(height: 20.h),
 

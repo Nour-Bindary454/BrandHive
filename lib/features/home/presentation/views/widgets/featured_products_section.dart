@@ -136,13 +136,17 @@ class FeaturedProductsSection extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  product.brandName.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w800,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    letterSpacing: 0.5,
+                                Expanded(
+                                  child: Text(
+                                    product.brandName.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w800,
+                                      color: Theme.of(context).colorScheme.primary,
+                                      letterSpacing: 0.5,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Row(

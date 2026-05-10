@@ -111,7 +111,7 @@ class _SignupState extends State<Signup> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BasicText(
-                        text: 'already_have_an_account'.tr().tr(),
+                        text: 'already_have_an_account'.tr(),
                         fontSize: 14.sp,
                         isBold: false,
                         color: BasicColors.linearGradientDark,

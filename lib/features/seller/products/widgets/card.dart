@@ -49,21 +49,21 @@ class SellerProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BasicText(
-                    text: 'split_hem_flare_pants'.tr().tr(),
+                    text: 'split_hem_flare_pants'.tr(),
                     fontSize: 14,
                     color: BasicColors.buttonColorDark, // Dark blue text
                     isBold: true,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'carena'.tr().tr(),
+                    text: 'carena'.tr(),
                     fontSize: 11,
                     color: Colors.blueGrey.shade400, // Light grayish/blue text
                     isBold: true,
                   ),
                   const Spacer(),
                   BasicText(
-                    text: '799_egp'.tr().tr(),
+                    text: '799_egp'.tr(),
                     fontSize: 16,
                     color: BasicColors
                         .buttonColorLight, // Core blue color for price

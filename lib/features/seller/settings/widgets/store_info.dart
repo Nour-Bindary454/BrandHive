@@ -15,7 +15,7 @@ class StoreInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'store_information'.tr().tr(),
+            text: 'store_information'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,

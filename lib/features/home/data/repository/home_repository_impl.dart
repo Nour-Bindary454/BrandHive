@@ -73,7 +73,7 @@ class HomeRepositoryImpl implements HomeRepository {
   }) async {
     try {
       final response = await apiService.getData(
-        endPoint: "${EndPoints.products}?category=$categoryId&page=$page&limit=10",
+        endPoint: "${EndPoints.products}?category=$categoryId&page=$page&limit=100",
       );
 
       final List<dynamic> data = response.data['data'] ?? [];

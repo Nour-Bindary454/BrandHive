@@ -20,14 +20,14 @@ class ProTipCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'pro_tip'.tr().tr(),
+            text: 'pro_tip'.tr(),
             fontSize: 13,
             color: const Color(0xFF0F172A),
             isBold: true,
           ),
           SizedBox(height: 8.h),
           BasicText(
-            text: 'adding_high_quality_photos_increases_sales_by_40_nupdate_your_product_gallery_today'.tr().tr(),
+            text: 'adding_high_quality_photos_increases_sales_by_40_nupdate_your_product_gallery_today'.tr(),
             fontSize: 11,
             color: Colors.grey.shade600,
             isBold: false,

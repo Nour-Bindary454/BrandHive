@@ -23,7 +23,7 @@ class AddProductActions extends StatelessWidget {
                 ),
               ),
               child: BasicText(
-                text: 'cancel'.tr().tr(),
+                text: 'cancel'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF2D4373),
                 isBold: true,
@@ -43,7 +43,7 @@ class AddProductActions extends StatelessWidget {
                 elevation: 0,
               ),
               child: BasicText(
-                text: 'publish_product'.tr().tr(),
+                text: 'publish_product'.tr(),
                 fontSize: 14,
                 color: Colors.white,
                 isBold: true,

@@ -43,7 +43,7 @@ class Welcome extends StatelessWidget {
                 Image.asset(PngImages.logo2),
                 SizedBox(height: 30.h),
                 BasicText(
-                  text: 'welcome'.tr().tr(),
+                  text: 'welcome'.tr(),
                   fontSize: 35.sp,
                   isBold: true,
                   color: Colors.white,
@@ -65,7 +65,7 @@ class Welcome extends StatelessWidget {
                     ),
                   ),
                   child: BasicText(
-                    text: 'sign_in'.tr().tr(),
+                    text: 'sign_in'.tr(),
                     fontSize: 17.sp,
                     isBold: false,
                     color: Colors.white,
@@ -76,7 +76,7 @@ class Welcome extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/signup');
                   },
-                  text: 'sign_up'.tr().tr(),
+                  text: 'sign_up'.tr(),
 
                   radius: 24,
                   colors: [BasicColors.buttonColorDark],

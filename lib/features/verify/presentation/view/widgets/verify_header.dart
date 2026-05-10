@@ -19,7 +19,7 @@ class VerifyHeader extends StatelessWidget {
 
         // Title
         BasicText(
-          text: 'please_check_your_nemail'.tr().tr(),
+          text: 'please_check_your_nemail'.tr(),
           fontSize: 30,
           color: const Color(0xFF333333),
           isBold: true,
