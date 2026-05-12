@@ -1,23 +1,23 @@
+import 'package:brand/features/checkout/data/models/checkout_response_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/sharedWidgets/basic_colors.dart';
+import 'package:brand/core/sharedWidgets/basic_button.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
-  const OrderSuccessScreen({super.key});
+  final CheckoutResponseModel response;
+
+  const OrderSuccessScreen({super.key, required this.response});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -45,7 +45,9 @@ class OrderSuccessScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w900,
-                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                  color:
+                      Theme.of(context).textTheme.bodyLarge?.color ??
+                      Colors.black,
                 ),
               ),
 
@@ -59,8 +61,12 @@ class OrderSuccessScreen extends StatelessWidget {
               SizedBox(height: 4.h),
 
               Text(
-                'Order confirmed successfully',
-                style: TextStyle(fontSize: 10.sp, color: Colors.grey),
+                'Order #${response.data.orderNumber ?? response.data.id ?? "N/A"}',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFFCBA153),
+                ),
               ),
 
               SizedBox(height: 40.h),
@@ -83,41 +89,65 @@ class OrderSuccessScreen extends StatelessWidget {
                         color: Colors.grey,
                       ),
                     ),
-
                     SizedBox(height: 16.h),
-
-                    Row(
-                      children: [
-                        Container(
-                          width: 50.w,
-                          height: 50.h,
-                          color: Colors.grey.shade200,
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Product Name',
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
+                    ...response.data.items
+                        .map(
+                          (item) => Padding(
+                            padding: EdgeInsets.only(bottom: 12.h),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50.w,
+                                  height: 50.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    image: item.productImage != null
+                                        ? DecorationImage(
+                                            image: NetworkImage(
+                                              item.productImage!,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4.h),
-                              Text(
-                                'Qty: 1',
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: Colors.grey,
+                                SizedBox(width: 12.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.productName,
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Text(
+                                        'Qty: ${item.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  '${item.unitPrice.toStringAsFixed(0)} EGP',
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        )
+                        .toList(),
                   ],
                 ),
               ),
@@ -127,19 +157,32 @@ class OrderSuccessScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: null,
-                  child: Text('trace_order'.tr()),
+                  onPressed: () {
+                    // Navigate to Orders
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Color(0xFF2D4373)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.r),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                  ),
+                  child: Text(
+                    'trace_order'.tr(),
+                    style: const TextStyle(color: Color(0xFF2D4373)),
+                  ),
                 ),
               ),
 
               SizedBox(height: 16.h),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: null,
-                  child: Text('continue_shopping'.tr()),
-                ),
+              BasicButton(
+                text: 'continue_shopping'.tr(),
+                onPressed: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+                colors: const [Color(0xFF2D4373)],
+                radius: 25.r,
               ),
 
               SizedBox(height: 40.h),

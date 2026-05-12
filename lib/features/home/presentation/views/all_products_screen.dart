@@ -2,7 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
+import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart';
+import 'package:brand/core/utils/toast/toast.dart';
+import 'package:brand/core/utils/dialogs/cart_dialogs.dart';
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:brand/core/sharedWidgets/basic_button.dart';
+import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllProductsScreen extends StatelessWidget {
@@ -66,7 +73,14 @@ class AllProductsScreen extends StatelessWidget {
                   isFavorite: false,
                 ),
                 onFavoritePressed: () {},
-                onAddToCartPressed: () {},
+                onAddToCartPressed: () {
+                  CartDialogs.showAddToCartDialog(
+                    context: context,
+                    productId: product.id,
+                    productName: product.name,
+                  );
+                },
+
               );
             },
           ),

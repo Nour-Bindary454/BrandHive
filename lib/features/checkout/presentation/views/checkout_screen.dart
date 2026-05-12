@@ -1,3 +1,7 @@
+import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/checkout/data/models/order_item_model.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/order_review_screen.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/order_success_screen.dart';
@@ -5,91 +9,127 @@ import 'package:brand/features/checkout/presentation/views/widgets/payment_metho
 import 'package:brand/features/checkout/presentation/views/widgets/shipping_address_screen.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/checkout_bottom_bar.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/checkout_step_indicator.dart';
+import 'package:brand/features/checkout/presentation/views/widgets/payment_webview_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 
-class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+class CheckoutScreen extends StatelessWidget {
+  final List<OrderItemModel> items;
+  final double subtotal;
 
-  @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
-}
-
-class _CheckoutScreenState extends State<CheckoutScreen> {
-  int currentStep = 1;
-
-  void nextStep() {
-    if (currentStep < 3) {
-      setState(() {
-        currentStep++;
-      });
-    } else {
-      // 👇 هنا الانتقال لشاشة النجاح
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => OrderSuccessScreen()),
-      );
-    }
-  }
-
-  void previousStep() {
-    if (currentStep > 1) {
-      setState(() {
-        currentStep--;
-      });
-    } else {
-      Navigator.pop(context);
-    }
-  }
+  const CheckoutScreen({
+    super.key,
+    required this.items,
+    required this.subtotal,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CheckoutBottomBar(
-        totalPrice: 100,
-        currentStep: currentStep,
-        onNext: nextStep,
+    return BlocProvider(
+      create: (context) => sl<CheckoutCubit>()..initCheckout(
+        items: items,
+        subtotal: subtotal,
       ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        title: BasicText(
-          text: 'checkout'.tr().tr(),
-          fontSize: 18.sp,
-          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-          isBold: true,
-          fontFamily: 'Outfit',
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).textTheme.bodyLarge?.color,
-          ),
-          onPressed: previousStep,
-        ),
-      ),
+      child: BlocConsumer<CheckoutCubit, CheckoutState>(
+        listener: (context, state) {
+          if (state.orderSuccessResult != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => OrderSuccessScreen(
+                  response: state.orderSuccessResult!,
+                ),
+              ),
+            );
+          }
 
-      body: Column(
-        children: [
-          CheckoutStepIndicator(currentStep: currentStep),
-          SizedBox(height: 5.h),
+          if (state.paymentUrl != null) {
+            final cubit = context.read<CheckoutCubit>();
+            final url = state.paymentUrl!;
+            cubit.clearPaymentUrl(); // Clear to prevent multiple navigations
 
-          Expanded(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: _buildCurrentStepUI(),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => PaymentWebViewScreen(
+                  paymentUrl: url,
+                  onPaymentFinished: (success) {
+                    Navigator.pop(context); // Close WebView
+                    cubit.handlePaymentResult(success);
+                  },
+                ),
+              ),
+            );
+          }
+          if (state.error != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error!)),
+            );
+          }
+        },
+        builder: (context, state) {
+          final cubit = context.read<CheckoutCubit>();
+
+          return Scaffold(
+            bottomNavigationBar: CheckoutBottomBar(
+              totalPrice: state.totalAmount,
+              currentStep: state.currentStep,
+              isLoading: state.isLoading,
+              onNext: () {
+                if (state.currentStep == 3) {
+                  cubit.placeOrder();
+                } else {
+                  cubit.nextStep();
+                }
+              },
             ),
-          ),
-        ],
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+            appBar: AppBar(
+              title: BasicText(
+                text: 'checkout'.tr().tr(),
+                fontSize: 18.sp,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                isBold: true,
+                fontFamily: 'Outfit',
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+                onPressed: () {
+                  if (state.currentStep > 1) {
+                    cubit.previousStep();
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ),
+            body: Column(
+              children: [
+                CheckoutStepIndicator(currentStep: state.currentStep),
+                SizedBox(height: 5.h),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: _buildCurrentStepUI(state.currentStep),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildCurrentStepUI() {
+  Widget _buildCurrentStepUI(int currentStep) {
     switch (currentStep) {
       case 1:
         return const ShippingAddressScreen(key: ValueKey(1));
@@ -102,3 +142,4 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 }
+

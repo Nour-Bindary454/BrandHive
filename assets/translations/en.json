@@ -148,5 +148,9 @@
   "please_check_your_nemail": "Please check your\\nemail",
   "welcome": "Welcome !",
   "sign_in": "Sign in",
-  "sign_up": "Sign up"
+  "sign_up": "Sign up",
+  "added_to_cart_success": "Product added to cart successfully",
+  "added_to_cart_error": "Failed to add product to cart",
+  "added_to_wishlist": "Added to wishlist",
+  "removed_from_wishlist": "Removed from wishlist"
 }

@@ -1,4 +1,7 @@
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/sharedWidgets/basic_colors.dart';
@@ -12,8 +15,6 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  PaymentMethodType _selectedType = PaymentMethodType.creditCard;
-
   final _cardNumController = TextEditingController();
   final _expiryController = TextEditingController();
   final _cvvController = TextEditingController();
@@ -21,102 +22,129 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.credit_card, color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black, size: 20.sp),
-                SizedBox(width: 8.w),
-                Text(
-                  'Payment Method',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.h),
+  void initState() {
+    super.initState();
+    final cubit = context.read<CheckoutCubit>();
+    if (cubit.state.selectedPayment != null) {
+      _cardNumController.text = cubit.state.selectedPayment!.cardNumber ?? '';
+      _expiryController.text = cubit.state.selectedPayment!.expiryDate ?? '';
+      _cvvController.text = cubit.state.selectedPayment!.cvv ?? '';
+    }
+  }
 
-            _buildPaymentOption(
-              PaymentMethodType.creditCard,
-              'Credit/Debit Card',
-              'Visa, Mastercard, Meeza',
-              Icons.credit_card_outlined,
-            ),
-            _buildPaymentOption(
-              PaymentMethodType.cashOnDelivery,
-              'Cash on Delivery',
-              'Pay when you receive',
-              Icons.money,
-            ),
-            _buildPaymentOption(
-              PaymentMethodType.mobileWallet,
-              'Mobile Wallet',
-              'Vodafone Cash, Instapay',
-              Icons.phone_iphone,
-            ),
-
-            if (_selectedType == PaymentMethodType.creditCard)
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    SizedBox(height: 20.h),
-                    _buildInput(
-                      'Card Number',
-                      _cardNumController,
-                      icon: Icons.credit_card,
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildInput(
-                            'Expiry Date',
-                            _expiryController,
-                            hint: 'MM/YY',
-                          ),
-                        ),
-                        SizedBox(width: 16.w),
-                        Expanded(
-                          child: _buildInput(
-                            'CVV',
-                            _cvvController,
-                            hint: '123',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            SizedBox(height: 100.h),
-          ],
-        ),
+  void _updatePayment(PaymentMethodType type) {
+    context.read<CheckoutCubit>().selectPaymentMethod(
+      PaymentModel(
+        methodType: type,
+        cardNumber: _cardNumController.text,
+        expiryDate: _expiryController.text,
+        cvv: _cvvController.text,
       ),
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CheckoutCubit, CheckoutState>(
+      builder: (context, state) {
+        final selectedType = state.selectedPayment?.methodType ?? PaymentMethodType.creditCard;
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.credit_card, color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black, size: 20.sp),
+                    SizedBox(width: 8.w),
+                    Text(
+                      'Payment Method',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+
+                _buildPaymentOption(
+                  context,
+                  PaymentMethodType.creditCard,
+                  'Credit/Debit Card',
+                  'Visa, Mastercard, Meeza',
+                  Icons.credit_card_outlined,
+                  selectedType,
+                ),
+                _buildPaymentOption(
+                  context,
+                  PaymentMethodType.cashOnDelivery,
+                  'Cash on Delivery',
+                  'Pay when you receive',
+                  Icons.money,
+                  selectedType,
+                ),
+
+                if (selectedType == PaymentMethodType.creditCard)
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.h),
+                        _buildInput(
+                          'Card Number',
+                          _cardNumController,
+                          icon: Icons.credit_card,
+                          onChanged: (_) => _updatePayment(selectedType),
+                        ),
+                        SizedBox(height: 16.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildInput(
+                                'Expiry Date',
+                                _expiryController,
+                                hint: 'MM/YY',
+                                onChanged: (_) => _updatePayment(selectedType),
+                              ),
+                            ),
+                            SizedBox(width: 16.w),
+                            Expanded(
+                              child: _buildInput(
+                                'CVV',
+                                _cvvController,
+                                hint: '123',
+                                onChanged: (_) => _updatePayment(selectedType),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: 100.h),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildPaymentOption(
+    BuildContext context,
     PaymentMethodType type,
     String title,
     String subtitle,
     IconData iconData,
+    PaymentMethodType selectedType,
   ) {
-    bool isSelected = _selectedType == type;
+    bool isSelected = selectedType == type;
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedType = type;
-        });
-      },
+      onTap: () => _updatePayment(type),
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.all(16.r),
@@ -133,11 +161,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           children: [
             Radio<PaymentMethodType>(
               value: type,
-              groupValue: _selectedType,
+              groupValue: selectedType,
               onChanged: (val) {
-                if (val != null) {
-                  setState(() => _selectedType = val);
-                }
+                if (val != null) _updatePayment(val);
               },
               activeColor: (BasicColors.buttonColorDark),
             ),
@@ -176,6 +202,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     TextEditingController controller, {
     String? hint,
     IconData? icon,
+    ValueChanged<String>? onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,6 +218,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         SizedBox(height: 8.h),
         TextFormField(
           controller: controller,
+          onChanged: onChanged,
           validator: (value) =>
               value == null || value.isEmpty ? 'Required' : null,
           decoration: InputDecoration(
@@ -220,3 +248,4 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     );
   }
 }
+

@@ -119,6 +119,11 @@ class WishlistCubit extends Cubit<WishlistState> {
           ));
         }
 
+        emit(WishlistToggleSuccess(
+          isFav ? 'removed_from_wishlist' : 'added_to_wishlist',
+          !isFav,
+        ));
+
         emit(WishlistUpdatedState());
         _fetchFullProductDetails();
       },

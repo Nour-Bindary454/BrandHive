@@ -19,3 +19,10 @@ class WishlistError extends WishlistState {
 
   WishlistError(this.error);
 }
+
+class WishlistToggleSuccess extends WishlistState {
+  final String message;
+  final bool isAdded;
+
+  WishlistToggleSuccess(this.message, this.isAdded);
+}

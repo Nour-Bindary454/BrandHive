@@ -4,13 +4,12 @@ import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 
+import 'package:brand/core/utils/dialogs/cart_dialogs.dart';
+
 class CategoryProductsGrid extends StatelessWidget {
   final List<HomeProduct> products;
 
-  const CategoryProductsGrid({
-    super.key,
-    required this.products,
-  });
+  const CategoryProductsGrid({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +52,15 @@ class CategoryProductsGrid extends StatelessWidget {
           );
 
           return ProductCard(
-            product: product,
             onFavoritePressed: () {},
-            onAddToCartPressed: () {},
+            product: product,
+            onAddToCartPressed: () {
+              CartDialogs.showAddToCartDialog(
+                context: context,
+                productId: homeProduct.id,
+                productName: homeProduct.name,
+              );
+            },
           );
         },
       ),

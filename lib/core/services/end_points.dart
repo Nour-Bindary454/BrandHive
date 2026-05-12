@@ -13,6 +13,8 @@ class EndPoints {
   static String getone = "brand/get one";
   static String products = "product";
   static String wishlist = "wishlist";
+  static String cart = "cart";
+  static String orders = "orders";
 
   static const String resetPassword = "auth/reset-password";
 }

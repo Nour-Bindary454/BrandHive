@@ -1,3 +1,4 @@
+import 'package:brand/core/services/api_services.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/theme/app_theme.dart';
 import 'package:brand/features/brand_profile/presentation/views/brand_profile_screen.dart';
@@ -32,9 +33,7 @@ import 'package:provider/provider.dart';
 import 'package:brand/features/cart/data/repository/cart_repository.dart';
 import 'package:brand/features/cart/services/cart_service.dart';
 import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart';
-import 'package:brand/features/checkout/data/data_sources/checkout_remote_data_source.dart';
 import 'package:brand/features/checkout/data/repository/checkout_repository.dart';
-import 'package:brand/features/checkout/presentation/viewmodels/checkout_view_model.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
@@ -48,7 +47,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<WishlistCubit>(create: (_) => sl<WishlistCubit>()),
-        Provider<CartRepository>(create: (_) => CartRepository()),
+        Provider<CartRepository>(
+          create: (_) => CartRepository(sl<ApiService>()),
+        ),
         ProxyProvider<CartRepository, CartService>(
           update: (_, repo, __) => CartService(repo),
         ),
@@ -57,18 +58,7 @@ class MyApp extends StatelessWidget {
           update: (_, service, viewModel) =>
               viewModel ?? CartViewModel(service),
         ),
-        Provider<CheckoutRemoteDataSource>(
-          create: (_) => CheckoutRemoteDataSource(),
-        ),
-        ProxyProvider<CheckoutRemoteDataSource, CheckoutRepository>(
-          update: (_, remoteDataSource, __) =>
-              CheckoutRepository(remoteDataSource),
-        ),
-        ChangeNotifierProxyProvider<CheckoutRepository, CheckoutViewModel>(
-          create: (context) =>
-              CheckoutViewModel(context.read<CheckoutRepository>()),
-          update: (_, repo, viewModel) => viewModel ?? CheckoutViewModel(repo),
-        ),
+
         ChangeNotifierProvider(create: (_) => SettingsViewModel()),
       ],
       child: ScreenUtilInit(

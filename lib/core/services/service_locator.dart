@@ -8,6 +8,9 @@ import 'package:brand/features/brand_profile/presentation/view_models/brand_prof
 import 'package:brand/features/category/presentation/view_models/category_cubit.dart';
 
 import 'package:brand/features/resetPassword/viewsModel/change_pass_cubit.dart';
+import 'package:brand/features/checkout/data/data_sources/checkout_remote_data_source.dart';
+import 'package:brand/features/checkout/data/repository/checkout_repository.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -70,6 +73,13 @@ void setup() {
   sl.registerLazySingleton<WishlistRepository>(
     () => WishlistRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<CheckoutRemoteDataSource>(
+    () => CheckoutRemoteDataSource(sl()),
+  );
+  sl.registerLazySingleton<CheckoutRepository>(
+    () => CheckoutRepository(sl()),
+  );
+
 
   // 🔹 Cubits
   sl.registerFactory(() => RegisterCubit(sl()));
@@ -83,4 +93,6 @@ void setup() {
   sl.registerFactory<BrandProfileCubit>(() => BrandProfileCubit());
   sl.registerFactory<CategoryCubit>(() => CategoryCubit());
   sl.registerFactory(() => WishlistCubit(sl()));
+  sl.registerFactory(() => CheckoutCubit(sl()));
+
 }

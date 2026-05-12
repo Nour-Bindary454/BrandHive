@@ -11,7 +11,6 @@ void main() async {
   await CacheHelper.init();
   await DioHelper.init();
   setup();
-
   runApp(
     EasyLocalization(
       supportedLocales: const [

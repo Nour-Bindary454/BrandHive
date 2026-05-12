@@ -191,15 +191,13 @@ class Explore extends StatelessWidget {
                                     SizedBox(width: 8.w),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AllProductsScreen(
-                                                  products: state.products,
-                                                ),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   // MaterialPageRoute(
+                                        //   //   builder: (context) =>
+                                        //   //       AllProductsScreen(products:  state.products),
+                                        //   // ),
+                                        // );
                                       },
                                       child: Text(
                                         'view_all'.tr(),

@@ -63,8 +63,9 @@ class CartItemWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     GestureDetector(
-                      onTap: () =>
-                          context.read<CartViewModel>().removeItem(item.id),
+                      onTap: () => context.read<CartViewModel>().removeItem(
+                        item.productId,
+                      ),
                       child: Icon(
                         Icons.delete_outline,
                         color: Theme.of(
@@ -117,7 +118,7 @@ class CartItemWidget extends StatelessWidget {
           icon: Icons.remove,
           onTap: item.quantity > 1
               ? () => context.read<CartViewModel>().updateQuantity(
-                  item.id,
+                  item.productId,
                   item.quantity - 1,
                 )
               : null,
@@ -136,7 +137,7 @@ class CartItemWidget extends StatelessWidget {
           context,
           icon: Icons.add,
           onTap: () => context.read<CartViewModel>().updateQuantity(
-            item.id,
+            item.productId,
             item.quantity + 1,
           ),
         ),

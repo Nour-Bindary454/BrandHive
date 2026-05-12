@@ -37,5 +37,9 @@
   "collections": "المجموعات",
   "trending_now": "شائع الآن",
   "browse_all_categories": "تصفح جميع التصنيفات",
-  "all_products": "كل المنتجات"
+  "all_products": "كل المنتجات",
+  "added_to_cart_success": "تم إضافة المنتج للسلة بنجاح",
+  "added_to_cart_error": "فشل إضافة المنتج للسلة",
+  "added_to_wishlist": "تم إضافة المنتج للمفضلة",
+  "removed_from_wishlist": "تم إزالة المنتج من المفضلة"
 }
