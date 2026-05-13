@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'address_model.dart';
 import 'order_item_model.dart';
+import 'status_history_model.dart';
 
-class OrderModel {
+class OrderModel extends Equatable {
   final String? id;
   final String? orderNumber;
   final String? user;
@@ -15,10 +17,12 @@ class OrderModel {
   final double total;
   final String? status;
   final String? paymentStatus;
+  final String? paymentTransactionId;
+  final List<StatusHistoryModel>? statusHistory;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  OrderModel({
+  const OrderModel({
     this.id,
     this.orderNumber,
     this.user,
@@ -32,6 +36,8 @@ class OrderModel {
     required this.total,
     this.status,
     this.paymentStatus,
+    this.paymentTransactionId,
+    this.statusHistory,
     this.createdAt,
     this.updatedAt,
   });
@@ -40,7 +46,7 @@ class OrderModel {
     return OrderModel(
       id: json['_id'],
       orderNumber: json['orderNumber'],
-      user: json['user'],
+      user: json['user'] is Map ? json['user']['_id'] : json['user'],
       shippingAddress: AddressModel.fromJson(json['shippingAddress']),
       paymentMethod: json['paymentMethod'] ?? '',
       items: (json['items'] as List?)
@@ -54,6 +60,10 @@ class OrderModel {
       total: (json['total'] ?? 0).toDouble(),
       status: json['status'],
       paymentStatus: json['paymentStatus'],
+      paymentTransactionId: json['paymentTransactionId'],
+      statusHistory: (json['statusHistory'] as List?)
+          ?.map((e) => StatusHistoryModel.fromJson(e))
+          .toList(),
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : null,
@@ -73,6 +83,15 @@ class OrderModel {
       'tax': tax,
       'discount': discount,
       'total': total,
+      if (paymentTransactionId != null) 'paymentTransactionId': paymentTransactionId,
+      if (statusHistory != null) 'statusHistory': statusHistory!.map((e) => e.toJson()).toList(),
     };
   }
+
+  @override
+  List<Object?> get props => [
+        id, orderNumber, user, shippingAddress, paymentMethod, items,
+        subtotal, shippingFee, tax, discount, total, status, paymentStatus,
+        paymentTransactionId, statusHistory, createdAt, updatedAt,
+      ];
 }

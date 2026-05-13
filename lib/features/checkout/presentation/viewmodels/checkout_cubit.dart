@@ -109,7 +109,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     try {
       final order = OrderModel(
         shippingAddress: state.selectedAddress!,
-        paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cash',
+        paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cod',
         items: state.checkoutItems,
         subtotal: state.subtotal,
 
@@ -118,6 +118,15 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       );
 
       final result = await _repository.placeOrder(order);
+      
+      // Clear cart after successful order creation
+      try {
+        await _repository.clearCart();
+      } catch (e) {
+        // Log error but don't fail the checkout since order is already placed
+        print('Failed to clear cart: $e');
+      }
+
       emit(state.copyWith(
         isLoading: false,
         paymentUrl: result.paymentUrl,

@@ -1,130 +1,134 @@
-import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:brand/features/orders/presentation/views/widgets/order_outlined_button.dart';
-import 'package:brand/features/orders/presentation/views/widgets/order_filled_button.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:brand/core/sharedWidgets/basic_text.dart';
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:brand/features/checkout/data/models/order_model.dart';
+import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
-  final String orderId;
-  final String date;
-  final String status;
-  final List<String> items;
-  final String additionalItems;
-  final String price;
+  final OrderModel order;
+  final VoidCallback onTap;
 
-  const OrderCard({
-    super.key,
-    required this.orderId,
-    required this.date,
-    required this.status,
-    required this.items,
-    required this.additionalItems,
-    required this.price,
-  });
+  const OrderCard({super.key, required this.order, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final bool isDelivered = status.toLowerCase() == "delivered";
+    // Determine status color
+    Color statusColor = Colors.grey;
+    final status = order.status?.toLowerCase() ?? 'pending';
+    if (status == 'pending') statusColor = Colors.orange;
+    if (status == 'confirmed') statusColor = Colors.blue;
+    if (status == 'shipped') statusColor = Colors.purple;
+    if (status == 'delivered') statusColor = Colors.green;
+    if (status == 'canceled' || status == 'failed') statusColor = Colors.red;
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 15.h),
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: const Color(0xFFE2E8F0), width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header: Order ID & Status
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BasicText(
-                    text: orderId,
-                    fontSize: 15.sp,
-                    color: const Color(0xFF1E293B),
-                    isBold: true,
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_today_outlined, size: 14.sp, color: const Color(0xFF64748B)),
-                      SizedBox(width: 5.w),
-                      BasicText(
-                        text: date,
-                        fontSize: 12.sp,
-                        color: const Color(0xFF64748B),
-                        isBold: false,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: isDelivered ? const Color(0xFFBCE6A6) : const Color(0xFF93C5FD),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: BasicText(
-                  text: status,
-                  fontSize: 12.sp,
-                  color: isDelivered ? const Color(0xFF166534) : const Color(0xFF1D4ED8),
+    final dateStr = order.createdAt != null 
+        ? DateFormat('dd MMM yyyy, hh:mm a').format(order.createdAt!) 
+        : '';
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 12.h),
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BasicText(
+                  text: 'Order #${order.orderNumber ?? order.id?.substring(0, 8) ?? 'N/A'}',
+                  fontSize: 16.sp,
                   isBold: true,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-
-          // Items List
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ...items.map(
-                (item) => Padding(
-                  padding: EdgeInsets.only(bottom: 4.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
                   child: BasicText(
-                    text: item,
-                    fontSize: 13.sp,
-                    color: const Color(0xFF1E293B),
-                    isBold: false,
+                    text: status.toUpperCase(),
+                    fontSize: 10.sp,
+                    isBold: true,
+                    color: statusColor,
                   ),
                 ),
-              ),
-              SizedBox(height: 2.h),
-              BasicText(
-                text: additionalItems,
-                fontSize: 11.sp,
-                color: const Color(0xFF94A3B8),
-                isBold: false,
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-
-          // Footer: Price & Buttons
-          Row(
-            children: [
-              BasicText(
-                text: price,
-                fontSize: 16.sp,
-                color: const Color(0xFF1E293B),
-                isBold: true,
-              ),
-              const Spacer(),
-              const OrderOutlinedButton(text: "Invoice", icon: Icons.download_outlined),
-              SizedBox(width: 10.w),
-              const OrderFilledButton(text: "Track"),
-            ],
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Icon(Icons.calendar_today_outlined, size: 14.sp, color: Colors.grey),
+                SizedBox(width: 6.w),
+                BasicText(
+                  text: dateStr,
+                  fontSize: 12.sp,
+                  color: Colors.grey.shade600,
+                  isBold: false,
+                ),
+              ],
+            ),
+            SizedBox(height: 12.h),
+            const Divider(),
+            SizedBox(height: 12.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BasicText(
+                      text: 'total_amount'.tr(),
+                      fontSize: 12.sp,
+                      color: Colors.grey.shade600,
+                      isBold: false,
+                    ),
+                    SizedBox(height: 2.h),
+                    BasicText(
+                      text: 'EGP ${order.total.toStringAsFixed(2)}',
+                      fontSize: 16.sp,
+                      isBold: true,
+                      color: BasicColors.buttonColorDark,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    BasicText(
+                      text: 'payment'.tr(),
+                      fontSize: 12.sp,
+                      color: Colors.grey.shade600,
+                      isBold: false,
+                    ),
+                    SizedBox(height: 2.h),
+                    BasicText(
+                      text: order.paymentMethod.toUpperCase(),
+                      fontSize: 14.sp,
+                      isBold: true,
+                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

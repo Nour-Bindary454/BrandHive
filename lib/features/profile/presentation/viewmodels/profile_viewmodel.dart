@@ -44,6 +44,10 @@ class ProfileViewModel extends ChangeNotifier {
             badgeText: '12 items',
           ),
           MenuItemModel(
+            title: 'my_addresses'.tr().tr().tr(),
+            icon: Icons.location_on_outlined,
+          ),
+          MenuItemModel(
             title: 'payment_methods'.tr().tr().tr(),
             icon: Icons.payment_outlined,
           ),

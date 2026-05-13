@@ -15,6 +15,9 @@ class EndPoints {
   static String wishlist = "wishlist";
   static String cart = "cart";
   static String orders = "orders";
+  static String addresses = "addresses";
+  static String shippingFee = "shipping-fee";
+  static String paymentWebhook = "payment/webhook/paymob";
 
   static const String resetPassword = "auth/reset-password";
 }

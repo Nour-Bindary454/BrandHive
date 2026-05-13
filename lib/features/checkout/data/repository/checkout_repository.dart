@@ -23,5 +23,12 @@ class CheckoutRepository {
       rethrow;
     }
   }
-}
 
+  Future<void> clearCart() async {
+    try {
+      await _remoteDataSource.clearCart();
+    } catch (e) {
+      rethrow;
+    }
+  }
+}

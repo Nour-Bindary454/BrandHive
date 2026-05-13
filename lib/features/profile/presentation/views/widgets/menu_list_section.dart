@@ -7,6 +7,7 @@ import '../../../../../core/sharedWidgets/basic_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
+import 'package:brand/features/address/presentation/views/address_list_screen.dart';
 
 class MenuListSection extends StatelessWidget {
   final List<MenuItemModel> items;
@@ -64,6 +65,11 @@ class MenuListSection extends StatelessWidget {
                 Navigator.pushNamed(context, '/paymentMethods');
               } else if (item.title == 'wishlist'.tr()) {
                 Navigator.pushNamed(context, '/wishlist');
+              } else if (item.title == 'my_addresses'.tr()) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddressListScreen()),
+                );
               } else if (item.title == 'my_orders'.tr()) {
                 Navigator.pushNamed(context, '/orders');
               } else if (item.title == 'notifications'.tr()) {

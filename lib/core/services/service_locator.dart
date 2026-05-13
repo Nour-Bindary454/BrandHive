@@ -12,6 +12,14 @@ import 'package:brand/features/checkout/data/data_sources/checkout_remote_data_s
 import 'package:brand/features/checkout/data/repository/checkout_repository.dart';
 import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
 
+import 'package:brand/features/address/data/data_sources/address_remote_data_source.dart';
+import 'package:brand/features/address/data/repository/address_repository.dart';
+import 'package:brand/features/address/presentation/viewmodels/address_cubit.dart';
+
+import 'package:brand/features/orders/data/data_sources/orders_remote_data_source.dart';
+import 'package:brand/features/orders/data/repository/orders_repository.dart';
+import 'package:brand/features/orders/presentation/viewmodels/orders_cubit.dart';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'api_services.dart';
@@ -79,7 +87,18 @@ void setup() {
   sl.registerLazySingleton<CheckoutRepository>(
     () => CheckoutRepository(sl()),
   );
-
+  sl.registerLazySingleton<AddressRemoteDataSource>(
+    () => AddressRemoteDataSource(sl()),
+  );
+  sl.registerLazySingleton<AddressRepository>(
+    () => AddressRepository(sl()),
+  );
+  sl.registerLazySingleton<OrdersRemoteDataSource>(
+    () => OrdersRemoteDataSource(sl()),
+  );
+  sl.registerLazySingleton<OrdersRepository>(
+    () => OrdersRepository(sl()),
+  );
 
   // 🔹 Cubits
   sl.registerFactory(() => RegisterCubit(sl()));
@@ -94,5 +113,6 @@ void setup() {
   sl.registerFactory<CategoryCubit>(() => CategoryCubit());
   sl.registerFactory(() => WishlistCubit(sl()));
   sl.registerFactory(() => CheckoutCubit(sl()));
-
+  sl.registerFactory(() => AddressCubit(sl()));
+  sl.registerFactory(() => OrdersCubit(sl()));
 }

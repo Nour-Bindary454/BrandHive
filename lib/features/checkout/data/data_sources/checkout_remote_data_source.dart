@@ -11,33 +11,36 @@ class CheckoutRemoteDataSource {
 
   /// Fetch saved addresses from API
   Future<List<AddressModel>> fetchSavedAddresses() async {
-    // Note: If there's no specific address endpoint yet, we might keep it mocked
-    // or use a profile/user endpoint. For now, assuming EndPoints.orders might have a related one
-    // or we use a hardcoded endpoint for addresses if available.
-    // Given the task, I'll stick to the orders integration.
-
-    // For now, keeping mock addresses as there's no address endpoint in EndPoints
-    await Future.delayed(const Duration(milliseconds: 500));
-    return [
-      // AddressModel(
-      //   id: 'addr1',
-      //   firstName: 'Muhamed',
-      //   lastName: 'Hassan',
-      //   phoneNumber: '+20 123 456 7890',
-      //   streetAddress: '15 El Tahrir St.',
-      //   city: 'Cairo',
-      //   areaDistrict: 'Zamalek',
-      // ),
-    ];
+    final response = await _apiService.getData(endPoint: EndPoints.addresses);
+    
+    // The response is a Map containing a 'data' key which is a List
+    final List<dynamic> data = response.data['data'] ?? [];
+    return data.map((json) => AddressModel.fromJson(json)).toList();
   }
 
   /// Place an order via API
   Future<CheckoutResponseModel> submitOrder(OrderModel order) async {
     final response = await _apiService.postData(
       endPoint: EndPoints.orders,
-      data: order.toJson(),
+      data: {
+        'shippingAddress': {
+          'fullName': order.shippingAddress.fullName,
+          'phone': order.shippingAddress.phone,
+          'street': order.shippingAddress.street,
+          'city': order.shippingAddress.city,
+          'governorate': order.shippingAddress.governorate,
+          if (order.shippingAddress.postalCode != null) 'postalCode': order.shippingAddress.postalCode,
+          'country': order.shippingAddress.country,
+        },
+        'paymentMethod': order.paymentMethod,
+      },
     );
 
     return CheckoutResponseModel.fromJson(response.data);
+  }
+
+  /// Clear the cart after placing the order
+  Future<void> clearCart() async {
+    await _apiService.deleteData(endPoint: 'cart/clear');
   }
 }

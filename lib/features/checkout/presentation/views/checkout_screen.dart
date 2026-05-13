@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   final List<OrderItemModel> items;
   final double subtotal;
 
@@ -26,43 +26,86 @@ class CheckoutScreen extends StatelessWidget {
   });
 
   @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  /// Prevents the listener from firing navigation twice
+  bool _navigated = false;
+
+  void _navigateToSuccess(BuildContext context, CheckoutState state) {
+    if (!mounted || _navigated) return;
+    _navigated = true;
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => OrderSuccessScreen(
+          response: state.orderSuccessResult!,
+        ),
+      ),
+      (route) => route.isFirst,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CheckoutCubit>()..initCheckout(
-        items: items,
-        subtotal: subtotal,
-      ),
+      create: (context) => sl<CheckoutCubit>()
+        ..initCheckout(
+          items: widget.items,
+          subtotal: widget.subtotal,
+        ),
       child: BlocConsumer<CheckoutCubit, CheckoutState>(
+        listenWhen: (prev, curr) {
+          // Only re-evaluate when loading stops or result appears
+          if (curr.isLoading) return false;
+          if (curr.orderSuccessResult != prev.orderSuccessResult) return true;
+          if (curr.paymentUrl != prev.paymentUrl) return true;
+          if (curr.error != prev.error && curr.error != null) return true;
+          return false;
+        },
         listener: (context, state) {
-          if (state.orderSuccessResult != null) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => OrderSuccessScreen(
-                  response: state.orderSuccessResult!,
-                ),
-              ),
-            );
-          }
+          if (_navigated) return;
 
-          if (state.paymentUrl != null) {
-            final cubit = context.read<CheckoutCubit>();
+          // ── Paymob: has paymentUrl → show WebView then success
+          if (state.orderSuccessResult != null && state.paymentUrl != null) {
+            _navigated = true;
             final url = state.paymentUrl!;
-            cubit.clearPaymentUrl(); // Clear to prevent multiple navigations
+            // Clear URL in cubit to avoid future re-fires
+            context.read<CheckoutCubit>().clearPaymentUrl();
 
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => PaymentWebViewScreen(
                   paymentUrl: url,
-                  onPaymentFinished: (success) {
-                    Navigator.pop(context); // Close WebView
-                    cubit.handlePaymentResult(success);
-                  },
+                  onPaymentFinished: (_) => Navigator.pop(context),
                 ),
               ),
-            );
+            ).then((_) {
+              // After WebView is closed, go to success screen
+              if (mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => OrderSuccessScreen(
+                      response: state.orderSuccessResult!,
+                    ),
+                  ),
+                  (route) => route.isFirst,
+                );
+              }
+            });
+            return;
           }
+
+          // ── COD: no paymentUrl → navigate directly to success
+          if (state.orderSuccessResult != null && state.paymentUrl == null) {
+            _navigateToSuccess(context, state);
+            return;
+          }
+
+          // ── Error
           if (state.error != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.error!)),
@@ -88,7 +131,7 @@ class CheckoutScreen extends StatelessWidget {
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             appBar: AppBar(
               title: BasicText(
-                text: 'checkout'.tr().tr(),
+                text: 'checkout'.tr(),
                 fontSize: 18.sp,
                 color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold: true,
@@ -142,4 +185,3 @@ class CheckoutScreen extends StatelessWidget {
     }
   }
 }
-
