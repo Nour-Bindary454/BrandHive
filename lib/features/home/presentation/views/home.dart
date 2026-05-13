@@ -1,6 +1,7 @@
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/features/category/presentation/views/category_view.dart';
 import 'package:brand/features/home/presentation/views/search_results_screen.dart';
+import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/home/presentation/views/widgets/top_local_brands_section.dart';
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
@@ -13,6 +14,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../view_models/cubit/home_cubit.dart';
 import '../view_models/cubit/home_states.dart';
+import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart';
+import 'package:brand/core/utils/toast/toast.dart';
+import 'package:brand/core/utils/dialogs/cart_dialogs.dart';
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:brand/core/sharedWidgets/basic_button.dart';
+import 'package:brand/core/sharedWidgets/basic_text.dart';
 
 import 'widgets/home_header.dart';
 import 'widgets/home_hero_banner.dart';
@@ -233,9 +240,19 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            onAddToCartTap: (id) {},
+                            onAddToCartTap: (id) {
+                              final product = state.featured.firstWhere(
+                                (p) => p.id == id,
+                              );
+                              CartDialogs.showAddToCartDialog(
+                                context: context,
+                                productId: product.id,
+                                productName: product.name,
+                              );
+                            },
                             onFavoriteTap: (id) {},
                           ),
+
                           SizedBox(height: 32.h),
                         ],
                       ]),

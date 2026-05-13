@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class BrandProfileRepository {
   Future<Either<Failure, List<HomeProduct>>> getBrandProducts(String brandId);
+  Future<Either<Failure, BrandModel>> getBrandById(String brandId);
 }

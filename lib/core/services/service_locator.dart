@@ -1,11 +1,13 @@
+import 'package:brand/features/seller_registration/data/repository/seller_reg_impl.dart';
+import 'package:brand/features/seller_registration/data/repository/seller_reg_repo.dart';
+import 'package:brand/features/seller_registration/presentation/viewModel/seller_reg_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import 'api_services.dart';
 
-// Repos
-import '../../features/signup/data/repository/register_repo_impl.dart';
 import '../../features/signup/data/repository/register_repos.dart';
+import '../../features/signup/data/repository/register_repo_impl.dart';
 
 import '../../features/login/data/repository/login_repos.dart';
 import '../../features/login/data/repository/login_repository_impl.dart';
@@ -39,10 +41,13 @@ import '../../features/newArrivals/data/repository/new_arrivals_repo_impl.dart';
 
 import '../../features/notifications/data/repository/notifications_repo.dart';
 import '../../features/notifications/data/repository/notifications_repo_impl.dart';
+
 import '../../features/admin_dashboard/data/repository/admin_repo.dart';
 import '../../features/admin_dashboard/data/repository/admin_repo_impl.dart';
 
-// Cubits
+import '../../features/checkout/data/data_sources/checkout_remote_data_source.dart';
+import '../../features/checkout/data/repository/checkout_repository.dart';
+
 import '../../features/signup/presentation/view_model/cubit/register_cubit.dart';
 import '../../features/login/presentation/viewsModel/login_cubit.dart';
 import '../../features/forgetPassword/presentaion/viewsModel/forget_cubit.dart';
@@ -57,11 +62,13 @@ import '../../features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
 import '../../features/newArrivals/presentation/viewModel/new_arrivals_cubit.dart';
 import '../../features/notifications/presentation/viewmodel/notifications_cubit.dart';
 import '../../features/admin_dashboard/presentation/view_model/admin_cubit.dart';
+import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
+// ================= GetIt =================
 
 final sl = GetIt.instance;
 
 void setup() {
-  // 🔹 Dio + ApiService
+  // Dio + ApiService
   sl.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
@@ -76,7 +83,8 @@ void setup() {
 
   sl.registerLazySingleton<ApiService>(() => ApiService(sl<Dio>()));
 
-  // 🔹 Repositories
+  // ================= REPOSITORIES =================
+
   sl.registerLazySingleton<RegisterRepository>(() => RegisterRepoImpl(sl()));
   sl.registerLazySingleton<LoginRepository>(() => LoginRepoImpl(sl()));
   sl.registerLazySingleton<ForgetPasswordRepository>(
@@ -99,30 +107,35 @@ void setup() {
   sl.registerLazySingleton<WishlistRepository>(
     () => WishlistRepositoryImpl(sl()),
   );
-  sl.registerLazySingleton<NewArrivalsRepo>(
-    () => NewArrivalsRepoImpl(sl()),
-  );
+  sl.registerLazySingleton<NewArrivalsRepo>(() => NewArrivalsRepoImpl(sl()));
   sl.registerLazySingleton<NotificationsRepository>(
     () => NotificationsRepoImpl(sl()),
   );
-  sl.registerLazySingleton<AdminRepository>(
-    () => AdminRepositoryImpl(),
-  );
+  sl.registerLazySingleton<AdminRepository>(() => AdminRepositoryImpl(sl()));
 
-  // 🔹 Cubits
+  sl.registerLazySingleton<CheckoutRemoteDataSource>(
+    () => CheckoutRemoteDataSource(sl()),
+  );
+  sl.registerLazySingleton<CheckoutRepository>(() => CheckoutRepository(sl()));
+
+  sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
+
+  // ================= CUBITS =================
+
   sl.registerFactory(() => RegisterCubit(sl()));
   sl.registerFactory(() => LoginCubit(sl()));
   sl.registerFactory(() => ForgetPasswordCubit(sl()));
   sl.registerFactory(() => ConfirmEmailCubit(sl()));
   sl.registerFactory(() => VerifyResetCodeCubit(sl()));
-  sl.registerLazySingleton(() => HomeCubit());
+  sl.registerFactory(() => HomeCubit());
   sl.registerFactory(() => ChangePassCubit(sl()));
-
-  sl.registerLazySingleton(() => ExploreCubit(sl())); //
-  sl.registerLazySingleton(() => BrandProfileCubit());
-  sl.registerLazySingleton(() => CategoryCubit());
-  sl.registerLazySingleton(() => WishlistCubit(sl()));
-  sl.registerLazySingleton(() => NewArrivalsCubit(sl()));
-  sl.registerLazySingleton(() => NotificationsCubit(sl()));
-  sl.registerLazySingleton(() => AdminCubit(sl()));
+  sl.registerFactory(() => ExploreCubit(sl()));
+  sl.registerFactory(() => BrandProfileCubit());
+  sl.registerFactory(() => CategoryCubit());
+  sl.registerFactory(() => WishlistCubit(sl()));
+  sl.registerFactory(() => NewArrivalsCubit(sl()));
+  sl.registerFactory(() => NotificationsCubit(sl()));
+  sl.registerFactory(() => AdminCubit(sl()));
+  sl.registerFactory(() => CheckoutCubit(sl()));
+  sl.registerFactory(() => BrandRequestCubit(sl()));
 }

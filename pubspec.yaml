@@ -46,6 +46,9 @@ dependencies:
   cherry_toast: ^1.13.0
   shared_preferences: ^2.5.5
   easy_localization: ^3.0.8
+  webview_flutter: ^4.10.0
+  image_picker: ^1.2.2
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

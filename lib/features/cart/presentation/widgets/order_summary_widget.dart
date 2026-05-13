@@ -24,8 +24,9 @@ class OrderSummaryWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(24.r),
             boxShadow: [
               BoxShadow(
-                color:
-                    Theme.of(context).colorScheme.onSurface.withOpacity(0.04),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withOpacity(0.04),
                 blurRadius: 10,
                 offset: const Offset(0, -4),
               ),
@@ -39,8 +40,7 @@ class OrderSummaryWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).colorScheme.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
 
@@ -49,12 +49,16 @@ class OrderSummaryWidget extends StatelessWidget {
               _buildSummaryRow(
                 context,
                 'Subtotal',
-                '${viewModel.total.toStringAsFixed(0)} EGP',
+                '${viewModel.subtotal.toStringAsFixed(0)} EGP',
               ),
 
               SizedBox(height: 10.h),
 
-              _buildSummaryRow(context, 'Shipping', 'Free'),
+              _buildSummaryRow(
+                context,
+                'Shipping',
+                '${viewModel.shippingCost.toStringAsFixed(0)} EGP',
+              ),
 
               SizedBox(height: 16.h),
 
@@ -70,8 +74,7 @@ class OrderSummaryWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
-                      color:
-                          Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   Text(
@@ -97,11 +100,13 @@ class OrderSummaryWidget extends StatelessWidget {
                           final orderItems = viewModel.items
                               .map(
                                 (e) => OrderItemModel(
-                                  id: e.id,
-                                  name: e.name,
-                                  price: e.price,
+                                  productImage: e.image,
+                                  itemTotal: e.price,
+                                  productName: e.name,
+                                  product: e.productId,
+                                  unitPrice: e.price,
+
                                   quantity: e.quantity,
-                                  image: e.image,
                                 ),
                               )
                               .toList();
@@ -109,7 +114,10 @@ class OrderSummaryWidget extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const CheckoutScreen(),
+                              builder: (_) => CheckoutScreen(
+                                items: orderItems,
+                                subtotal: viewModel.subtotal,
+                              ),
                             ),
                           );
                         },

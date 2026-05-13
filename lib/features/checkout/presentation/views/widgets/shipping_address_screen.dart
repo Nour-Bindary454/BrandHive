@@ -1,8 +1,12 @@
+import 'package:brand/features/checkout/data/models/address_model.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
+import 'package:brand/features/checkout/presentation/viewmodels/checkout_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/svg_images/svg_images.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/custom_shipping_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -16,119 +20,143 @@ class ShippingAddressScreen extends StatefulWidget {
 }
 
 class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _streetController = TextEditingController();
   final _cityController = TextEditingController();
   final _areaController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// 🔹 Title
-            Row(
-              children: [
-                SvgPicture.asset(SvgImages.locationdark),
-                SizedBox(width: 8.w),
-                BasicText(
-                  text: 'shipping_address'.tr(),
-                  fontSize: 17.sp,
-                  color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-                  isBold: true,
-                  fontFamily: 'Outfit',
-                ),
-              ],
-            ),
+  void initState() {
+    super.initState();
+    final cubit = context.read<CheckoutCubit>();
+    if (cubit.state.selectedAddress != null) {
+      _fullNameController.text = cubit.state.selectedAddress!.fullName;
+      _phoneController.text = cubit.state.selectedAddress!.phone;
+      _streetController.text = cubit.state.selectedAddress!.street;
+      _cityController.text = cubit.state.selectedAddress!.city;
+      _areaController.text = cubit.state.selectedAddress!.country;
+    }
+  }
 
-            SizedBox(height: 20.h),
+  void _updateAddress() {
+    context.read<CheckoutCubit>().selectAddress(
+      AddressModel(
+        governorate: '',
+        fullName: _fullNameController.text,
 
-            /// 🔹 Form
-            Row(
-              children: [
-                Expanded(
-                  child: CustomShippingForm(
-                    context: context,
-                    label: 'First Name',
-                    controller: _firstNameController,
-                    isPhone: false,
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: CustomShippingForm(
-                    context: context,
-                    label: 'Last Name',
-                    controller: _lastNameController,
-                    isPhone: false,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 14.h),
-
-            CustomShippingForm(
-              context: context,
-              label: 'Phone Number',
-              controller: _phoneController,
-              isPhone: true,
-            ),
-
-            SizedBox(height: 14.h),
-
-            CustomShippingForm(
-              context: context,
-              label: 'Street Address',
-              controller: _streetController,
-              isPhone: false,
-            ),
-
-            SizedBox(height: 14.h),
-
-            Row(
-              children: [
-                Expanded(
-                  child: CustomShippingForm(
-                    context: context,
-                    label: 'City',
-                    controller: _cityController,
-                    isPhone: false,
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: CustomShippingForm(
-                    context: context,
-                    label: 'Area/District',
-                    controller: _areaController,
-                    isPhone: false,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20.h),
-
-            /// 🔹 Saved Address UI (ONLY UI)
-            _savedAddressUI(),
-          ],
-        ),
+        phone: _phoneController.text,
+        street: _streetController.text,
+        city: _cityController.text,
+        country: _areaController.text,
       ),
     );
   }
 
-  /// ===================== SAVED ADDRESS UI =====================
-  Widget _savedAddressUI() {
-    final addresses = [
-      {"title": "Home", "address": "12 Nile Street, Cairo, Egypt"},
-    ];
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CheckoutCubit, CheckoutState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// 🔹 Title
+                Row(
+                  children: [
+                    SvgPicture.asset(SvgImages.locationdark),
+                    SizedBox(width: 8.w),
+                    BasicText(
+                      text: 'shipping_address'.tr().tr(),
+                      fontSize: 17.sp,
+                      color:
+                          Theme.of(context).textTheme.bodyLarge?.color ??
+                          Colors.black,
+                      isBold: true,
+                      fontFamily: 'Outfit',
+                    ),
+                  ],
+                ),
 
+                SizedBox(height: 20.h),
+
+                /// 🔹 Form
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomShippingForm(
+                        context: context,
+                        label: 'Full Name',
+                        controller: _fullNameController,
+                        isPhone: false,
+                        onChanged: (_) => _updateAddress(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 14.h),
+
+                CustomShippingForm(
+                  context: context,
+                  label: 'Phone Number',
+                  controller: _phoneController,
+                  isPhone: true,
+                  onChanged: (_) => _updateAddress(),
+                ),
+
+                SizedBox(height: 14.h),
+
+                CustomShippingForm(
+                  context: context,
+                  label: 'Street Address',
+                  controller: _streetController,
+                  isPhone: false,
+                  onChanged: (_) => _updateAddress(),
+                ),
+
+                SizedBox(height: 14.h),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomShippingForm(
+                        context: context,
+                        label: 'City',
+                        controller: _cityController,
+                        isPhone: false,
+                        onChanged: (_) => _updateAddress(),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: CustomShippingForm(
+                        context: context,
+                        label: 'Area/District',
+                        controller: _areaController,
+                        isPhone: false,
+                        onChanged: (_) => _updateAddress(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20.h),
+
+                /// 🔹 Saved Address UI
+                if (state.savedAddresses.isNotEmpty)
+                  _savedAddressUI(context, state),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _savedAddressUI(BuildContext context, CheckoutState state) {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -149,60 +177,81 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
 
           SizedBox(height: 10.h),
 
-          ...addresses.map((address) {
-            return Container(
-              margin: EdgeInsets.only(bottom: 10.h),
-              padding: EdgeInsets.all(14.r),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(14.r),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Row(
-                children: [
-                  /// icon
-                  CircleAvatar(
-                    backgroundColor: const Color(0xFF2463EB).withOpacity(0.1),
-                    child: const Icon(
-                      Icons.location_on,
-                      color: BasicColors.buttonColorDark,
-                    ),
+          ...state.savedAddresses.map((address) {
+            bool isSelected = state.selectedAddress?.id == address.id;
+            return GestureDetector(
+              onTap: () {
+                context.read<CheckoutCubit>().selectAddress(address);
+                _fullNameController.text = address.fullName;
+                _phoneController.text = address.phone;
+                _streetController.text = address.street;
+                _cityController.text = address.city;
+                _areaController.text = address.country;
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10.h),
+                padding: EdgeInsets.all(14.r),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(14.r),
+                  border: Border.all(
+                    color: isSelected
+                        ? BasicColors.buttonColorDark
+                        : Colors.grey.shade300,
                   ),
-
-                  SizedBox(width: 12.w),
-
-                  /// text
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BasicText(
-                          text: address["title"]!,
-                          fontSize: 14.sp,
-                          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-                          isBold: true,
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: const Color(0xFF2463EB).withOpacity(0.1),
+                      child: const Icon(
+                        Icons.location_on,
+                        color: BasicColors.buttonColorDark,
+                      ),
+                    ),
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BasicText(
+                            text: "Address", // or address title if available
+                            fontSize: 14.sp,
+                            color:
+                                Theme.of(context).textTheme.bodyLarge?.color ??
+                                Colors.black,
+                            isBold: true,
+                          ),
+                          SizedBox(height: 3.h),
+                          BasicText(
+                            text: "${address.street}, ${address.city}",
+                            fontSize: 13.sp,
+                            color: Colors.grey,
+                            isBold: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 18.w,
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isSelected
+                              ? BasicColors.buttonColorDark
+                              : Colors.grey,
                         ),
-                        SizedBox(height: 3.h),
-                        BasicText(
-                          text: address["address"]!,
-                          fontSize: 13.sp,
-                          color: Colors.grey,
-                          isBold: true,
-                        ),
-                      ],
+                        color: isSelected
+                            ? BasicColors.buttonColorDark
+                            : Colors.transparent,
+                      ),
+                      child: isSelected
+                          ? Icon(Icons.check, size: 12.sp, color: Colors.white)
+                          : null,
                     ),
-                  ),
-
-                  /// radio UI only
-                  Container(
-                    width: 18.w,
-                    height: 18.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }).toList(),

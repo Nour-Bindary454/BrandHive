@@ -7,6 +7,7 @@ class RegistrationTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextEditingController? controller;
   final bool isPassword;
+  final bool readOnly; // ← جديد
   final int maxLines;
   final TextInputType keyboardType;
 
@@ -17,6 +18,7 @@ class RegistrationTextField extends StatefulWidget {
     this.suffixIcon,
     this.controller,
     this.isPassword = false,
+    this.readOnly = false, // ← جديد
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
   });
@@ -43,10 +45,13 @@ class _RegistrationTextFieldState extends State<RegistrationTextField> {
         obscureText: widget.isPassword ? _obscureText : false,
         maxLines: widget.isPassword ? 1 : widget.maxLines,
         keyboardType: widget.keyboardType,
+        readOnly: widget.readOnly, // ← جديد
         style: TextStyle(
           fontFamily: 'Poppins',
           fontSize: 14.sp,
-          color: const Color(0xFF2B2B2B),
+          color: widget.readOnly
+              ? const Color(0xFF8E8E8E) // لون أفتح لو read-only
+              : const Color(0xFF2B2B2B),
         ),
         decoration: InputDecoration(
           hintText: widget.hint,
@@ -65,14 +70,14 @@ class _RegistrationTextFieldState extends State<RegistrationTextField> {
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(
-                    _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    _obscureText
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
                     color: const Color(0xFF8E8E8E),
                     size: 20.sp,
                   ),
                   onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
+                    setState(() => _obscureText = !_obscureText);
                   },
                 )
               : widget.suffixIcon,
@@ -82,8 +87,10 @@ class _RegistrationTextFieldState extends State<RegistrationTextField> {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: const BorderSide(
-              color: Color(0xFFE5E5E5),
+            borderSide: BorderSide(
+              color: widget.readOnly
+                  ? const Color(0xFFEEEEEE) // border أفتح لو read-only
+                  : const Color(0xFFE5E5E5),
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -94,7 +101,9 @@ class _RegistrationTextFieldState extends State<RegistrationTextField> {
             ),
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: widget.readOnly
+              ? const Color(0xFFF5F5F5) // background أفتح لو read-only
+              : Colors.white,
         ),
       ),
     );

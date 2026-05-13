@@ -1,18 +1,20 @@
+import 'package:brand/features/seller_registration/presentation/views/widgets/registration_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_dropdown.dart';
-import 'package:brand/features/seller_registration/presentation/views/widgets/registration_text_field.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 
-class AddressInfoStep extends StatefulWidget {
-  const AddressInfoStep({super.key});
+class AddressInfoStep extends StatelessWidget {
+  final String? selectedCountry;
+  final ValueChanged<String?>? onCountryChanged;
+  final TextEditingController? cityController;
 
-  @override
-  State<AddressInfoStep> createState() => _AddressInfoStepState();
-}
-
-class _AddressInfoStepState extends State<AddressInfoStep> {
-  String? selectedCountry;
+  const AddressInfoStep({
+    super.key,
+    this.selectedCountry,
+    this.onCountryChanged,
+    this.cityController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +26,29 @@ class _AddressInfoStepState extends State<AddressInfoStep> {
           title: 'address_information'.tr(),
           icon: Icons.location_on_outlined,
         ),
+
         RegistrationDropdown(
           hint: 'Select Country',
           prefixIcon: Icons.language_outlined,
-          items: const ['Egypt', 'Saudi Arabia', 'UAE', 'USA', 'UK'],
+          items: const [
+            'Egypt',
+            'Saudi Arabia',
+            'UAE',
+            'Kuwait',
+            'Qatar',
+            'Bahrain',
+            'Jordan',
+            'USA',
+            'UK',
+          ],
           value: selectedCountry,
-          onChanged: (value) {
-            setState(() {
-              selectedCountry = value;
-            });
-          },
+          onChanged: (value) => onCountryChanged?.call(value),
         ),
-        const RegistrationTextField(
+
+        RegistrationTextField(
           hint: 'City',
           prefixIcon: Icons.location_city_outlined,
-        ),
-        const RegistrationTextField(
-          hint: 'Street Address',
-          prefixIcon: Icons.home_outlined,
+          controller: cityController,
         ),
       ],
     );

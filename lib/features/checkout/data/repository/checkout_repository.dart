@@ -1,5 +1,6 @@
 import '../data_sources/checkout_remote_data_source.dart';
 import '../models/address_model.dart';
+import '../models/checkout_response_model.dart';
 import '../models/order_model.dart';
 
 class CheckoutRepository {
@@ -11,17 +12,16 @@ class CheckoutRepository {
     try {
       return await _remoteDataSource.fetchSavedAddresses();
     } catch (e) {
-      // Handle logging or mapping to failures
       rethrow;
     }
   }
 
-  Future<String> placeOrder(OrderModel order) async {
+  Future<CheckoutResponseModel> placeOrder(OrderModel order) async {
     try {
-      final orderId = await _remoteDataSource.submitOrder(order);
-      return orderId;
+      return await _remoteDataSource.submitOrder(order);
     } catch (e) {
       rethrow;
     }
   }
 }
+

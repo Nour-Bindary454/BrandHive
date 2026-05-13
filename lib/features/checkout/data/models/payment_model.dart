@@ -1,7 +1,6 @@
 enum PaymentMethodType {
   creditCard,
   cashOnDelivery,
-  mobileWallet,
 }
 
 class PaymentModel {
@@ -23,8 +22,6 @@ class PaymentModel {
         return 'Credit/Debit Card';
       case PaymentMethodType.cashOnDelivery:
         return 'Cash on Delivery';
-      case PaymentMethodType.mobileWallet:
-        return 'Mobile Wallet';
     }
   }
 

@@ -1,37 +1,73 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/features/seller_registration/presentation/views/widgets/registration_dropdown.dart';
+import 'package:brand/features/seller_registration/data/model/category_model.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/registration_text_field.dart';
 import 'package:brand/features/seller_registration/presentation/views/widgets/section_header.dart';
+import 'package:brand/features/seller_registration/presentation/views/widgets/steps/brand_logo.dart';
+import 'package:brand/features/seller_registration/presentation/views/widgets/store_category_selector.dart';
+import 'package:brand/features/seller_registration/presentation/views/widgets/store_ships_toggle.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StoreInfoStep extends StatefulWidget {
-  const StoreInfoStep({super.key});
+  final TextEditingController? nameController;
+  final TextEditingController? descriptionController;
+  final TextEditingController? websiteController;
+  final TextEditingController? whatsappController;
+  final List<CategoryModel> categories;
+  final List<String> selectedCategoryIds;
+  final ValueChanged<List<String>>? onCategoriesChanged;
+  final bool shipsInternationally;
+  final ValueChanged<bool>? onShipsInternationallyChanged;
+  final File? selectedLogo;
+  final ValueChanged<File> onLogoSelected;
+
+  const StoreInfoStep({
+    super.key,
+    required this.selectedLogo,
+    required this.onLogoSelected,
+    this.nameController,
+    this.descriptionController,
+    this.websiteController,
+    this.whatsappController,
+    required this.categories,
+    required this.selectedCategoryIds,
+    this.onCategoriesChanged,
+    required this.shipsInternationally,
+    this.onShipsInternationallyChanged,
+  });
 
   @override
   State<StoreInfoStep> createState() => _StoreInfoStepState();
 }
 
 class _StoreInfoStepState extends State<StoreInfoStep> {
-  String? selectedCategory;
-  String? selectedBusinessType;
-  final TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _descriptionController;
   int _charCount = 0;
 
   @override
   void initState() {
     super.initState();
-    _descriptionController.addListener(() {
-      setState(() {
-        _charCount = _descriptionController.text.length;
-      });
-    });
+    _descriptionController =
+        widget.descriptionController ?? TextEditingController();
+    _charCount = _descriptionController.text.length;
+    _descriptionController.addListener(
+      () => setState(() => _charCount = _descriptionController.text.length),
+    );
   }
 
   @override
   void dispose() {
-    _descriptionController.dispose();
+    if (widget.descriptionController == null) {
+      _descriptionController.dispose();
+    }
     super.dispose();
+  }
+
+  void _toggleCategory(String id) {
+    final updated = List<String>.from(widget.selectedCategoryIds);
+    updated.contains(id) ? updated.remove(id) : updated.add(id);
+    widget.onCategoriesChanged?.call(updated);
   }
 
   @override
@@ -45,33 +81,24 @@ class _StoreInfoStepState extends State<StoreInfoStep> {
           icon: Icons.storefront_outlined,
         ),
         SizedBox(height: 16.h),
-        const RegistrationTextField(
+        BrandLogoPicker(
+          initialImage: widget.selectedLogo,
+          onImageSelected: widget.onLogoSelected,
+        ),
+        SizedBox(height: 16.h),
+
+        RegistrationTextField(
           hint: 'Store name',
           prefixIcon: Icons.store_outlined,
+          controller: widget.nameController,
         ),
-        RegistrationDropdown(
-          hint: 'Select a category',
-          prefixIcon: Icons.local_offer_outlined,
-          items: const ['Fashion', 'Electronics', 'Home', 'Beauty', 'Other'],
-          value: selectedCategory,
-          onChanged: (value) {
-            setState(() {
-              selectedCategory = value;
-            });
-          },
+
+        StoreCategorySelector(
+          categories: widget.categories,
+          selectedCategoryIds: widget.selectedCategoryIds,
+          onToggle: _toggleCategory,
         ),
-        RegistrationDropdown(
-          hint: 'Business type',
-          prefixIcon: Icons.business_center_outlined,
-          items: const ['Individual', 'Company', 'LLC'],
-          value: selectedBusinessType,
-          onChanged: (value) {
-            setState(() {
-              selectedBusinessType = value;
-            });
-          },
-        ),
-        
+
         Stack(
           children: [
             RegistrationTextField(
@@ -93,6 +120,27 @@ class _StoreInfoStepState extends State<StoreInfoStep> {
             ),
           ],
         ),
+
+        RegistrationTextField(
+          hint: 'Website (optional)',
+          prefixIcon: Icons.link_outlined,
+          controller: widget.websiteController,
+          keyboardType: TextInputType.url,
+        ),
+
+        RegistrationTextField(
+          hint: 'WhatsApp link (optional)',
+          prefixIcon: Icons.chat_outlined,
+          controller: widget.whatsappController,
+          keyboardType: TextInputType.url,
+        ),
+
+        StoreShipsToggle(
+          value: widget.shipsInternationally,
+          onChanged: widget.onShipsInternationallyChanged,
+        ),
+
+        SizedBox(height: 16.h),
       ],
     );
   }

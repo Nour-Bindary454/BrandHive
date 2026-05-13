@@ -6,10 +6,10 @@ class TokenManager {
   }
 
   static Future<String?> getToken() async {
-    return CacheHelper.getData('token');
+    return CacheHelper.getData(key: 'token');
   }
 
   static Future<void> clear() async {
-    CacheHelper.removeData('token');
+    CacheHelper.removeData(key: 'token');
   }
 }

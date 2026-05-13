@@ -9,6 +9,7 @@ class Product {
   final double price;
   final String currency;
   final bool isFavorite;
+  final bool? isActive;
 
   Product({
     required this.id,
@@ -21,6 +22,7 @@ class Product {
     required this.price,
     required this.currency,
     this.isFavorite = false,
+    this.isActive = true,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -35,10 +37,11 @@ class Product {
       price: (json['price'] as num).toDouble(),
       currency: json['currency'],
       isFavorite: json['isFavorite'] ?? false,
+      isActive: json['isActive'] ?? true,
     );
   }
 
-  Product copyWith({bool? isFavorite}) {
+  Product copyWith({bool? isFavorite, bool? isActive}) {
     return Product(
       id: id,
       brandId: brandId,
@@ -50,6 +53,7 @@ class Product {
       price: price,
       currency: currency,
       isFavorite: isFavorite ?? this.isFavorite,
+      isActive: isActive ?? this.isActive,
     );
   }
 }

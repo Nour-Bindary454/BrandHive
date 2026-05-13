@@ -13,7 +13,7 @@ class Logout extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             // مسح التوكن
-            await CacheHelper.removeData("token");
+            await CacheHelper.removeData(key: "token");
 
             //الرجوع لصفحة اللوجين ومسح كل الشاشات
             Navigator.pushNamedAndRemoveUntil(

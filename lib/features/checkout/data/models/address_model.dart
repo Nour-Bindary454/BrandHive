@@ -1,34 +1,48 @@
 class AddressModel {
-  final String id; // added for saved addresses
-  final String firstName;
-  final String lastName;
-  final String phoneNumber;
-  final String streetAddress;
+  final String? id;
+  final String fullName;
+  final String phone;
+  final String street;
   final String city;
-  final String areaDistrict;
+  final String governorate;
+  final String? postalCode;
+  final String country;
 
   AddressModel({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.phoneNumber,
-    required this.streetAddress,
+    this.id,
+    required this.fullName,
+    required this.phone,
+    required this.street,
     required this.city,
-    required this.areaDistrict,
+    required this.governorate,
+    this.postalCode,
+    required this.country,
   });
 
-  String get fullName => '$firstName $lastName';
-  String get fullAddress => '$streetAddress, $areaDistrict, $city';
+  factory AddressModel.fromJson(Map<String, dynamic> json) {
+    return AddressModel(
+      id: json['_id'],
+      fullName: json['fullName'] ?? '',
+      phone: json['phone'] ?? '',
+      street: json['street'] ?? '',
+      city: json['city'] ?? '',
+      governorate: json['governorate'] ?? '',
+      postalCode: json['postalCode'],
+      country: json['country'] ?? '',
+    );
+  }
+
+  String get fullAddress => '$street, $city, $governorate, $country';
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'firstName': firstName,
-      'lastName': lastName,
-      'phoneNumber': phoneNumber,
-      'streetAddress': streetAddress,
+      'fullName': fullName,
+      'phone': phone,
+      'street': street,
       'city': city,
-      'areaDistrict': areaDistrict,
+      'governorate': governorate,
+      'postalCode': postalCode,
+      'country': country,
     };
   }
 }

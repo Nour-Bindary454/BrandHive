@@ -1,74 +1,55 @@
-import '../model/cart_item_model.dart';
+import 'package:brand/core/services/api_services.dart';
+import 'package:brand/core/services/end_points.dart';
+
+import '../model/cart_response_model.dart';
 
 class CartRepository {
-  // Mock internal database for offline/local cart testing
-  final List<CartItemModel> _mockDatabase = [
-    CartItemModel(
-      id: 'p1',
-      name: 'Split-Hem Flare Pants',
-      brand: 'CARENA',
-      price: 799.0,
-      image:
-          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=300&q=80',
-      quantity: 1,
-    ),
-    CartItemModel(
-      id: 'p2',
-      name: 'Cafe Elegance Scarf',
-      brand: 'EMAA',
-      price: 450.0,
-      image:
-          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=300&q=80',
-      quantity: 1,
-    ),
-  ];
+  final ApiService _apiService;
 
-  /// Fetch items from the server (mocked as local array)
-  Future<List<CartItemModel>> getCartItems() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 1));
-    return List.from(_mockDatabase);
+  CartRepository(this._apiService);
+
+  /// Get Cart
+  Future<CartDataModel> getCartItems() async {
+    final response = await _apiService.getData(endPoint: EndPoints.cart);
+
+    return CartDataModel.fromJson(response.data['data'] ?? {});
   }
 
-  /// Add new product to cart backend
-  Future<bool> addToCart(CartItemModel product) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    final index = _mockDatabase.indexWhere((item) => item.id == product.id);
-    if (index >= 0) {
-      _mockDatabase[index].quantity += product.quantity;
-    } else {
-      _mockDatabase.add(product);
-    }
-    return true;
+  /// Add Item
+  Future<CartDataModel> addToCart(String productId, {int quantity = 1}) async {
+    final response = await _apiService.postData(
+      endPoint: '${EndPoints.cart}/add',
+      data: {'productId': productId, 'quantity': quantity},
+    );
+
+    return CartDataModel.fromJson(response.data['data'] ?? {});
   }
 
-  /// Remove item from cart backend
-  Future<bool> removeFromCart(String productId) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    _mockDatabase.removeWhere((item) => item.id == productId);
-    return true;
+  /// Update Quantity
+  Future<CartDataModel> updateQuantity(String productId, int quantity) async {
+    final response = await _apiService.patchData(
+      endPoint: '${EndPoints.cart}/update',
+      data: {'productId': productId, 'quantity': quantity},
+    );
+
+    return CartDataModel.fromJson(response.data['data'] ?? {});
   }
 
-  /// Update item quantity on backend
-  Future<bool> updateQuantity(String productId, int quantity) async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    final index = _mockDatabase.indexWhere((item) => item.id == productId);
-    if (index >= 0) {
-      if (quantity <= 0) {
-        _mockDatabase.removeAt(index);
-      } else {
-        _mockDatabase[index].quantity = quantity;
-      }
-      return true;
-    }
-    return false;
+  /// Remove Item
+  Future<CartDataModel> removeFromCart(String productId) async {
+    print('DELETE => ${EndPoints.cart}');
+
+    final response = await _apiService.deleteData(
+      endPoint: '${EndPoints.cart}/remove/$productId',
+    );
+
+    return CartDataModel.fromJson(response.data['data'] ?? {});
   }
 
-  /// Checkout items
+  /// Checkout
   Future<bool> checkout(Map<String, dynamic> cartData) async {
-    await Future.delayed(const Duration(seconds: 2));
-    // Clear cart upon successful checkout
-    _mockDatabase.clear();
+    await _apiService.postData(endPoint: 'orders', data: cartData);
+
     return true;
   }
 }

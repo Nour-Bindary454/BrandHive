@@ -7,8 +7,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BrandProfileCubit extends Cubit<BrandProfileState> {
   BrandProfileCubit() : super(BrandProfileState());
 
-  Future<void> getBrandProducts(String brandId) async {
+  Future<void> loadBrandData(String brandId, {BrandModel? initialBrand}) async {
+    if (initialBrand != null) {
+      emit(state.copyWith(brand: initialBrand));
+    }
+    
     emit(state.copyWith(isLoading: true, error: null));
+
+    if (state.brand == null) {
+      final brandResult = await sl<BrandProfileRepository>().getBrandById(brandId);
+      brandResult.fold(
+        (failure) {
+           emit(state.copyWith(isLoading: false, error: failure.errMessage));
+           return;
+        },
+        (brand) {
+          emit(state.copyWith(brand: brand));
+        },
+      );
+    }
+
+    if (state.error != null) return;
 
     final result = await sl<BrandProfileRepository>().getBrandProducts(brandId);
 
@@ -19,7 +38,7 @@ class BrandProfileCubit extends Cubit<BrandProfileState> {
           12,
           (index) => HomeProduct(
             id: 'bp$index',
-            brandName: 'Mock Brand',
+            brandName: state.brand?.name ?? 'Mock Brand',
             category: 'Category',
             name: 'Mock Product $index',
             imageUrl: 'https://placehold.co/300x300/png',
@@ -33,5 +52,9 @@ class BrandProfileCubit extends Cubit<BrandProfileState> {
         emit(state.copyWith(isLoading: false, products: products));
       },
     );
+  }
+
+  Future<void> getBrandProducts(String brandId) async {
+    loadBrandData(brandId);
   }
 }
