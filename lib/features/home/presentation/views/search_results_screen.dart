@@ -5,7 +5,6 @@ import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
 import 'package:brand/features/explore/data/repository/explore_repo.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
-import 'package:brand/core/errors/failure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -108,13 +107,10 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               ),
             ),
             SizedBox(height: 10.h),
-            const Divider(
-                color: Color(0xFFF1F5F9), thickness: 1, height: 1),
+            const Divider(color: Color(0xFFF1F5F9), thickness: 1, height: 1),
 
             // Results grid
-            Expanded(
-              child: _buildBody(),
-            ),
+            Expanded(child: _buildBody()),
           ],
         ),
       ),
@@ -157,8 +153,11 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off_rounded,
-                size: 48.sp, color: const Color(0xFF94A3B8)),
+            Icon(
+              Icons.search_off_rounded,
+              size: 48.sp,
+              color: const Color(0xFF94A3B8),
+            ),
             SizedBox(height: 12.h),
             BasicText(
               text: 'No products found',

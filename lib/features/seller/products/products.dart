@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/products/widgets/card.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,9 @@ class _ProductsState extends State<Products> {
               BasicText(
                 text: 'my_products'.tr(),
                 fontSize: 20,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color:
+                    Theme.of(context).textTheme.bodyLarge?.color ??
+                    Colors.black,
                 isBold: true,
               ),
               SizedBox(height: 20.h),

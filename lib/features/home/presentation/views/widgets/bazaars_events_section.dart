@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +55,9 @@ class BazaarsEventsSection extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primaryContainer.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(
@@ -99,7 +100,9 @@ class BazaarsEventsSection extends StatelessWidget {
                       fontFamily: 'Poppins',
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ],

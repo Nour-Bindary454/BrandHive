@@ -1,5 +1,4 @@
 import 'package:brand/features/admin_dashboard/data/models/admin_models.dart';
-import 'package:brand/features/admin_dashboard/presentation/views/widgets/brand_status_tag.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +31,9 @@ class AdminNotificationItem extends StatelessWidget {
               offset: const Offset(0, 4),
             ),
           ],
-          border: !notification.isRead ? Border.all(color: Colors.blue.withOpacity(0.2)) : null,
+          border: !notification.isRead
+              ? Border.all(color: Colors.blue.withOpacity(0.2))
+              : null,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,10 +56,7 @@ class AdminNotificationItem extends StatelessWidget {
             SizedBox(height: 8.h),
             Text(
               notification.body,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: const Color(0xFF64748B),
-              ),
+              style: TextStyle(fontSize: 12.sp, color: const Color(0xFF64748B)),
             ),
             SizedBox(height: 12.h),
             Row(
@@ -78,7 +76,11 @@ class AdminNotificationItem extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios, size: 12.sp, color: const Color(0xFF2D4373)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12.sp,
+                  color: const Color(0xFF2D4373),
+                ),
               ],
             ),
           ],

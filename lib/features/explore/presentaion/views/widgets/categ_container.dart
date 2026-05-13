@@ -1,4 +1,3 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

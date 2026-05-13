@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'menu_item_tile.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
@@ -22,7 +21,9 @@ class MenuListSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.02),
+            color:
+                (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
+                    .withOpacity(0.02),
             blurRadius: 10,
             spreadRadius: 2,
             offset: const Offset(0, 4),
@@ -37,7 +38,8 @@ class MenuListSection extends StatelessWidget {
         separatorBuilder: (context, index) => Divider(
           height: 1,
           thickness: 1,
-          color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black).withOpacity(0.1),
+          color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
+              .withOpacity(0.1),
           indent: 56.w, // Match icon offset
           endIndent: 20.w,
         ),
@@ -46,7 +48,10 @@ class MenuListSection extends StatelessWidget {
           String? badgeText = item.badgeText;
 
           if (item.title == 'wishlist'.tr()) {
-            final wishlistCount = context.watch<WishlistCubit>().wishlistedProductIds.length;
+            final wishlistCount = context
+                .watch<WishlistCubit>()
+                .wishlistedProductIds
+                .length;
             badgeText = '$wishlistCount items';
           }
 

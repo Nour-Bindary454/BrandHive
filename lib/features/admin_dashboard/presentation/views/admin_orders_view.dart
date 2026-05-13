@@ -1,5 +1,4 @@
 import 'package:brand/core/services/service_locator.dart';
-import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_cubit.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_states.dart';
@@ -25,7 +24,7 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
     'Confirmed',
     'Shipped',
     'Delivered',
-    'Cancelled'
+    'Cancelled',
   ];
 
   @override
@@ -38,7 +37,11 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
           backgroundColor: Colors.white,
           elevation: 0.5,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, size: 18.sp, color: Colors.black),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              size: 18.sp,
+              color: Colors.black,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
@@ -73,9 +76,12 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
               final filteredOrders = _selectedFilter == 'All'
                   ? allOrders
                   : allOrders
-                      .where((o) =>
-                          o.status.toLowerCase() == _selectedFilter.toLowerCase())
-                      .toList();
+                        .where(
+                          (o) =>
+                              o.status.toLowerCase() ==
+                              _selectedFilter.toLowerCase(),
+                        )
+                        .toList();
 
               return Column(
                 children: [
@@ -85,11 +91,15 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
                         ? _buildEmptyState()
                         : ListView.builder(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 8.h),
+                              horizontal: 16.w,
+                              vertical: 8.h,
+                            ),
                             itemCount: filteredOrders.length,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return AdminOrderCard(order: filteredOrders[index]);
+                              return AdminOrderCard(
+                                order: filteredOrders[index],
+                              );
                             },
                           ),
                   ),
@@ -110,9 +120,7 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1),
-        ),
+        border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1)),
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -128,10 +136,14 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
               margin: EdgeInsets.only(right: 10.w),
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFF2D4373) : Colors.transparent,
+                color: isSelected
+                    ? const Color(0xFF2D4373)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
-                  color: isSelected ? const Color(0xFF2D4373) : const Color(0xFFE2E8F0),
+                  color: isSelected
+                      ? const Color(0xFF2D4373)
+                      : const Color(0xFFE2E8F0),
                   width: 1,
                 ),
               ),
@@ -165,8 +177,11 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
               shape: BoxShape.circle,
               border: Border.all(color: const Color(0xFFF1F5F9)),
             ),
-            child: Icon(CupertinoIcons.doc_text_search,
-                size: 32.sp, color: const Color(0xFFCBD5E1)),
+            child: Icon(
+              CupertinoIcons.doc_text_search,
+              size: 32.sp,
+              color: const Color(0xFFCBD5E1),
+            ),
           ),
           SizedBox(height: 12.h),
           BasicText(

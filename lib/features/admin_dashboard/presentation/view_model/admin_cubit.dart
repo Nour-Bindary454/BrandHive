@@ -1,7 +1,7 @@
 import 'package:brand/features/admin_dashboard/data/models/admin_models.dart';
 import 'package:brand/features/admin_dashboard/data/repository/admin_repo.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_states.dart';
-import 'package:flutter/material.dart';
+import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminCubit extends Cubit<AdminState> {
@@ -14,54 +14,86 @@ class AdminCubit extends Cubit<AdminState> {
 
     final statsResult = await repo.getDashboardStats();
     final requestsResult = await repo.getBrandRequests();
+    final categoriesResult = await repo.getCategories();
     final notificationsResult = await repo.getNotifications();
 
-    statsResult.fold(
-      (failure) => emit(AdminError(failure.errMessage)),
-      (stats) {
-        requestsResult.fold(
-          (failure) => emit(AdminError(failure.errMessage)),
-          (requests) {
-            notificationsResult.fold(
-              (failure) => emit(AdminSuccess(stats: stats, requests: requests)),
-              (notifications) => emit(AdminSuccess(
-                stats: stats,
-                requests: requests,
-                notifications: notifications,
-              )),
-            );
-          },
+    statsResult.fold((failure) => emit(AdminError(failure.errMessage)), (
+      stats,
+    ) {
+      requestsResult.fold((failure) => emit(AdminError(failure.errMessage)), (
+        requests,
+      ) async {
+        // Fetch categories but don't fail if they can't be fetched
+        final categoriesResult = await repo.getCategories();
+        List<CategoryModel> categories = [];
+        categoriesResult.fold((_) => null, (c) => categories = c);
+
+        // Map category IDs to names
+        final categoryMap = {for (var c in categories) c.id: c.name};
+        final mappedRequests = requests.map((r) {
+          final raw = r.rawData;
+          String categoryName = r.category;
+
+          // Try to extract from categories list in rawData
+          if (raw['categories'] is List && raw['categories'].isNotEmpty) {
+            final catList = raw['categories'] as List;
+            final names = catList
+                .map((id) => categoryMap[id.toString()] ?? id.toString())
+                .toList();
+            categoryName = names.join(', ');
+          } else if (categoryMap.containsKey(r.category)) {
+            categoryName = categoryMap[r.category]!;
+          }
+
+          return r.copyWith(category: categoryName);
+        }).toList();
+
+        notificationsResult.fold(
+          (failure) =>
+              emit(AdminSuccess(stats: stats, requests: mappedRequests)),
+          (notifications) => emit(
+            AdminSuccess(
+              stats: stats,
+              requests: mappedRequests,
+              notifications: notifications,
+            ),
+          ),
         );
-      },
-    );
+      });
+    });
   }
 
-  Future<void> updateRequestStatus(String id, BrandStatus status) async {
+  Future<void> updateRequestStatus(
+    String id,
+    BrandStatus status, {
+    String? reason,
+  }) async {
     if (state is! AdminSuccess) return;
 
     final currentState = state as AdminSuccess;
-    
+
     // Optimistic update
     final updatedRequests = currentState.requests.map((r) {
-      if (r.id == id) return r.copyWith(status: status);
+      if (r.id == id) {
+        return r.copyWith(status: status, rejectionReason: reason);
+      }
       return r;
     }).toList();
-    
-    emit(AdminSuccess(
-      stats: currentState.stats,
-      requests: updatedRequests,
-      notifications: currentState.notifications,
-    ));
 
-    final result = await repo.updateBrandStatus(id, status);
-
-    result.fold(
-      (failure) {
-        // Rollback on failure (in a real app you'd fetch data again or keep original list)
-        getDashboardData(); 
-      },
-      (_) => null,
+    emit(
+      AdminSuccess(
+        stats: currentState.stats,
+        requests: updatedRequests,
+        notifications: currentState.notifications,
+      ),
     );
+
+    final result = await repo.updateBrandStatus(id, status, reason: reason);
+
+    result.fold((failure) {
+      // Rollback on failure (in a real app you'd fetch data again or keep original list)
+      getDashboardData();
+    }, (_) => null);
   }
 
   Future<void> deleteProduct(String id) async {
@@ -69,7 +101,13 @@ class AdminCubit extends Cubit<AdminState> {
     final result = await repo.deleteProduct(id);
     result.fold(
       (failure) => emit(AdminActionError(failure.errMessage)),
-      (_) => emit(AdminActionSuccess('Product deleted successfully', id: id, action: 'delete_product')),
+      (_) => emit(
+        AdminActionSuccess(
+          'Product deleted successfully',
+          id: id,
+          action: 'delete_product',
+        ),
+      ),
     );
   }
 
@@ -77,7 +115,9 @@ class AdminCubit extends Cubit<AdminState> {
     final result = await repo.deleteBrand(id);
     result.fold(
       (failure) => null,
-      (_) => emit(AdminActionSuccess('brand_deleted', id: id, action: 'delete_brand')),
+      (_) => emit(
+        AdminActionSuccess('brand_deleted', id: id, action: 'delete_brand'),
+      ),
     );
   }
 
@@ -85,7 +125,13 @@ class AdminCubit extends Cubit<AdminState> {
     final result = await repo.toggleBrandStatus(id, isActive);
     result.fold(
       (failure) => null,
-      (_) => emit(AdminActionSuccess(isActive ? 'brand_deactivated' : 'brand_activated', id: id, action: 'toggle_brand')),
+      (_) => emit(
+        AdminActionSuccess(
+          isActive ? 'brand_deactivated' : 'brand_activated',
+          id: id,
+          action: 'toggle_brand',
+        ),
+      ),
     );
   }
 
@@ -94,11 +140,13 @@ class AdminCubit extends Cubit<AdminState> {
     final result = await repo.toggleProductStatus(id, isActive);
     result.fold(
       (failure) => emit(AdminActionError(failure.errMessage)),
-      (_) => emit(AdminActionSuccess(
-        isActive ? 'product_deactivated' : 'product_activated',
-        id: id,
-        action: 'toggle_product',
-      )),
+      (_) => emit(
+        AdminActionSuccess(
+          isActive ? 'product_deactivated' : 'product_activated',
+          id: id,
+          action: 'toggle_product',
+        ),
+      ),
     );
   }
 

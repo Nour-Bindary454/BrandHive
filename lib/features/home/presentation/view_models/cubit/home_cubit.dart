@@ -99,21 +99,18 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       ];
 
-      /// 7. FEATURED + CATEGORIES — fetch in parallel
+      /// 7. FEATURED + CATEGORIES — fetch all 10 pages IN PARALLEL
       List<HomeProduct> featured = [];
-      final results = await Future.wait([
-        sl<HomeRepository>().getAllProducts(page: 1),
-      ]);
-
-      results[0].fold(
-        (failure) {
-          print("Failed to load products: ${failure.errMessage}");
-          throw Exception(failure.errMessage);
-        },
-        (data) {
-          featured = List.from(data)..shuffle(Random());
-        },
+      final productResults = await Future.wait(
+        List.generate(10, (i) => sl<HomeRepository>().getAllProducts(page: i + 1)),
       );
+
+      for (final result in productResults) {
+        result.fold((failure) {}, (data) {
+          featured.addAll(data);
+        });
+      }
+      featured.shuffle(Random());
 
       /// ✅ FINAL EMIT
       emit(

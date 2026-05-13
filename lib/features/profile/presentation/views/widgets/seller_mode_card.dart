@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
+
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class SellerModeCard extends StatelessWidget {
@@ -45,7 +45,9 @@ class SellerModeCard extends StatelessWidget {
                   BasicText(
                     text: 'manage_your_store_products_and_orders'.tr(),
                     fontSize: 12.sp,
-                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onPrimary.withOpacity(0.8),
                     isBold: false,
                   ),
                 ],

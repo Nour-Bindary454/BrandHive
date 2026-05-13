@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -34,7 +33,9 @@ class ProfileHeader extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.05),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -43,7 +44,9 @@ class ProfileHeader extends StatelessWidget {
               child: CircleAvatar(
                 radius: 45.r,
                 backgroundImage: NetworkImage(imageUrl),
-                backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withOpacity(0.2),
               ),
             ),
             Positioned(
@@ -54,7 +57,10 @@ class ProfileHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Theme.of(context).cardColor, width: 2.w),
+                  border: Border.all(
+                    color: Theme.of(context).cardColor,
+                    width: 2.w,
+                  ),
                 ),
                 child: Icon(
                   Icons.settings_outlined,

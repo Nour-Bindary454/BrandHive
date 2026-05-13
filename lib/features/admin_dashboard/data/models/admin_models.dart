@@ -25,6 +25,8 @@ class AdminBrandRequest {
   final String category;
   final String date;
   final BrandStatus status;
+  final bool shipsInternationally;
+  final String? rejectionReason;
   final Map<String, dynamic> rawData; // Full payload from notification/API
 
   AdminBrandRequest({
@@ -34,17 +36,26 @@ class AdminBrandRequest {
     required this.category,
     required this.date,
     required this.status,
+    this.shipsInternationally = false,
+    this.rejectionReason,
     this.rawData = const {},
   });
 
-  AdminBrandRequest copyWith({BrandStatus? status}) {
+  AdminBrandRequest copyWith({
+    BrandStatus? status,
+    String? rejectionReason,
+    bool? shipsInternationally,
+    String? category,
+  }) {
     return AdminBrandRequest(
       id: id,
       name: name,
       location: location,
-      category: category,
+      category: category ?? this.category,
       date: date,
       status: status ?? this.status,
+      shipsInternationally: shipsInternationally ?? this.shipsInternationally,
+      rejectionReason: rejectionReason ?? this.rejectionReason,
       rawData: rawData,
     );
   }

@@ -178,7 +178,8 @@ class _SellerRegistrationBodyState extends State<_SellerRegistrationBody> {
       listener: (context, state) {
         if (state is BrandRequestSuccess) {
           // Save state to prevent multiple requests
-          CacheHelper.saveData(key: 'brand_request_pending', value: 'true');
+          final userId = CacheHelper.getData(key: 'id') ?? '';
+          CacheHelper.saveData(key: 'brand_request_pending_$userId', value: 'true');
           Navigator.pushReplacementNamed(context, '/sellerRegistrationSuccess');
         } else if (state is BrandRequestFailure) {
           Toast.showErrorToast(msg: state.error, context: context);

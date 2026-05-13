@@ -3,17 +3,14 @@ import 'package:brand/core/services/service_locator.dart';
 
 import 'package:brand/features/cart/presentation/cart_screen.dart';
 import 'package:brand/features/explore/presentaion/views/explore.dart';
-import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';
 import 'package:brand/features/profile/presentation/views/profile_screen.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_dashboard_view.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_products_view.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_brands_view.dart';
-import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/settings/presentation/views/settings_view.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_cubit.dart';
-import 'package:brand/features/home/presentation/view_models/cubit/home_states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

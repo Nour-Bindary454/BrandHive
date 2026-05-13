@@ -76,8 +76,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // Seller Mode Banner
                   SellerModeCard(
                     onTap: () {
+                      final userId = CacheHelper.getData(key: 'id') ?? '';
                       final Object isPending =
-                          CacheHelper.getData(key: 'brand_request_pending') ??
+                          CacheHelper.getData(key: 'brand_request_pending_$userId') ??
                           false;
 
                       if (isPending == 'true') {

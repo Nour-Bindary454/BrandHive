@@ -1,4 +1,3 @@
-import 'package:brand/core/services/cache_helper.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,9 @@ class ProductInfoSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            product.brandName.isNotEmpty ? product.brandName.toUpperCase() : 'brand'.tr().toUpperCase(),
+            product.brandName.isNotEmpty
+                ? product.brandName.toUpperCase()
+                : 'brand'.tr().toUpperCase(),
             style: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14.sp,
@@ -55,11 +56,17 @@ class ProductInfoSection extends StatelessWidget {
           SizedBox(height: 24.h),
           Text(
             'description'.tr(),
-            style: TextStyle(fontFamily: 'Outfit', fontSize: 18.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 8.h),
           Text(
-            product.description.isNotEmpty ? product.description : 'no_description'.tr(),
+            product.description.isNotEmpty
+                ? product.description
+                : 'no_description'.tr(),
             style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 14.sp,
