@@ -20,7 +20,7 @@ class PendingActionButtons extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: BasicText(
-              text: 'decline'.tr().tr(),
+              text: 'decline'.tr(),
               fontSize: 12,
               color: Colors.red.shade400,
               isBold: true,
@@ -37,7 +37,7 @@ class PendingActionButtons extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: BasicText(
-              text: 'accept_order'.tr().tr(),
+              text: 'accept_order'.tr(),
               fontSize: 12,
               color: Colors.white,
               isBold: true,

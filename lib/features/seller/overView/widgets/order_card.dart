@@ -85,7 +85,7 @@ class OrderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: BasicText(
-                  text: 'pending'.tr().tr(),
+                  text: 'pending'.tr(),
                   fontSize: 10,
                   color: const Color(0xFFF5A623), // Deep yellow text
                   isBold: true,

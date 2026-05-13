@@ -23,7 +23,7 @@ class FeaturedBrands extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicText(
-              text: 'featured_brands'.tr().tr(),
+              text: 'featured_brands'.tr(),
               fontSize: 18,
               color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               isBold: true,
@@ -33,7 +33,7 @@ class FeaturedBrands extends StatelessWidget {
               child: Row(
                 children: [
                   BasicText(
-                    text: 'all_brands'.tr().tr(),
+                    text: 'all_brands'.tr(),
                     fontSize: 12,
                     color: Color(0xFF2D4373), // Dark blue
                     isBold: true,

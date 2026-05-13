@@ -32,7 +32,7 @@ class _SettingsState extends State<Settings> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: BasicText(
-                  text: 'store_settings'.tr().tr(),
+                  text: 'store_settings'.tr(),
                   fontSize: 18,
                   color: const Color(0xFF1F2937),
                   isBold: true,

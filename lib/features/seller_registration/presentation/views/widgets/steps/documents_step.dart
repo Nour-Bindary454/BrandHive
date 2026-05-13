@@ -13,7 +13,7 @@ class DocumentsStep extends StatelessWidget {
       children: [
         SectionHeader(
           stepNumber: '04',
-          title: 'documents'.tr().tr(),
+          title: 'documents'.tr(),
           icon: Icons.description_outlined,
         ),
         _buildUploadField(context, 'National ID / Passport'),

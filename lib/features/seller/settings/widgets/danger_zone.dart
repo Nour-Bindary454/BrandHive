@@ -15,7 +15,7 @@ class DangerZone extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'danger_zone'.tr().tr(),
+            text: 'danger_zone'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,
@@ -40,7 +40,7 @@ class DangerZone extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     BasicText(
-                      text: 'deactivate_store'.tr().tr(),
+                      text: 'deactivate_store'.tr(),
                       fontSize: 11,
                       color: Colors.red.shade400,
                       isBold: true,
@@ -57,7 +57,7 @@ class DangerZone extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           BasicText(
-            text: 'deactivating_your_store_will_hide_all_products_from_customers_but_keep_your_data_intact'.tr().tr(),
+            text: 'deactivating_your_store_will_hide_all_products_from_customers_but_keep_your_data_intact'.tr(),
             fontSize: 10,
             color: Colors.grey.shade500,
             isBold: false,

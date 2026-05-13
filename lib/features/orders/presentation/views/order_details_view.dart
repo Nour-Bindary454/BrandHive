@@ -31,12 +31,6 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.inAppWebView);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open payment URL')),
-        );
-      }
     }
   }
 
@@ -45,17 +39,25 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('cancel_order'.tr()),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        title: Text(
+          'cancel_order'.tr(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('are_you_sure_cancel_order'.tr()),
-            SizedBox(height: 10.h),
+            SizedBox(height: 15.h),
             TextField(
               controller: reasonController,
               decoration: InputDecoration(
                 hintText: 'reason_optional'.tr(),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
               ),
             ),
           ],
@@ -89,16 +91,15 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
       backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
         title: BasicText(
-          color: Colors.black,
+          color: BasicColors.black,
           text: 'order_details'.tr(),
           fontSize: 18.sp,
           isBold: true,
+          fontFamily: 'Outfit',
         ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor:
-            Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
       ),
       body: BlocConsumer<OrdersCubit, OrdersState>(
         listener: (context, state) {
@@ -119,11 +120,9 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is OrderDetailsError) {
             return Center(
-              child: BasicText(
-                isBold: false,
-                text: state.message,
-                color: Colors.red,
-                fontSize: 14.sp,
+              child: Text(
+                state.message,
+                style: const TextStyle(color: Colors.red),
               ),
             );
           } else if (state is OrderDetailsLoaded) {
@@ -135,16 +134,23 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
             final isPaymob = order.paymentMethod.toLowerCase() == 'paymob';
 
             return SingleChildScrollView(
-              padding: EdgeInsets.all(20.w),
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 30.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Order Summary Card
                   Container(
-                    padding: EdgeInsets.all(16.r),
+                    padding: EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(20.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.03),
+                          blurRadius: 10,
+                        ),
+                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,163 +158,167 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            BasicText(
-                              color: BasicColors.black,
-                              text:
-                                  'Order #${order.orderNumber ?? order.id?.substring(0, 8)}',
-                              fontSize: 16.sp,
-                              isBold: true,
+                            Text(
+                              'Order #${order.orderNumber ?? order.id?.substring(0, 8)}',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'Outfit',
+                              ),
                             ),
-                            BasicText(
-                              text: (order.status ?? 'pending').toUpperCase(),
-                              fontSize: 14.sp,
-                              color: BasicColors.buttonColorDark,
-                              isBold: true,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10.w,
+                                vertical: 4.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: BasicColors.buttonColorLight.withOpacity(
+                                  0.1,
+                                ),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Text(
+                                (order.status ?? 'pending').toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: BasicColors.buttonColorLight,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 8.h),
                         if (order.createdAt != null)
-                          BasicText(
-                            isBold: false,
-                            text: DateFormat(
+                          Text(
+                            DateFormat(
                               'dd MMM yyyy, hh:mm a',
                             ).format(order.createdAt!),
-                            fontSize: 12.sp,
-                            color: Colors.grey.shade600,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.grey,
+                            ),
                           ),
                       ],
                     ),
                   ),
 
-                  SizedBox(height: 20.h),
-                  BasicText(
-                    color: BasicColors.black,
-                    text: 'tracking_history'.tr(),
-                    fontSize: 16.sp,
-                    isBold: true,
-                  ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 24.h),
+                  _sectionTitle('tracking_history'.tr()),
+                  SizedBox(height: 12.h),
                   Container(
-                    padding: EdgeInsets.all(16.r),
+                    padding: EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(20.r),
                     ),
                     child:
                         order.statusHistory != null &&
                             order.statusHistory!.isNotEmpty
                         ? StatusTimeline(history: order.statusHistory!)
-                        : BasicText(
-                            fontSize: 16.sp,
-                            isBold: false,
-
-                            text: 'no_history_available'.tr(),
-                            color: Colors.grey,
+                        : Center(
+                            child: Text(
+                              'no_history_available'.tr(),
+                              style: const TextStyle(color: Colors.grey),
+                            ),
                           ),
                   ),
 
-                  SizedBox(height: 20.h),
-                  BasicText(
-                    color: BasicColors.black,
-                    text: 'shipping_address'.tr(),
-                    fontSize: 16.sp,
-                    isBold: true,
-                  ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 24.h),
+                  _sectionTitle('shipping_address'.tr()),
+                  SizedBox(height: 12.h),
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(16.r),
+                    padding: EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BasicText(
-                          color: BasicColors.black,
-                          fontSize: 16.sp,
-                          text: order.shippingAddress.fullName,
-                          isBold: true,
+                        Text(
+                          order.shippingAddress.fullName,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        SizedBox(height: 4.h),
-                        BasicText(
-                          isBold: false,
-                          fontSize: 16.sp,
-                          text: order.shippingAddress.phone,
-                          color: Colors.grey.shade700,
+                        SizedBox(height: 6.h),
+                        Text(
+                          order.shippingAddress.phone,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: Colors.grey.shade700,
+                          ),
                         ),
-                        SizedBox(height: 4.h),
-                        BasicText(
-                          fontSize: 16.sp,
-                          isBold: false,
-                          text:
-                              '${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.governorate}',
-                          color: Colors.grey.shade700,
+                        SizedBox(height: 6.h),
+                        Text(
+                          '${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.governorate}',
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: Colors.grey.shade700,
+                            height: 1.4,
+                          ),
                         ),
                       ],
                     ),
                   ),
 
-                  SizedBox(height: 20.h),
-                  BasicText(
-                    color: BasicColors.black,
-                    text: 'items'.tr(),
-                    fontSize: 16.sp,
-                    isBold: true,
-                  ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 24.h),
+                  _sectionTitle('items'.tr()),
+                  SizedBox(height: 12.h),
                   ...order.items
                       .map(
                         (item) => Container(
-                          margin: EdgeInsets.only(bottom: 10.h),
-                          padding: EdgeInsets.all(12.r),
+                          margin: EdgeInsets.only(bottom: 12.h),
+                          padding: EdgeInsets.all(16.r),
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
                           child: Row(
                             children: [
                               if (item.productImage != null)
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.r),
+                                  borderRadius: BorderRadius.circular(12.r),
                                   child: Image.network(
                                     item.productImage!,
                                     width: 60.w,
                                     height: 60.w,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) =>
-                                        const Icon(Icons.image_not_supported),
                                   ),
                                 ),
-                              SizedBox(width: 12.w),
+                              SizedBox(width: 15.w),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    BasicText(
-                                      text: item.productName,
-                                      fontSize: 14.sp,
-                                      isBold: true,
-                                      color: BasicColors.black,
+                                    Text(
+                                      item.productName,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     SizedBox(height: 4.h),
-                                    BasicText(
-                                      text: 'Qty: ${item.quantity}',
-                                      fontSize: 12.sp,
-                                      color: Colors.grey,
-                                      isBold: false,
+                                    Text(
+                                      'Qty: ${item.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              BasicText(
-                                text:
-                                    'EGP ${item.itemTotal.toStringAsFixed(2)}',
-                                fontSize: 14.sp,
-                                isBold: true,
-                                color: BasicColors.buttonColorDark,
+                              Text(
+                                '${item.itemTotal.toStringAsFixed(0)} EGP',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w900,
+                                  color: BasicColors.buttonColorLight,
+                                ),
                               ),
                             ],
                           ),
@@ -316,22 +326,39 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                       )
                       .toList(),
 
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 24.h),
+                  const Divider(),
+                  SizedBox(height: 12.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _sectionTitle('total_amount'.tr()),
+                      Text(
+                        '${order.total.toStringAsFixed(0)} EGP',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w900,
+                          color: BasicColors.buttonColorLight,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 32.h),
                   // Actions
                   if (isPending) ...[
                     if (isPaymob && isPaymentFailed) ...[
-                      SizedBox(
-                        width: double.infinity,
-                        child: BasicButton(
-                          text: 'retry_payment'.tr(),
-                          onPressed: () => context
-                              .read<OrdersCubit>()
-                              .retryPayment(order.id!),
-                          colors: const [BasicColors.buttonColorDark],
-                          radius: 12.r,
-                        ),
+                      BasicButton(
+                        text: 'retry_payment'.tr(),
+                        onPressed: () =>
+                            context.read<OrdersCubit>().retryPayment(order.id!),
+                        colors: const [
+                          BasicColors.linearGradientDark,
+                          BasicColors.linearGradientLight,
+                        ],
+                        radius: 25.r,
                       ),
-                      SizedBox(height: 12.h),
+                      SizedBox(height: 16.h),
                     ],
                     SizedBox(
                       width: double.infinity,
@@ -343,26 +370,39 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 14.h),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius: BorderRadius.circular(25.r),
                           ),
-                          side: const BorderSide(color: Colors.red),
+                          side: const BorderSide(color: Colors.red, width: 1.5),
                         ),
-                        child: BasicText(
-                          fontSize: 16.sp,
-                          text: 'cancel_order'.tr(),
-                          color: Colors.red,
-                          isBold: true,
+                        child: Text(
+                          'cancel_order'.tr(),
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
                   ],
-                  SizedBox(height: 30.h),
+                  SizedBox(height: 40.h),
                 ],
               ),
             );
           }
           return const SizedBox.shrink();
         },
+      ),
+    );
+  }
+
+  Widget _sectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w900,
+        fontFamily: 'Outfit',
       ),
     );
   }

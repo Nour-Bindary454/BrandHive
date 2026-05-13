@@ -93,7 +93,7 @@ class OrderReviewScreen extends StatelessWidget {
                           Icon(
                             Icons.credit_card,
                             size: 20.sp,
-                            color: (BasicColors.buttonColorDark),
+                            color: BasicColors.buttonColorLight,
                           ),
                           SizedBox(width: 8.w),
                           Text(
@@ -157,7 +157,7 @@ class OrderReviewScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 16.sp,
-                              color: (BasicColors.buttonColorDark),
+                              color: BasicColors.buttonColorLight,
                             ),
                           ),
                         ],

@@ -20,58 +20,55 @@ class CheckoutBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.r),
+      padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 30.h),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         boxShadow: [
           BoxShadow(
-            color:
-                (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
-                    .withOpacity(0.05),
-            offset: const Offset(0, -5),
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, -4),
             blurRadius: 10,
           ),
         ],
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30.r),
+          topRight: Radius.circular(30.r),
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          /// 🔹 Total Payment
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Total Payment',
                 style: TextStyle(
-                  fontSize: 12.sp,
-                  color: const Color.fromARGB(255, 108, 111, 113),
+                  fontSize: 14.sp,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                '${totalPrice.toStringAsFixed(0)} EGP',
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w900,
+                  color: BasicColors.buttonColorLight,
                 ),
               ),
             ],
           ),
-
-          SizedBox(height: 4.h),
-
-          Text(
-            '${totalPrice.toStringAsFixed(0)} EGP',
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w900,
-              color: BasicColors.buttonColorLight,
-            ),
-          ),
-
-          SizedBox(height: 16.h),
-
-          /// 🔹 Button (LOGIC ONLY)
+          SizedBox(height: 20.h),
           BasicButton(
-            text: isLoading
-                ? " "
-                : (currentStep == 3 ? "Place Order" : "Continue"),
-            onPressed: isLoading ? () {} : onNext,
-            colors: const [BasicColors.buttonColorLight],
-            radius: 22.r,
+            text: currentStep == 3 ? "Place Order" : "Continue",
+            onPressed: onNext,
+            isLoading: isLoading,
+            colors: const [
+              BasicColors.linearGradientDark,
+              BasicColors.linearGradientLight,
+            ],
+            radius: 25.r,
           ),
         ],
       ),

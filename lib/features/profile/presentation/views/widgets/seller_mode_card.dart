@@ -36,14 +36,14 @@ class SellerModeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BasicText(
-                    text: 'switch_to_seller_mode'.tr().tr(),
+                    text: 'switch_to_seller_mode'.tr(),
                     fontSize: 16.sp,
                     color: Theme.of(context).colorScheme.onPrimary,
                     isBold: true,
                   ),
                   SizedBox(height: 4.h),
                   BasicText(
-                    text: 'manage_your_store_products_and_orders'.tr().tr(),
+                    text: 'manage_your_store_products_and_orders'.tr(),
                     fontSize: 12.sp,
                     color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                     isBold: false,

@@ -18,7 +18,7 @@ class Security extends StatelessWidget {
               Icon(Icons.lock_outline, color: const Color(0xFF4C79BD), size: 18.sp),
               SizedBox(width: 8.w),
               BasicText(
-                text: 'security'.tr().tr(),
+                text: 'security'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF1F2937),
                 isBold: true,
@@ -39,7 +39,7 @@ class Security extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: BasicText(
-                    text: 'change_password'.tr().tr(),
+                    text: 'change_password'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF1F2937),
                     isBold: true,
@@ -60,14 +60,14 @@ class Security extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BasicText(
-                  text: 'two_factor_authentication'.tr().tr(),
+                  text: 'two_factor_authentication'.tr(),
                   fontSize: 11,
                   color: const Color(0xFF1F2937),
                   isBold: true,
                 ),
                 SizedBox(height: 6.h),
                 BasicText(
-                  text: 'add_an_extra_layer_of_security_to_your_account'.tr().tr(),
+                  text: 'add_an_extra_layer_of_security_to_your_account'.tr(),
                   fontSize: 10,
                   color: const Color(0xFF1F2937).withOpacity(0.7),
                   isBold: false,
@@ -81,7 +81,7 @@ class Security extends StatelessWidget {
                     border: Border.all(color: const Color(0xFF4C79BD).withOpacity(0.3)),
                   ),
                   child: BasicText(
-                    text: 'enable_2fa'.tr().tr(),
+                    text: 'enable_2fa'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF4C79BD), // Blue action text
                     isBold: true,

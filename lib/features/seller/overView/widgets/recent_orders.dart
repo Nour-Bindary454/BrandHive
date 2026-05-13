@@ -18,13 +18,13 @@ class RecentOrders extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BasicText(
-                text: 'recent_orders'.tr().tr(),
+                text: 'recent_orders'.tr(),
                 fontSize: 16,
                 color: const Color(0xFF0F172A),
                 isBold: true,
               ),
               BasicText(
-                text: 'view_all'.tr().tr(),
+                text: 'view_all'.tr(),
                 fontSize: 12,
                 color: const Color(0xFF5384DB),
                 isBold: true,

@@ -14,7 +14,7 @@ class PaymentInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'payment_information'.tr().tr(),
+            text: 'payment_information'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,
@@ -35,21 +35,21 @@ class PaymentInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BasicText(
-                      text: 'primary_payout_method'.tr().tr(),
+                      text: 'primary_payout_method'.tr(),
                       fontSize: 10,
                       color: Colors.grey.shade500,
                       isBold: false,
                     ),
                     SizedBox(height: 8.h),
                     BasicText(
-                      text: 'banque_misr'.tr().tr(),
+                      text: 'banque_misr'.tr(),
                       fontSize: 12,
                       color: const Color(0xFF1F2937),
                       isBold: true,
                     ),
                     SizedBox(height: 4.h),
                     BasicText(
-                      text: 'account_ending_in_4267'.tr().tr(),
+                      text: 'account_ending_in_4267'.tr(),
                       fontSize: 10,
                       color: Colors.grey.shade500,
                       isBold: false,
@@ -68,7 +68,7 @@ class PaymentInfo extends StatelessWidget {
                       border: Border.all(color: Colors.grey.shade300),
                     ),
                     child: BasicText(
-                      text: 'edit'.tr().tr(),
+                      text: 'edit'.tr(),
                       fontSize: 11,
                       color: const Color(0xFF4C79BD), // blue
                       isBold: true,
@@ -92,7 +92,7 @@ class PaymentInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BasicText(
-                    text: 'add_another_payment_method'.tr().tr(),
+                    text: 'add_another_payment_method'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF1F2937),
                     isBold: true,

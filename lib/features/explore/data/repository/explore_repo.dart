@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class ExploreRepository {
   Future<Either<Failure, List<HomeProduct>>> getAllProducts({int page = 1});
+  Future<Either<Failure, List<HomeProduct>>> searchProducts(String query);
 }

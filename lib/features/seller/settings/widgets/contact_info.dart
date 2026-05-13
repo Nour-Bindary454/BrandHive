@@ -19,7 +19,7 @@ class ContactInfo extends StatelessWidget {
               Icon(Icons.mail_outline, color: const Color(0xFF4C79BD), size: 18.sp),
               SizedBox(width: 8.w),
               BasicText(
-                text: 'contact_information'.tr().tr(),
+                text: 'contact_information'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF1F2937),
                 isBold: true,

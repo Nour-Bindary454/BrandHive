@@ -100,15 +100,20 @@ class WishlistView extends StatelessWidget {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      Text(
-                        'Clear All',
-                        style: TextStyle(
-                          color: const Color(
-                            0xFFC85B33,
-                          ), // Orangeish-red from image
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
+                      InkWell(
+                        onTap: () {
+                          cubit.clearWishlist();
+                        },
+                        child: Text(
+                          'Clear All',
+                          style: TextStyle(
+                            color: const Color(
+                              0xFFC85B33,
+                            ), // Orangeish-red from image
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
                     ],

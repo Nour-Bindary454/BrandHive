@@ -91,7 +91,7 @@ class _VerifyButtonSectionState extends State<VerifyButtonSection> {
     return Column(
       children: [
         BasicButton(
-          text: 'verify'.tr().tr(),
+          text: 'verify'.tr(),
           colors: const [Color(0xFF2D4373)],
           radius: 12,
           onPressed: () {

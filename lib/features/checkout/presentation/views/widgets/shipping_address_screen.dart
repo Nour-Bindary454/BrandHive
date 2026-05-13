@@ -2,7 +2,6 @@ import 'package:brand/features/checkout/data/models/address_model.dart';
 import 'package:brand/features/checkout/presentation/viewmodels/checkout_cubit.dart';
 import 'package:brand/features/checkout/presentation/viewmodels/checkout_state.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/svg_images/svg_images.dart';
 import 'package:brand/features/checkout/presentation/views/widgets/custom_shipping_form.dart';
@@ -40,12 +39,21 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _phoneController.dispose();
+    _streetController.dispose();
+    _cityController.dispose();
+    _areaController.dispose();
+    super.dispose();
+  }
+
   void _updateAddress() {
     context.read<CheckoutCubit>().selectAddress(
       AddressModel(
         governorate: '',
         fullName: _fullNameController.text,
-
         phone: _phoneController.text,
         street: _streetController.text,
         city: _cityController.text,
@@ -64,13 +72,15 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 20.h),
+
                 /// 🔹 Title
                 Row(
                   children: [
                     SvgPicture.asset(SvgImages.locationdark),
                     SizedBox(width: 8.w),
                     BasicText(
-                      text: 'shipping_address'.tr().tr(),
+                      text: 'shipping_address'.tr(),
                       fontSize: 17.sp,
                       color:
                           Theme.of(context).textTheme.bodyLarge?.color ??
@@ -84,18 +94,12 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                 SizedBox(height: 20.h),
 
                 /// 🔹 Form
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomShippingForm(
-                        context: context,
-                        label: 'Full Name',
-                        controller: _fullNameController,
-                        isPhone: false,
-                        onChanged: (_) => _updateAddress(),
-                      ),
-                    ),
-                  ],
+                CustomShippingForm(
+                  context: context,
+                  label: 'Full Name',
+                  controller: _fullNameController,
+                  isPhone: false,
+                  onChanged: (_) => _updateAddress(),
                 ),
 
                 SizedBox(height: 14.h),
@@ -149,6 +153,8 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                 /// 🔹 Saved Address UI
                 if (state.savedAddresses.isNotEmpty)
                   _savedAddressUI(context, state),
+
+                SizedBox(height: 100.h),
               ],
             ),
           ),
@@ -169,7 +175,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'saved_addresses'.tr().tr(),
+            text: 'saved_addresses'.tr(),
             fontSize: 16.sp,
             color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             isBold: true,
@@ -216,7 +222,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BasicText(
-                            text: "Address", // or address title if available
+                            text: "Saved Address",
                             fontSize: 14.sp,
                             color:
                                 Theme.of(context).textTheme.bodyLarge?.color ??
@@ -228,7 +234,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                             text: "${address.street}, ${address.city}",
                             fontSize: 13.sp,
                             color: Colors.grey,
-                            isBold: true,
+                            isBold: false,
                           ),
                         ],
                       ),

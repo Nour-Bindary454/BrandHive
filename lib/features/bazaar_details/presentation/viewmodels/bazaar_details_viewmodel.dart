@@ -26,7 +26,7 @@ class BazaarDetailsViewModel extends ChangeNotifier {
       // Right now, using mock payload matching the UI constraints tightly.
       _bazaarDetails = BazaarDetailsModel(
         id: bazaarId,
-        title: 'cairo_artisan_bazaar'.tr().tr(),
+        title: 'cairo_artisan_bazaar'.tr(),
         description:
             'The heart of Egyptian craftsmanship. Experience traditional bazaar vibes with modern local brands.',
         imageUrl:

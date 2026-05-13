@@ -15,7 +15,7 @@ class StoreAnalytics extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'store_analytics'.tr().tr(),
+            text: 'store_analytics'.tr(),
             fontSize: 16,
             color: const Color(0xFF0F172A),
             isBold: true,

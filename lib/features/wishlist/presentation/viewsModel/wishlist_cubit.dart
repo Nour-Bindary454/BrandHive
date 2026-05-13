@@ -129,4 +129,19 @@ class WishlistCubit extends Cubit<WishlistState> {
       },
     );
   }
+
+  Future<void> clearWishlist() async {
+    final idsToRemove = List<String>.from(wishlistedProductIds);
+    wishlistProducts.clear();
+    wishlistedProductIds.clear();
+    emit(WishlistUpdatedState());
+
+    for (var id in idsToRemove) {
+      try {
+        await repo.removeFromWishlist(id);
+      } catch (e) {
+        // Ignore individual failures so it continues clearing the rest
+      }
+    }
+  }
 }

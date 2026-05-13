@@ -1,3 +1,4 @@
+import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,43 +21,43 @@ class OrdersBody extends StatelessWidget {
           SizedBox(height: 10.h),
           // Header
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: Row(
               children: [
                 const CustomBackarrow(),
                 SizedBox(width: 15.w),
-                BlocBuilder<OrdersCubit, OrdersState>(
-                  builder: (context, state) {
-                    int count = 0;
-                    if (state is OrdersLoaded) {
-                      count = state.orders.length;
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BasicText(
-                          text: "my_orders".tr(),
-                          fontSize: 20.sp,
-                          color: const Color(0xFF1E293B),
-                          isBold: true,
-                        ),
-                        BasicText(
-                          text: "$count ${'orders'.tr()}",
-                          fontSize: 13.sp,
-                          color: const Color(0xFF64748B),
-                          isBold: false,
-                        ),
-                      ],
-                    );
-                  },
+                Expanded(
+                  child: BlocBuilder<OrdersCubit, OrdersState>(
+                    builder: (context, state) {
+                      int count = 0;
+                      if (state is OrdersLoaded) {
+                        count = state.orders.length;
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BasicText(
+                            text: "my_orders".tr(),
+                            fontSize: 22.sp,
+                            color: BasicColors.black,
+                            isBold: true,
+                            fontFamily: 'Outfit',
+                          ),
+                          BasicText(
+                            text: "$count ${'orders'.tr()}",
+                            fontSize: 13.sp,
+                            color: Colors.grey,
+                            isBold: false,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20.h),
-
-          // Divider
-          const Divider(color: Color(0xFFF1F5F9), thickness: 1, height: 1),
+          SizedBox(height: 10.h),
 
           // List
           Expanded(
@@ -66,11 +67,20 @@ class OrdersBody extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is OrdersError) {
                   return Center(
-                    child: BasicText(
-                      text: state.message,
-                      fontSize: 14.sp,
-                      color: Colors.red,
-                      isBold: false,
+                    child: Padding(
+                      padding: EdgeInsets.all(20.r),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            color: Colors.red,
+                            size: 50,
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(state.message, textAlign: TextAlign.center),
+                        ],
+                      ),
                     ),
                   );
                 } else if (state is OrdersLoaded) {
@@ -79,12 +89,16 @@ class OrdersBody extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.inventory_2_outlined, size: 80.sp, color: Colors.grey),
+                          Icon(
+                            Icons.shopping_bag_outlined,
+                            size: 80.sp,
+                            color: Colors.grey.shade300,
+                          ),
                           SizedBox(height: 16.h),
                           BasicText(
                             text: 'no_orders_found'.tr(),
                             fontSize: 16.sp,
-                            color: Colors.grey.shade700,
+                            color: Colors.grey,
                             isBold: true,
                           ),
                         ],
@@ -97,7 +111,8 @@ class OrdersBody extends StatelessWidget {
                       await context.read<OrdersCubit>().fetchMyOrders();
                     },
                     child: ListView.builder(
-                      padding: EdgeInsets.all(20.w),
+                      padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 20.h),
+                      physics: const BouncingScrollPhysics(),
                       itemCount: state.orders.length,
                       itemBuilder: (context, index) {
                         final order = state.orders[index];

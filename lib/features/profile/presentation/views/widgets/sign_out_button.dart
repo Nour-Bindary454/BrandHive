@@ -30,7 +30,7 @@ class SignOutButton extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
             BasicText(
-              text: 'sign_out'.tr().tr(),
+              text: 'sign_out'.tr(),
               fontSize: 14.sp,
               color: const Color(0xFFFF4D4D), // Red color
               isBold: true,

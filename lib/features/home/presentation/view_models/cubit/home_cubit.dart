@@ -6,27 +6,38 @@ import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:brand/features/home/presentation/view_models/cubit/home_states.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeState());
 
-  Future<void> loadHomeData() async {
+  Future<void> loadHomeData({bool isRefresh = false}) async {
+    if (!isRefresh && state.brands.isNotEmpty && state.categories.isNotEmpty) return;
+
     emit(state.copyWith(isLoading: true, error: null));
 
     try {
+      final hour = DateTime.now().hour;
+      String greeting = 'Good Morning,';
+      if (hour >= 12 && hour < 17) {
+        greeting = 'Good Afternoon,';
+      } else if (hour >= 17) {
+        greeting = 'Good Evening,';
+      }
+
       /// 1. USER
       final user = UserProfile(
-        name: 'Mustafa Kamal',
+        name: CacheHelper.getData('name') ?? 'User',
         profileImageUrl: 'https://i.pravatar.cc/150?img=11',
-        greeting: 'Good Morning,',
+        greeting: greeting,
       );
 
       /// 2. BANNER
       final banner = BannerModel(
         id: '1',
         label: 'New Arrival',
-        title: 'ramadan_collection'.tr().tr(),
-        subtitle: 'handcrafted_lanterns_decor'.tr().tr(),
+        title: 'ramadan_collection'.tr(),
+        subtitle: 'handcrafted_lanterns_decor'.tr(),
         imageUrl: 'https://placehold.co/1000x500/png',
       );
 
@@ -46,7 +57,7 @@ class HomeCubit extends Cubit<HomeState> {
       final events = [
         EventModel(
           id: 'e1',
-          title: 'cairo_artisan_bazaar'.tr().tr(),
+          title: 'cairo_artisan_bazaar'.tr(),
           date: 'Dec 15-17',
           location: 'Khan El Khalili',
         ),
