@@ -5,16 +5,14 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
-import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart'; // Correct parameterized card
+import 'package:brand/features/brand_profile/presentation/widgets/product_card.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
 import 'package:brand/features/explore/presentaion/viewsModel/explore_cubit.dart';
 import 'package:brand/features/explore/presentaion/viewsModel/explore_states.dart';
-import 'package:brand/features/explore/presentaion/views/widgets/browse_all_cat.dart';
-import 'package:brand/features/explore/presentaion/views/widgets/category_selector.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/collections_container.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/filter_bottom_sheet.dart';
-import 'package:brand/features/explore/presentaion/views/widgets/subcategory_tabs.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/featured_brands.dart';
+import 'package:brand/features/home/presentation/views/search_results_screen.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,51 +25,84 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ExploreCubit>()..getProducts(),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: SafeArea(
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 16.h),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BasicText(
-                          text: 'explore'.tr().tr().tr(),
-                          fontSize: 24,
-                          color:
-                              Theme.of(context).textTheme.bodyLarge?.color ??
-                              BasicColors.black,
-                          isBold: true,
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            body: SafeArea(
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                slivers: [
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 16.h),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 0.8.sw,
-                              child: CusSearchBar(
-                                hintText: 'search_products'.tr().tr().tr(),
-                              ),
+                            BasicText(
+                              text: 'explore'.tr(),
+                              fontSize: 24,
+                              color:
+                                  Theme.of(context).textTheme.bodyLarge?.color ??
+                                  BasicColors.black,
+                              isBold: true,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (context) =>
-                                      const FilterBottomSheet(),
-                                );
-                              },
-                              child: Container(
-                                height: 45.h,
+                            SizedBox(height: 10.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 0.8.sw,
+                                  child: CusSearchBar(
+                                    hintText: 'search_products'.tr(),
+                                    onSubmitted: (query) {
+                                      if (query.trim().isNotEmpty) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => SearchResultsScreen(
+                                              initialQuery: query.trim(),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    final cubit = context.read<ExploreCubit>();
+                                    final state = cubit.state;
+                                    final result =
+                                        await showModalBottomSheet<
+                                          Map<String, dynamic>
+                                        >(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (context) =>
+                                              FilterBottomSheet(
+                                                initialSort: state.sortBy,
+                                                initialCategory: state.category,
+                                                initialMinPrice: state.minPrice,
+                                                initialMaxPrice: state.maxPrice,
+                                                categories: state.categories.map((c) => c.name).toList(),
+                                              ),
+                                        );
+                                    if (result != null) {
+                                      await cubit.filterProducts(
+                                        sortBy: result['sortBy'],
+                                        category: result['category'],
+                                        minPrice: result['minPrice'],
+                                        maxPrice: result['maxPrice'],
+                                      );
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 45.h,
                                 width: 0.13.sw,
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).cardColor,
@@ -97,10 +128,6 @@ class Explore extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 10.h),
-
-                        //CategorySelector
-                        const CategorySelector(),
-                        SizedBox(height: 20.h),
 
                         //Collections
                         BasicText(
@@ -148,30 +175,13 @@ class Explore extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 20.h),
-                        //Browse All Categories
-                        BasicText(
-                          text: 'browse_all_categories'.tr().tr().tr(),
-                          fontSize: 18,
-                          color:
-                              Theme.of(context).textTheme.bodyLarge?.color ??
-                              BasicColors.black,
-                          isBold: true,
-                        ),
-                        SizedBox(height: 20.h),
-                        //containers
-                        // BrowseAllCat(),
-                        SizedBox(height: 20.h),
-
-                        const SubcategoryTabs(),
-                        SizedBox(height: 20.h),
-
                         BlocBuilder<ExploreCubit, ExploreState>(
                           builder: (context, state) {
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 BasicText(
-                                  text: 'all_products'.tr().tr().tr(),
+                                  text: 'all_products'.tr(),
                                   fontSize: 18,
                                   color:
                                       Theme.of(
@@ -227,7 +237,7 @@ class Explore extends StatelessWidget {
                               return Center(
                                 child: Text("Error: ${state.error}"),
                               );
-                            } else if (state.products.isEmpty) {
+                            } else if (state.filteredProducts.isEmpty) {
                               return Center(
                                 child: Text('no_products_found'.tr()),
                               );
@@ -243,11 +253,9 @@ class Explore extends StatelessWidget {
                                     crossAxisSpacing: 10.w,
                                     mainAxisSpacing: 10.h,
                                   ),
-                              itemCount: state.products.length > 10
-                                  ? 10
-                                  : state.products.length,
+                              itemCount: state.filteredProducts.length,
                               itemBuilder: (context, index) {
-                                final product = state.products[index];
+                                final product = state.filteredProducts[index];
                                 return ProductCard(
                                   product: Product(
                                     id: product.id,
@@ -281,7 +289,8 @@ class Explore extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      );
+    }),
     );
   }
 }

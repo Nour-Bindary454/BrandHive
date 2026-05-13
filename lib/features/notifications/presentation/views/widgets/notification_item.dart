@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationItem extends StatelessWidget {
+  final String id;
   final String title;
   final String subtitle;
   final String timeAgo;
@@ -10,9 +11,12 @@ class NotificationItem extends StatelessWidget {
   final Color iconBgColor;
   final Color iconColor;
   final bool isUnread;
+  final VoidCallback? onMarkRead;
+  final VoidCallback? onDelete;
 
   const NotificationItem({
     super.key,
+    this.id = '',
     required this.title,
     required this.subtitle,
     required this.timeAgo,
@@ -20,6 +24,8 @@ class NotificationItem extends StatelessWidget {
     required this.iconBgColor,
     required this.iconColor,
     this.isUnread = false,
+    this.onMarkRead,
+    this.onDelete,
   });
 
   @override
@@ -111,7 +117,7 @@ class NotificationItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 15.w),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: onMarkRead,
                         child: BasicText(
                           text: "Mark read",
                           fontSize: 12.sp,
@@ -121,7 +127,7 @@ class NotificationItem extends StatelessWidget {
                       ),
                     ),
                   InkWell(
-                    onTap: () {},
+                    onTap: onDelete,
                     child: BasicText(
                       text: "Delete",
                       fontSize: 12.sp,

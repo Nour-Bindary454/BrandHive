@@ -28,7 +28,7 @@ class _RememberMeState extends State<RememberMe> {
             ),
           ),
           BasicText(
-            text: 'remember_me'.tr().tr(),
+            text: 'remember_me'.tr(),
             fontSize: 13.sp,
             isBold: true,
             color: Color(0xff2C3F52),

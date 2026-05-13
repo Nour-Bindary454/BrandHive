@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 import 'package:brand/features/signup/data/repository/register_repos.dart';
 import 'package:brand/features/signup/presentation/view_model/cubit/register_state.dart';
@@ -40,7 +41,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
         (failure) {
           emit(SignUpError(failure.errMessage));
         },
-        (response) {
+        (response) async {
+          await CacheHelper.saveData(key: 'name', value: name);
+          await CacheHelper.saveData(key: 'email', value: email);
           emit(SignUpSuccess(response));
         },
       );

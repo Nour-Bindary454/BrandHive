@@ -321,7 +321,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: isSelected ? BasicColors.buttonColorDark : Colors.grey[300]!,
+            color: isSelected ? BasicColors.buttonColorLight : Colors.grey[300]!,
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -333,11 +333,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               onChanged: (val) {
                 if (val != null) _updatePayment(val);
               },
-              activeColor: BasicColors.buttonColorDark,
+              activeColor: BasicColors.buttonColorLight,
             ),
             Icon(
               iconData,
-              color: isSelected ? BasicColors.buttonColorDark : Colors.grey,
+              color: isSelected ? BasicColors.buttonColorLight : Colors.grey,
             ),
             SizedBox(width: 16.w),
             Expanded(
@@ -414,7 +414,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide: const BorderSide(color: BasicColors.buttonColorDark),
+              borderSide: const BorderSide(color: BasicColors.buttonColorLight),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

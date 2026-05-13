@@ -39,6 +39,25 @@ class LoginCubit extends Cubit<LoginStates> {
             value: response.accessToken!,
           );
 
+          if (response.user != null) {
+            await CacheHelper.saveData(
+              key: 'id',
+              value: response.user!.id ?? '',
+            );
+            await CacheHelper.saveData(
+              key: 'name',
+              value: response.user!.name ?? 'User',
+            );
+            await CacheHelper.saveData(
+              key: 'email',
+              value: response.user!.email ?? '',
+            );
+            await CacheHelper.saveData(
+              key: 'role',
+              value: response.user!.role ?? 'user',
+            );
+          }
+
           await TokenManager.saveToken(response.accessToken!);
 
           await DioHelper.updateToken();

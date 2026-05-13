@@ -2,19 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({super.key});
+  final String initialSort;
+  final String initialCategory;
+  final String initialMinPrice;
+  final String initialMaxPrice;
+  final List<String> categories;
+
+  const FilterBottomSheet({
+    super.key,
+    required this.initialSort,
+    required this.initialCategory,
+    required this.initialMinPrice,
+    required this.initialMaxPrice,
+    required this.categories,
+  });
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
-  String selectedSort = 'Featured';
-  String selectedCategory = 'All';
+  late String selectedSort;
+  late String selectedCategory;
   String selectedShipping = 'All';
-  
-  final TextEditingController minPriceController = TextEditingController();
-  final TextEditingController maxPriceController = TextEditingController();
+
+  static const Map<String, String> _categoryDisplayNames = {
+    'handicrafts': 'Hand Crafts',
+    'home-decor': 'Home Decor',
+    'beauty': 'Beauty',
+    'fashion': 'Fashion',
+    'jewelry': 'Jewelry',
+  };
+
+  String _displayName(String apiName) {
+    return _categoryDisplayNames[apiName.toLowerCase()] ?? apiName;
+  }
+
+  late final TextEditingController minPriceController;
+  late final TextEditingController maxPriceController;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSort = widget.initialSort;
+    selectedCategory = widget.initialCategory;
+    minPriceController = TextEditingController(text: widget.initialMinPrice);
+    maxPriceController = TextEditingController(text: widget.initialMaxPrice);
+  }
 
   @override
   void dispose() {
@@ -30,7 +64,12 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
       ),
-      padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, MediaQuery.of(context).viewInsets.bottom + 24.h),
+      padding: EdgeInsets.fromLTRB(
+        24.w,
+        24.h,
+        24.w,
+        MediaQuery.of(context).padding.bottom + 16.h,
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,10 +114,26 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               spacing: 8.w,
               runSpacing: 12.h,
               children: [
-                _buildChip('Featured', selectedSort, (v) => setState(() => selectedSort = v)),
-                _buildChip('Price: Low', selectedSort, (v) => setState(() => selectedSort = v)),
-                _buildChip('Price: High', selectedSort, (v) => setState(() => selectedSort = v)),
-                _buildChip('Top Rated', selectedSort, (v) => setState(() => selectedSort = v)),
+                _buildChip(
+                  'Featured',
+                  selectedSort,
+                  (v) => setState(() => selectedSort = v),
+                ),
+                _buildChip(
+                  'Price: Low',
+                  selectedSort,
+                  (v) => setState(() => selectedSort = v),
+                ),
+                _buildChip(
+                  'Price: High',
+                  selectedSort,
+                  (v) => setState(() => selectedSort = v),
+                ),
+                _buildChip(
+                  'Top Rated',
+                  selectedSort,
+                  (v) => setState(() => selectedSort = v),
+                ),
               ],
             ),
             SizedBox(height: 24.h),
@@ -90,13 +145,23 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               spacing: 8.w,
               runSpacing: 12.h,
               children: [
-                _buildChip('All', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Fashion', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Jewelry', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Ceramics', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Beauty', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Food', selectedCategory, (v) => setState(() => selectedCategory = v)),
-                _buildChip('Home Decor', selectedCategory, (v) => setState(() => selectedCategory = v)),
+                _buildChip(
+                  'All',
+                  selectedCategory,
+                  (v) => setState(() => selectedCategory = v),
+                ),
+                ...widget.categories.map(
+                  (cat) => _buildChip(
+                    _displayName(cat),
+                    _displayName(selectedCategory),
+                    (v) => setState(
+                      () => selectedCategory = widget.categories.firstWhere(
+                        (c) => _displayName(c) == v,
+                        orElse: () => v,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 24.h),
@@ -106,9 +171,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             SizedBox(height: 12.h),
             Row(
               children: [
-                Expanded(child: _buildPriceField('Min EGP', minPriceController)),
+                Expanded(
+                  child: _buildPriceField('Min EGP', minPriceController),
+                ),
                 SizedBox(width: 16.w),
-                Expanded(child: _buildPriceField('Max EGP', maxPriceController)),
+                Expanded(
+                  child: _buildPriceField('Max EGP', maxPriceController),
+                ),
               ],
             ),
             SizedBox(height: 24.h),
@@ -120,21 +189,36 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               spacing: 8.w,
               runSpacing: 12.h,
               children: [
-                _buildChip('All', selectedShipping, (v) => setState(() => selectedShipping = v)),
-                _buildChip('Global Only', selectedShipping, (v) => setState(() => selectedShipping = v)),
-                _buildChip('Egypt Only', selectedShipping, (v) => setState(() => selectedShipping = v)),
+                _buildChip(
+                  'All',
+                  selectedShipping,
+                  (v) => setState(() => selectedShipping = v),
+                ),
+                _buildChip(
+                  'Global Only',
+                  selectedShipping,
+                  (v) => setState(() => selectedShipping = v),
+                ),
+                _buildChip(
+                  'Egypt Only',
+                  selectedShipping,
+                  (v) => setState(() => selectedShipping = v),
+                ),
               ],
             ),
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Apply Button
             SizedBox(
               width: double.infinity,
-              height: 54.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // Apply filter logic here
-                  Navigator.pop(context);
+                  Navigator.pop(context, {
+                    'sortBy': selectedSort,
+                    'category': selectedCategory,
+                    'minPrice': minPriceController.text,
+                    'maxPrice': maxPriceController.text,
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF2D4373),
@@ -147,13 +231,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   'Apply Filters',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16.sp,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Poppins',
                   ),
                 ),
               ),
             ),
+            SizedBox(height: 24.h),
           ],
         ),
       ),
@@ -173,7 +258,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     );
   }
 
-  Widget _buildChip(String label, String selectedValue, Function(String) onSelect) {
+  Widget _buildChip(
+    String label,
+    String selectedValue,
+    Function(String) onSelect,
+  ) {
     bool isSelected = label == selectedValue;
     return GestureDetector(
       onTap: () => onSelect(label),
@@ -183,7 +272,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           color: isSelected ? const Color(0xFF2D4373) : Colors.white,
           borderRadius: BorderRadius.circular(24.r),
           border: Border.all(
-            color: isSelected ? const Color(0xFF2D4373) : const Color(0xFFE2E8F0),
+            color: isSelected
+                ? const Color(0xFF2D4373)
+                : const Color(0xFFE2E8F0),
           ),
         ),
         child: Text(
@@ -222,7 +313,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             fontFamily: 'Poppins',
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
+          ),
         ),
       ),
     );

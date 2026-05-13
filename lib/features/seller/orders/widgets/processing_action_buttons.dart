@@ -18,7 +18,7 @@ class ProcessingActionButtons extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: BasicText(
-        text: 'mark_as_ready'.tr().tr(),
+        text: 'mark_as_ready'.tr(),
         fontSize: 12,
         color: const Color(0xFF5384DB),
         isBold: true,

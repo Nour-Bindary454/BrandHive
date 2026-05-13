@@ -22,7 +22,7 @@ class _SeoVisibilitySectionState extends State<SeoVisibilitySection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'seo_visibility'.tr().tr(),
+            text: 'seo_visibility'.tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
@@ -30,7 +30,7 @@ class _SeoVisibilitySectionState extends State<SeoVisibilitySection> {
           SizedBox(height: 15.h),
           AddProductTextField(
             label: 'Tags (Comma separated)',
-            hintText: 'e_g_handmade_egyptian_kilim_rug'.tr().tr(),
+            hintText: 'e_g_handmade_egyptian_kilim_rug'.tr(),
           ),
           SizedBox(height: 15.h),
           GestureDetector(
@@ -60,7 +60,7 @@ class _SeoVisibilitySectionState extends State<SeoVisibilitySection> {
                   ),
                   SizedBox(width: 10.w),
                   BasicText(
-                    text: 'publish_this_product_immediately'.tr().tr(),
+                    text: 'publish_this_product_immediately'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF0F172A),
                     isBold: true,

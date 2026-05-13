@@ -1,7 +1,10 @@
 import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_state.dart';
 import 'package:brand/features/notifications/presentation/views/widgets/notification_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationsBody extends StatelessWidget {
@@ -29,23 +32,40 @@ class NotificationsBody extends StatelessWidget {
                       color: const Color(0xFF1E293B),
                       isBold: true,
                     ),
-                    BasicText(
-                      text: "2 new",
-                      fontSize: 13.sp,
-                      color: const Color(0xFF3B82F6),
-                      isBold: true,
+                    BlocBuilder<NotificationsCubit, NotificationsState>(
+                      buildWhen: (prev, curr) =>
+                          prev.unreadCount != curr.unreadCount,
+                      builder: (context, state) {
+                        return BasicText(
+                          text: state.unreadCount > 0
+                              ? "${state.unreadCount} new"
+                              : "All read",
+                          fontSize: 13.sp,
+                          color: const Color(0xFF3B82F6),
+                          isBold: true,
+                        );
+                      },
                     ),
                   ],
                 ),
                 const Spacer(),
-                InkWell(
-                  onTap: () {},
-                  child: BasicText(
-                    text: "Mark all read",
-                    fontSize: 13.sp,
-                    color: const Color(0xFF3B82F6),
-                    isBold: true,
-                  ),
+                BlocBuilder<NotificationsCubit, NotificationsState>(
+                  buildWhen: (prev, curr) =>
+                      prev.unreadCount != curr.unreadCount,
+                  builder: (context, state) {
+                    if (state.unreadCount == 0) return const SizedBox.shrink();
+                    return InkWell(
+                      onTap: () {
+                        context.read<NotificationsCubit>().markAllAsRead();
+                      },
+                      child: BasicText(
+                        text: "Mark all read",
+                        fontSize: 13.sp,
+                        color: const Color(0xFF3B82F6),
+                        isBold: true,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -54,67 +74,174 @@ class NotificationsBody extends StatelessWidget {
 
           // Divider
           const Divider(color: Color(0xFFF1F5F9), thickness: 1, height: 1),
-          
+
           // List
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(20.w),
-              children: const [
-                NotificationItem(
-                  title: "Order Confirmed",
-                  subtitle: "Your order #EGY-8839201 has been confirmed",
-                  timeAgo: "2 mins ago",
-                  icon: Icons.inventory_2_outlined,
-                  iconBgColor: Color(0xFFDBEAFE),
-                  iconColor: Color(0xFF2563EB),
-                  isUnread: true,
-                ),
-                NotificationItem(
-                  title: "New Message",
-                  subtitle: "Nile Weavers replied to your message",
-                  timeAgo: "15 mins ago",
-                  icon: Icons.chat_bubble_outline_rounded,
-                  iconBgColor: Color(0xFFD1FAE5),
-                  iconColor: Color(0xFF059669),
-                  isUnread: true,
-                ),
-                NotificationItem(
-                  title: "Flash Sale Alert!",
-                  subtitle: "50% off on Handwoven Rugs - Ends in 2 hours",
-                  timeAgo: "1 hour ago",
-                  icon: Icons.local_offer_outlined,
-                  iconBgColor: Color(0xFFFFEDD5),
-                  iconColor: Color(0xFFEA580C),
-                ),
-                NotificationItem(
-                  title: "Item Back in Stock",
-                  subtitle: "The Brass Pendant Light you liked is now in stock",
-                  timeAgo: "3 hours ago",
-                  icon: Icons.favorite_border_rounded,
-                  iconBgColor: Color(0xFFFCE7F3),
-                  iconColor: Color(0xFFDB2777),
-                ),
-                NotificationItem(
-                  title: "New Feature Available",
-                  subtitle: "Check out our new Seller Analytics dashboard",
-                  timeAgo: "Yesterday",
-                  icon: Icons.bolt_rounded,
-                  iconBgColor: Color(0xFFEDE9FE),
-                  iconColor: Color(0xFF7C3AED),
-                ),
-                NotificationItem(
-                  title: "Shipped",
-                  subtitle: "Your order is on the way. Track your delivery",
-                  timeAgo: "2 days ago",
-                  icon: Icons.local_shipping_outlined,
-                  iconBgColor: Color(0xFFDBEAFE),
-                  iconColor: Color(0xFF2563EB),
-                ),
-              ],
+            child: BlocBuilder<NotificationsCubit, NotificationsState>(
+              builder: (context, state) {
+                if (state.isLoading && state.notifications.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (state.error != null && state.notifications.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BasicText(
+                          text: state.error!,
+                          fontSize: 14.sp,
+                          color: const Color(0xFF64748B),
+                          isBold: false,
+                        ),
+                        SizedBox(height: 12.h),
+                        InkWell(
+                          onTap: () => context
+                              .read<NotificationsCubit>()
+                              .fetchNotifications(forceRefresh: true),
+                          child: BasicText(
+                            text: "Retry",
+                            fontSize: 14.sp,
+                            color: const Color(0xFF3B82F6),
+                            isBold: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (state.notifications.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.notifications_none_rounded,
+                            size: 48.sp, color: const Color(0xFF94A3B8)),
+                        SizedBox(height: 12.h),
+                        BasicText(
+                          text: "No notifications yet",
+                          fontSize: 14.sp,
+                          color: const Color(0xFF64748B),
+                          isBold: false,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.all(20.w),
+                  itemCount: state.notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification = state.notifications[index];
+                    return NotificationItem(
+                      id: notification.id,
+                      title: notification.title,
+                      subtitle: notification.body,
+                      timeAgo: _formatTimeAgo(notification.createdAt),
+                      icon: _getIconForType(notification.type),
+                      iconBgColor: _getBgColorForType(notification.type),
+                      iconColor: _getIconColorForType(notification.type),
+                      isUnread: !notification.isRead,
+                      onMarkRead: () {
+                        context
+                            .read<NotificationsCubit>()
+                            .markAsRead(notification.id);
+                      },
+                      onDelete: () {
+                        context
+                            .read<NotificationsCubit>()
+                            .deleteNotification(notification.id);
+                      },
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  IconData _getIconForType(String type) {
+    switch (type.toLowerCase()) {
+      case 'order':
+        return Icons.inventory_2_outlined;
+      case 'message':
+        return Icons.chat_bubble_outline_rounded;
+      case 'sale':
+      case 'offer':
+        return Icons.local_offer_outlined;
+      case 'wishlist':
+      case 'stock':
+        return Icons.favorite_border_rounded;
+      case 'feature':
+        return Icons.bolt_rounded;
+      case 'shipping':
+        return Icons.local_shipping_outlined;
+      default:
+        return Icons.notifications_outlined;
+    }
+  }
+
+  Color _getBgColorForType(String type) {
+    switch (type.toLowerCase()) {
+      case 'order':
+        return const Color(0xFFDBEAFE);
+      case 'message':
+        return const Color(0xFFD1FAE5);
+      case 'sale':
+      case 'offer':
+        return const Color(0xFFFFEDD5);
+      case 'wishlist':
+      case 'stock':
+        return const Color(0xFFFCE7F3);
+      case 'feature':
+        return const Color(0xFFEDE9FE);
+      case 'shipping':
+        return const Color(0xFFDBEAFE);
+      default:
+        return const Color(0xFFE2E8F0);
+    }
+  }
+
+  Color _getIconColorForType(String type) {
+    switch (type.toLowerCase()) {
+      case 'order':
+        return const Color(0xFF2563EB);
+      case 'message':
+        return const Color(0xFF059669);
+      case 'sale':
+      case 'offer':
+        return const Color(0xFFEA580C);
+      case 'wishlist':
+      case 'stock':
+        return const Color(0xFFDB2777);
+      case 'feature':
+        return const Color(0xFF7C3AED);
+      case 'shipping':
+        return const Color(0xFF2563EB);
+      default:
+        return const Color(0xFF64748B);
+    }
+  }
+
+  String _formatTimeAgo(String createdAt) {
+    if (createdAt.isEmpty) return '';
+    try {
+      final date = DateTime.parse(createdAt);
+      final now = DateTime.now();
+      final diff = now.difference(date);
+
+      if (diff.inMinutes < 1) return 'Just now';
+      if (diff.inMinutes < 60) return '${diff.inMinutes} mins ago';
+      if (diff.inHours < 24) return '${diff.inHours} hours ago';
+      if (diff.inDays < 7) return '${diff.inDays} days ago';
+      return '${(diff.inDays / 7).floor()} weeks ago';
+    } catch (_) {
+      return createdAt;
+    }
   }
 }

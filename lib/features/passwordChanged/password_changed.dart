@@ -38,7 +38,7 @@ class PasswordChanged extends StatelessWidget {
 
               // Title
               BasicText(
-                text: 'password_changed'.tr().tr(),
+                text: 'password_changed'.tr(),
                 fontSize: 24,
                 color: const Color(0xFF1F1F1F), // Dark text
                 isBold: true,
@@ -48,7 +48,7 @@ class PasswordChanged extends StatelessWidget {
 
               // Subtitle
               BasicText(
-                text: 'your_password_has_been_nchanged_successfully'.tr().tr(),
+                text: 'your_password_has_been_nchanged_successfully'.tr(),
                 fontSize: 14,
                 color: Colors.grey.shade600,
                 isBold: false,
@@ -60,7 +60,7 @@ class PasswordChanged extends StatelessWidget {
               // Back to login Button
               Center(
                 child: BasicButton(
-                  text: 'back_to_login'.tr().tr(),
+                  text: 'back_to_login'.tr(),
                   colors: const [Color(0xFF2D4373)],
                   radius: 8.r,
                   onPressed: () {

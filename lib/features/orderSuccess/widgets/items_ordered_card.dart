@@ -21,7 +21,7 @@ class ItemsOrderedCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'items_ordered'.tr().tr(),
+            text: 'items_ordered'.tr(),
             fontSize: 12,
             color: Colors.grey.shade600,
             isBold: true,
@@ -63,7 +63,7 @@ class ItemsOrderedCard extends StatelessWidget {
                         ),
                         SizedBox(height: 4.h),
                         BasicText(
-                          text: 'qty_1'.tr().tr(),
+                          text: 'qty_1'.tr(),
                           fontSize: 12,
                           color: Colors.grey.shade700,
                           isBold: false,

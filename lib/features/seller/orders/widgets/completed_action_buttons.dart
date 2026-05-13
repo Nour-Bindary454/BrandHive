@@ -14,7 +14,7 @@ class CompletedActionButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BasicText(
-            text: 'view_details'.tr().tr(),
+            text: 'view_details'.tr(),
             fontSize: 12,
             color: Colors.grey.shade500,
             isBold: true,

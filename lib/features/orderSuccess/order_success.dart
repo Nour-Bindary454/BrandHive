@@ -40,21 +40,21 @@ class OrderSuccess extends StatelessWidget {
               
               // Titles
               BasicText(
-                text: 'order_placed'.tr().tr(),
+                text: 'order_placed'.tr(),
                 fontSize: 24,
                 color: Color(0xFF2D4373), // Dark Blue
                 isBold: true,
               ),
               SizedBox(height: 10.h),
               BasicText(
-                text: 'thank_you_for_your_purchase'.tr().tr(),
+                text: 'thank_you_for_your_purchase'.tr(),
                 fontSize: 14,
                 color: Colors.grey.shade800,
                 isBold: false, 
               ),
               SizedBox(height: 5.h),
               BasicText(
-                text: 'order_egy_8839201_confirmed'.tr().tr(),
+                text: 'order_egy_8839201_confirmed'.tr(),
                 fontSize: 12,
                 color: Colors.grey.shade500,
                 isBold: false, 
@@ -96,7 +96,7 @@ class OrderSuccess extends StatelessWidget {
               
               // Continue Shopping Filled Button
               BasicButton(
-                text: 'continue_shopping'.tr().tr(),
+                text: 'continue_shopping'.tr(),
                 colors: const [Color(0xFF2D4373)],
                 radius: 25.r,
                 onPressed: () {},

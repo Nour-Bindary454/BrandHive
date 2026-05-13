@@ -103,7 +103,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return BasicButton(
-                  text: 'send_code'.tr().tr(),
+                  text: 'send_code'.tr(),
                   onPressed: () {
                     if (_emailController.text.isNotEmpty) {
                       context.read<ForgetPasswordCubit>().forgetPassword(_emailController.text);
@@ -123,7 +123,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BasicText(
-                  text: 'remember_password'.tr().tr(),
+                  text: 'remember_password'.tr(),
                   fontSize: 14.sp,
                   isBold: false,
                   color: BasicColors.linearGradientDark,

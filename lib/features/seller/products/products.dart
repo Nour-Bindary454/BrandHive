@@ -25,7 +25,7 @@ class _ProductsState extends State<Products> {
             children: [
               SizedBox(height: 20.h),
               BasicText(
-                text: 'my_products'.tr().tr(),
+                text: 'my_products'.tr(),
                 fontSize: 20,
                 color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                 isBold: true,

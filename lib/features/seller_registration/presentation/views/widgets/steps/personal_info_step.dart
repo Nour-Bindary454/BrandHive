@@ -13,7 +13,7 @@ class PersonalInfoStep extends StatelessWidget {
       children: [
         SectionHeader(
           stepNumber: '01',
-          title: 'personal_information'.tr().tr(),
+          title: 'personal_information'.tr(),
           icon: Icons.person_outline,
         ),
         const RegistrationTextField(

@@ -41,7 +41,7 @@ class _StoreInfoStepState extends State<StoreInfoStep> {
       children: [
         SectionHeader(
           stepNumber: '02',
-          title: 'store_information'.tr().tr(),
+          title: 'store_information'.tr(),
           icon: Icons.storefront_outlined,
         ),
         SizedBox(height: 16.h),
