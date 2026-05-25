@@ -26,8 +26,8 @@ class ProfileViewModel extends ChangeNotifier {
       await Future.delayed(const Duration(seconds: 1));
 
       _profileData = ProfileModel(
-        name: CacheHelper.getData('name') ?? 'User',
-        email: CacheHelper.getData('email') ?? 'user@example.com',
+        name: CacheHelper.getData(key: 'name') ?? 'User',
+        email: CacheHelper.getData(key: 'email') ?? 'user@example.com',
         imageUrl:
             'https://i.pravatar.cc/150?u=a042581f4e29026704d', // Placeholder
         membership: 'Gold Member',
@@ -71,7 +71,7 @@ class ProfileViewModel extends ChangeNotifier {
 
   void signOut(BuildContext context) {
     // Clear token
-    CacheHelper.removeData('token');
+    CacheHelper.removeData(key: 'token');
 
     // Navigate to Login and clear stack
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);

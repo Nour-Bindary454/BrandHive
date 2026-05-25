@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 2), () {
-      final token = CacheHelper.getData('token');
+      final token = CacheHelper.getData(key: 'token');
       if (token != null && token.isNotEmpty) {
         Navigator.pushReplacementNamed(context, '/mainlayout');
       } else {
@@ -32,17 +32,14 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            width: mediaQuery.size.width,
-            height: mediaQuery.size.height,
-            color: Colors.white,
-          ),
+          Positioned.fill(child: Container(color: Colors.white)),
           Positioned(
             top: 0,
             right: 0,
             child: Image.asset(
               PngImages.frametop,
-              width: mediaQuery.size.width * 0.69,
+              width: mediaQuery.size.width * 0.7,
+              fit: BoxFit.cover,
             ),
           ),
           Positioned(
@@ -50,14 +47,11 @@ class _SplashState extends State<Splash> {
             left: 0,
             child: Image.asset(
               PngImages.framebottom,
-              width: mediaQuery.size.width * 0.95,
+              width: mediaQuery.size.width,
+              fit: BoxFit.cover,
             ),
           ),
-          Center(
-            child: Image.asset(
-              PngImages.logo,
-            ),
-          ),
+          Center(child: Image.asset(PngImages.logo, width: 260)),
         ],
       ),
     );

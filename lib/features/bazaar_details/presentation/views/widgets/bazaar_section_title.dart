@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class BazaarSectionTitle extends StatelessWidget {

@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +24,8 @@ class FeaturedBrands extends StatelessWidget {
             BasicText(
               text: 'featured_brands'.tr(),
               fontSize: 18,
-              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+              color:
+                  Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               isBold: true,
             ),
             GestureDetector(
@@ -64,7 +64,10 @@ class FeaturedBrands extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16.r),
                     boxShadow: [
                       BoxShadow(
-                        color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.04),
+                        color:
+                            (Theme.of(context).textTheme.bodyLarge?.color ??
+                                    Colors.black)
+                                .withOpacity(0.04),
                         blurRadius: 10,
                         spreadRadius: 1,
                         offset: Offset(0, 2),

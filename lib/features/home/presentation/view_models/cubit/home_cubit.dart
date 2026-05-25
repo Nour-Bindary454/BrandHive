@@ -27,7 +27,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       /// 1. USER
       final user = UserProfile(
-        name: CacheHelper.getData('name') ?? 'User',
+        name: CacheHelper.getData(key: 'name') ?? 'User',
         profileImageUrl: 'https://i.pravatar.cc/150?img=11',
         greeting: greeting,
       );
@@ -99,21 +99,18 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       ];
 
-      /// 7. FEATURED + CATEGORIES — fetch in parallel
+      /// 7. FEATURED + CATEGORIES — fetch all 10 pages IN PARALLEL
       List<HomeProduct> featured = [];
-      final results = await Future.wait([
-        sl<HomeRepository>().getAllProducts(page: 1),
-      ]);
-
-      results[0].fold(
-        (failure) {
-          print("Failed to load products: ${failure.errMessage}");
-          throw Exception(failure.errMessage);
-        },
-        (data) {
-          featured = List.from(data)..shuffle(Random());
-        },
+      final productResults = await Future.wait(
+        List.generate(10, (i) => sl<HomeRepository>().getAllProducts(page: i + 1)),
       );
+
+      for (final result in productResults) {
+        result.fold((failure) {}, (data) {
+          featured.addAll(data);
+        });
+      }
+      featured.shuffle(Random());
 
       /// ✅ FINAL EMIT
       emit(
@@ -162,5 +159,32 @@ class HomeCubit extends Cubit<HomeState> {
         ));
       },
     );
+  }
+  Future<void> updateProductStatus(String productId, bool isActive) async {
+    final updatedFeatured = state.featured.map((p) {
+      if (p.id == productId) return p.copyWith(isActive: isActive);
+      return p;
+    }).toList();
+
+    emit(state.copyWith(featured: updatedFeatured));
+  }
+
+  Future<void> removeProduct(String productId) async {
+    final updatedFeatured = state.featured.where((p) => p.id != productId).toList();
+    emit(state.copyWith(featured: updatedFeatured));
+  }
+
+  Future<void> removeBrand(String brandId) async {
+    final updatedBrands = state.brands.where((b) => b.id != brandId).toList();
+    emit(state.copyWith(brands: updatedBrands));
+  }
+
+  Future<void> updateBrandStatus(String brandId, bool isActive) async {
+    final updatedBrands = state.brands.map((b) {
+      if (b.id == brandId) return b.copyWith(isActive: isActive);
+      return b;
+    }).toList();
+
+    emit(state.copyWith(brands: updatedBrands));
   }
 }

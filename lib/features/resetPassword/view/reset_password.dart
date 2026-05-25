@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/sharedWidgets/basic_text_field.dart';
 import 'package:brand/features/passwordChanged/password_changed.dart';
@@ -60,7 +59,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                     BasicText(
                       text: 'reset_password'.tr(),
                       fontSize: 28,
-                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                      color:
+                          Theme.of(context).textTheme.bodyLarge?.color ??
+                          Colors.black,
                       isBold: true,
                     ),
 
@@ -106,16 +107,20 @@ class _ResetPasswordState extends State<ResetPassword> {
                                       confirmPasswordController.text) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('passwords_don_t_match'.tr()),
+                                        content: Text(
+                                          'passwords_don_t_match'.tr(),
+                                        ),
                                       ),
                                     );
                                     return;
                                   }
 
-                                  context.read<ChangePassCubit>().changePassword(
-                                    email: widget.email,
-                                    password: passwordController.text,
-                                  );
+                                  context
+                                      .read<ChangePassCubit>()
+                                      .changePassword(
+                                        email: widget.email,
+                                        password: passwordController.text,
+                                      );
                                 },
                               ),
                       ],

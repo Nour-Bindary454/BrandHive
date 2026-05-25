@@ -46,6 +46,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       (route) => route.isFirst,
     );
   }
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          sl<CheckoutCubit>()..initCheckout(items: items, subtotal: subtotal),
+      child: BlocConsumer<CheckoutCubit, CheckoutState>(
+        listener: (context, state) {
+          if (state.orderSuccessResult != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                    OrderSuccessScreen(response: state.orderSuccessResult!),
+              ),
+            );
+          }
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +122,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
           // ── Error
           if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error!)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error!)));
           }
         },
         builder: (context, state) {
@@ -133,7 +148,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               title: BasicText(
                 text: 'checkout'.tr(),
                 fontSize: 18.sp,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color:
+                    Theme.of(context).textTheme.bodyLarge?.color ??
+                    Colors.black,
                 isBold: true,
                 fontFamily: 'Outfit',
               ),

@@ -1,4 +1,5 @@
 import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/admin_dashboard/data/models/admin_models.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_cubit.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_states.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/widgets/admin_dashboard_header.dart';
@@ -66,10 +67,11 @@ class AdminDashboardView extends StatelessWidget {
                     final request = state.requests[index];
                     return BrandRequestItem(
                       request: request,
-                      onStatusChange: (status) {
+                      onStatusChange: (BrandStatus status, String? reason) {
                         context.read<AdminCubit>().updateRequestStatus(
                           request.id,
                           status,
+                          reason: reason,
                         );
                       },
                     );

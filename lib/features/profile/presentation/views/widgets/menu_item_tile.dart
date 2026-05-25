@@ -2,7 +2,6 @@ import 'package:brand/features/profile/data/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class MenuItemTile extends StatelessWidget {
@@ -58,7 +57,11 @@ class MenuItemTile extends StatelessWidget {
                   isBold: true,
                 ),
               ),
-            Icon(Icons.chevron_right, size: 20.sp, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+            Icon(
+              Icons.chevron_right,
+              size: 20.sp,
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+            ),
           ],
         ),
       ),

@@ -20,21 +20,17 @@ class AdminDashboardHeader extends StatelessWidget {
           bottomLeft: Radius.circular(30.r),
           bottomRight: Radius.circular(30.r),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF2D4373).withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              padding: EdgeInsets.all(8.r),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.arrow_back, color: Colors.white, size: 20.sp),
-            ),
-          ),
           SizedBox(height: 24.h),
           Text(
             "Admin Dashboard",

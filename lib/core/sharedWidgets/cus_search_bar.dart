@@ -1,9 +1,13 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CusSearchBar extends StatefulWidget {
-  const CusSearchBar({super.key, this.hintText = 'Search...', this.onChanged, this.onSubmitted});
+  const CusSearchBar({
+    super.key,
+    this.hintText = 'Search...',
+    this.onChanged,
+    this.onSubmitted,
+  });
   final String hintText;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -33,11 +37,18 @@ class _CusSearchBarState extends State<CusSearchBar> {
       child: TextField(
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,
-        textInputAction: widget.onSubmitted != null ? TextInputAction.search : null,
+        textInputAction: widget.onSubmitted != null
+            ? TextInputAction.search
+            : null,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
-          prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodyMedium?.color),
+          hintStyle: TextStyle(
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
         ),

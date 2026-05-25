@@ -14,11 +14,11 @@ class CacheHelper {
     return await _prefs!.setString(key, value);
   }
 
-  static String? getData(String key) {
+  static String? getData({required String key}) {
     return _prefs!.getString(key);
   }
 
-  static Future<bool> removeData(String key) async {
+  static Future<bool> removeData({required String key}) async {
     return await _prefs!.remove(key);
   }
 }

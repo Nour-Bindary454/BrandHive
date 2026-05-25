@@ -32,8 +32,6 @@ class SellerStepper extends StatelessWidget {
           _buildStep(1, 'Store', Icons.store_outlined),
           _buildLine(1),
           _buildStep(2, 'Address', Icons.location_on_outlined),
-          _buildLine(2),
-          _buildStep(3, 'Documents', Icons.description_outlined),
         ],
       ),
     );

@@ -41,5 +41,22 @@
   "added_to_cart_success": "تم إضافة المنتج للسلة بنجاح",
   "added_to_cart_error": "فشل إضافة المنتج للسلة",
   "added_to_wishlist": "تم إضافة المنتج للمفضلة",
-  "removed_from_wishlist": "تم إزالة المنتج من المفضلة"
+  "removed_from_wishlist": "تم إزالة المنتج من المفضلة",
+  "products": "المنتجات",
+  "brands": "البراندات",
+  "search_brands": "ابحث عن البراندات...",
+  "activate": "تفعيل",
+  "deactivate": "إلغاء تفعيل",
+  "delete": "حذف",
+  "delete_product": "حذف المنتج",
+  "delete_confirm_msg": "هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.",
+  "delete_brand": "حذف البراند",
+  "delete_brand_confirm_msg": "هل أنت متأكد من حذف هذا البراند؟ قد تتأثر جميع المنتجات التابعة له.",
+  "admin_section": "إدارة المسؤول",
+  "deactivated_products": "المنتجات المعطلة",
+  "no_deactivated_products": "لا توجد منتجات معطلة حالياً",
+  "no_brands_found": "لا توجد براندات حالياً",
+  "search_products": "ابحث عن المنتجات...",
+  "no_products_found": "لا توجد منتجات حالياً",
+  "all_orders": "جميع الطلبات"
 }

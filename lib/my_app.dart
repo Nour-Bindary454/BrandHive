@@ -33,7 +33,6 @@ import 'package:provider/provider.dart';
 import 'package:brand/features/cart/data/repository/cart_repository.dart';
 import 'package:brand/features/cart/services/cart_service.dart';
 import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart';
-import 'package:brand/features/checkout/data/repository/checkout_repository.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
@@ -47,6 +46,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<WishlistCubit>(create: (_) => sl<WishlistCubit>()),
+        BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()..loadHomeData()),
         Provider<CartRepository>(
           create: (_) => CartRepository(sl<ApiService>()),
         ),
@@ -94,10 +94,7 @@ class MyApp extends StatelessWidget {
 
                   '/brandProfile': (context) => BrandProfileScreen(),
 
-                  '/home': (context) => BlocProvider(
-                    create: (context) => sl<HomeCubit>()..loadHomeData(),
-                    child: const HomeScreen(),
-                  ),
+                  '/home': (context) => const HomeScreen(),
                   '/mainlayout': (context) => Mainlayout(),
                   '/resetPassword': (context) {
                     final email =

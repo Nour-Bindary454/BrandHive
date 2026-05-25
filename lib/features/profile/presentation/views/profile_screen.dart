@@ -7,6 +7,8 @@ import 'widgets/stats_row.dart';
 import 'widgets/menu_list_section.dart';
 import 'widgets/sign_out_button.dart';
 import '../../../../core/sharedWidgets/basic_text.dart';
+import '../../../../core/services/cache_helper.dart';
+import '../../../../core/utils/toast/toast.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -74,6 +76,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // Seller Mode Banner
                   SellerModeCard(
                     onTap: () {
+                      final userId = CacheHelper.getData(key: 'id') ?? '';
+                      final Object isPending =
+                          CacheHelper.getData(key: 'brand_request_pending_$userId') ??
+                          false;
+
+                      if (isPending == 'true') {
+                        Toast.showInfoToast(
+                          msg: 'Your request is currently pending approval',
+                          context: context,
+                        );
+                        return;
+                      }
+
                       // Navigate to seller registration
                       Navigator.pushNamed(context, '/sellerRegistration');
                     },

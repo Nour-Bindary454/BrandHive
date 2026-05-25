@@ -73,6 +73,7 @@ class HomeProduct {
   final double price;
   final int matchPercentage;
   final double rating;
+  final bool? isActive;
 
   HomeProduct({
     required this.id,
@@ -84,6 +85,7 @@ class HomeProduct {
     required this.price,
     this.matchPercentage = 0,
     this.rating = 0.0,
+    this.isActive = true,
   });
 
   factory HomeProduct.fromJson(Map<String, dynamic> json) {
@@ -91,13 +93,40 @@ class HomeProduct {
       id: json['_id'] ?? json['id'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',
-      brandName: json['brand']?['name'] ?? '',
-      category: json['category']?['name'] ?? '',
+      brandName: json['brand'] is Map ? (json['brand']['name'] ?? '') : '',
+      category: json['category'] is Map ? (json['category']['name'] ?? '') : '',
       imageUrl: json['mainImage'] ?? '',
       price: double.tryParse(json['price']?.toString() ?? '0') ?? 0.0,
       rating:
           double.tryParse(json['stats']?['averageRating']?.toString() ?? '0') ??
           0.0,
+      isActive: json['isActive'] ?? true,
+    );
+  }
+
+  HomeProduct copyWith({
+    String? id,
+    String? brandName,
+    String? category,
+    String? name,
+    String? description,
+    String? imageUrl,
+    double? price,
+    int? matchPercentage,
+    double? rating,
+    bool? isActive,
+  }) {
+    return HomeProduct(
+      id: id ?? this.id,
+      brandName: brandName ?? this.brandName,
+      category: category ?? this.category,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      imageUrl: imageUrl ?? this.imageUrl,
+      price: price ?? this.price,
+      matchPercentage: matchPercentage ?? this.matchPercentage,
+      rating: rating ?? this.rating,
+      isActive: isActive ?? this.isActive,
     );
   }
 }
@@ -123,13 +152,35 @@ class BrandModel {
 
   factory BrandModel.fromJson(Map<String, dynamic> json) {
     return BrandModel(
-      id: json['_id'],
-      name: json['name'],
-      slug: json['slug'],
-      description: json['description'],
-      country: json['country'],
-      logoUrl: json['logo']['url'],
-      isActive: json['isActive'],
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
+      slug: json['slug'] ?? '',
+      description: json['description'] ?? '',
+      country: json['country'] ?? '',
+      logoUrl: (json['logo'] != null && json['logo'] is Map && json['logo']['url'] != null)
+          ? json['logo']['url']
+          : '',
+      isActive: json['isActive'] ?? false,
+    );
+  }
+
+  BrandModel copyWith({
+    String? id,
+    String? name,
+    String? slug,
+    String? description,
+    String? country,
+    String? logoUrl,
+    bool? isActive,
+  }) {
+    return BrandModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      description: description ?? this.description,
+      country: country ?? this.country,
+      logoUrl: logoUrl ?? this.logoUrl,
+      isActive: isActive ?? this.isActive,
     );
   }
 }

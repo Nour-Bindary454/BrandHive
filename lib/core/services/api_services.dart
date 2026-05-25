@@ -37,7 +37,6 @@ class ApiService {
             "✅ [RESPONSE] [${response.statusCode}] ${response.requestOptions.uri}",
           );
 
-          // 🔥 كشف لو السيرفر رجّع HTML بالغلط
           final data = response.data;
           if (data is String && data.contains("<html")) {
             throw DioException(
