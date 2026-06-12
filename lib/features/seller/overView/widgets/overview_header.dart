@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
+import 'package:brand/core/services/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -69,16 +70,25 @@ class OverviewHeader extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10.w),
-                  Container(
-                    width: 44.r,
-                    height: 44.r,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Center(
-                      child: ImageIcon(AssetImage(PngImages.logout), color: Colors.grey.shade400, size: 20.sp),
+                  GestureDetector(
+                    onTap: () async {
+                      await CacheHelper.removeData(key: 'token');
+                      await CacheHelper.removeData(key: 'role');
+                      if (context.mounted) {
+                        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                      }
+                    },
+                    child: Container(
+                      width: 44.r,
+                      height: 44.r,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: Center(
+                        child: ImageIcon(AssetImage(PngImages.logout), color: Colors.grey.shade400, size: 20.sp),
+                      ),
                     ),
                   ),
                 ],

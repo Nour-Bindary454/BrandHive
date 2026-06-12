@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:brand/features/admin_dashboard/data/models/admin_models.dart';
 import 'package:brand/features/admin_dashboard/data/repository/admin_repo.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_states.dart';
@@ -48,12 +49,34 @@ class AdminCubit extends Cubit<AdminState> {
           return r.copyWith(category: categoryName);
         }).toList();
 
+        // Sort brand requests descendingly by createdAt timestamp (newest first)
+        mappedRequests.sort((a, b) {
+          final aDate = DateTime.tryParse(a.rawData['createdAt']?.toString() ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final bDate = DateTime.tryParse(b.rawData['createdAt']?.toString() ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return bDate.compareTo(aDate);
+        });
+
+        // Recalculate the pending count from actual loaded requests and patch the Pending stat card
+        final pendingCount = mappedRequests.where((r) => r.status == BrandStatus.pending).length;
+        final correctedStats = stats.map((s) {
+          if (s.label == 'Pending') {
+            return AdminStatModel(
+              value: pendingCount.toString(),
+              label: s.label,
+              subtitle: s.subtitle,
+              icon: s.icon,
+              color: s.color,
+            );
+          }
+          return s;
+        }).toList();
+
         notificationsResult.fold(
           (failure) =>
-              emit(AdminSuccess(stats: stats, requests: mappedRequests)),
+              emit(AdminSuccess(stats: correctedStats, requests: mappedRequests)),
           (notifications) => emit(
             AdminSuccess(
-              stats: stats,
+              stats: correctedStats,
               requests: mappedRequests,
               notifications: notifications,
             ),
@@ -90,10 +113,45 @@ class AdminCubit extends Cubit<AdminState> {
 
     final result = await repo.updateBrandStatus(id, status, reason: reason);
 
-    result.fold((failure) {
-      // Rollback on failure (in a real app you'd fetch data again or keep original list)
-      getDashboardData();
-    }, (_) => null);
+    result.fold(
+      (failure) {
+        // Rollback on failure (in a real app you'd fetch data again or keep original list)
+        getDashboardData();
+      },
+      (_) async {
+        if (status == BrandStatus.approved) {
+          try {
+            // Find the approved request in currentState to get rawData
+            final request = currentState.requests.firstWhere((r) => r.id == id);
+            final userObj = request.rawData['user'];
+            String? userId;
+            if (userObj != null) {
+              if (userObj is Map) {
+                userId = userObj['_id'] ?? userObj['id'];
+              } else if (userObj is String) {
+                userId = userObj;
+              }
+            }
+
+            if (userId != null && userId.isNotEmpty) {
+              debugPrint("🚀 [AdminCubit] Sending approval notification to user: $userId");
+              await repo.sendNotification(
+                data: {
+                  "userId": userId,
+                  "type": "general",
+                  "title": "Brand Approved",
+                  "body": "Your brand request has been approved! You are now a seller.",
+                },
+              );
+            } else {
+              debugPrint("⚠️ [AdminCubit] Could not find user ID in brand request rawData");
+            }
+          } catch (e) {
+            debugPrint("❌ [AdminCubit] Error sending brand approval notification: $e");
+          }
+        }
+      },
+    );
   }
 
   Future<void> deleteProduct(String id) async {

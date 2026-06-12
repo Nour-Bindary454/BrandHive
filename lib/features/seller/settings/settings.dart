@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
+import 'package:brand/features/settings/presentation/views/widgets/sections/sign_out_button.dart';
 import 'package:brand/features/seller/settings/widgets/contact_info.dart';
 import 'package:brand/features/seller/settings/widgets/danger_zone.dart';
 import 'package:brand/features/seller/settings/widgets/legal_policies.dart';
@@ -46,6 +47,8 @@ class _SettingsState extends State<Settings> {
               const Security(),
               const LegalPolicies(),
               const DangerZone(),
+              SizedBox(height: 20.h),
+              const SignOutButton(),
               SizedBox(height: 40.h),
             ],
           ),

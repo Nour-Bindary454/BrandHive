@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../viewmodels/profile_viewmodel.dart';
 import 'widgets/profile_header.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
 import 'widgets/seller_mode_card.dart';
 import 'widgets/stats_row.dart';
 import 'widgets/menu_list_section.dart';
@@ -75,7 +77,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   // Seller Mode Banner
                   SellerModeCard(
-                    onTap: () {
+                    onTap: () async {
+                      try {
+                        await context.read<NotificationsCubit>().fetchNotifications(forceRefresh: true);
+                      } catch (_) {}
+
+                      final String? role = CacheHelper.getData(key: 'role');
+                      if (role?.toLowerCase() == 'seller') {
+                        Navigator.pushNamedAndRemoveUntil(context, '/sellerLayout', (route) => false);
+                        return;
+                      }
+
                       final userId = CacheHelper.getData(key: 'id') ?? '';
                       final Object isPending =
                           CacheHelper.getData(key: 'brand_request_pending_$userId') ??

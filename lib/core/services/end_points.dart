@@ -32,4 +32,5 @@ class EndPoints {
   static String activateBrand(String id) => "brand/$id/activate";
   static String deactivateBrand(String id) => "brand/$id/deactivate";
   static String brandAction(String id) => "brand/$id";
+  static String support = "support";
 }

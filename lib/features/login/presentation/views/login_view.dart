@@ -33,7 +33,12 @@ class _LoginState extends State<Login> {
               msg: state.model.message.toString(),
               context: context,
             );
-            Navigator.pushReplacementNamed(context, '/mainlayout');
+            final role = state.model.user?.role;
+            if (role?.toLowerCase() == 'seller') {
+              Navigator.pushReplacementNamed(context, '/sellerLayout');
+            } else {
+              Navigator.pushReplacementNamed(context, '/mainlayout');
+            }
           }
 
           if (state is LoginError) {
