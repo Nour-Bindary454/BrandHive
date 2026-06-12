@@ -1,5 +1,8 @@
 import 'package:brand/features/seller_registration/data/model/category_model.dart';
+import 'package:brand/features/seller_registration/presentation/viewModel/seller_reg_cubit.dart';
+import 'package:brand/features/seller_registration/presentation/viewModel/seller_reg_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StoreCategorySelector extends StatelessWidget {
@@ -31,8 +34,13 @@ class StoreCategorySelector extends StatelessWidget {
             ),
           ),
         ),
-        categories.isEmpty
-            ? Padding(
+        BlocBuilder<BrandRequestCubit, BrandRequestState>(
+          builder: (context, state) {
+            final cubit = context.read<BrandRequestCubit>();
+            final cats = cubit.categories;
+
+            if (state is CategoriesLoading || (state is BrandRequestInitial && cats.isEmpty)) {
+              return Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: Center(
                   child: SizedBox(
@@ -44,51 +52,79 @@ class StoreCategorySelector extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
-            : Padding(
+              );
+            }
+
+            if (state is CategoriesFailure) {
+              return Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
-                child: Wrap(
-                  spacing: 8.w,
-                  runSpacing: 8.h,
-                  children: categories.map((cat) {
-                    final isSelected = selectedCategoryIds.contains(cat.id);
-                    return GestureDetector(
-                      onTap: () => onToggle(cat.id),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 14.w,
-                          vertical: 8.h,
-                        ),
-                        decoration: BoxDecoration(
+                child: Center(
+                  child: Text(
+                    'Failed to load categories: ${state.error}',
+                    style: TextStyle(color: Colors.red, fontSize: 12.sp),
+                  ),
+                ),
+              );
+            }
+
+            if (cats.isEmpty) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: Center(
+                  child: Text(
+                    'No categories available',
+                    style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                  ),
+                ),
+              );
+            }
+
+            return Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: Wrap(
+                spacing: 8.w,
+                runSpacing: 8.h,
+                children: cats.map((cat) {
+                  final isSelected = selectedCategoryIds.contains(cat.id);
+                  return GestureDetector(
+                    onTap: () => onToggle(cat.id),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color(0xFF2D4373)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(20.r),
+                        border: Border.all(
                           color: isSelected
                               ? const Color(0xFF2D4373)
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(20.r),
-                          border: Border.all(
-                            color: isSelected
-                                ? const Color(0xFF2D4373)
-                                : const Color(0xFFE5E5E5),
-                          ),
-                        ),
-                        child: Text(
-                          cat.name,
-                          style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : const Color(0xFF2B2B2B),
-                            fontSize: 12.sp,
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.w400,
-                            fontFamily: 'Poppins',
-                          ),
+                              : const Color(0xFFE5E5E5),
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
+                      child: Text(
+                        cat.name,
+                        style: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : const Color(0xFF2B2B2B),
+                          fontSize: 12.sp,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
+            );
+          },
+        ),
       ],
     );
   }

@@ -32,7 +32,6 @@ class OrdersCubit extends Cubit<OrdersState> {
       (failure) => emit(OrderActionError(failure.errMessage)),
       (_) {
         emit(const OrderActionSuccess('Order cancelled successfully'));
-        // Re-fetch details to update UI
         fetchOrderDetails(orderId);
       },
     );
@@ -49,6 +48,19 @@ class OrdersCubit extends Cubit<OrdersState> {
         } else {
           emit(const OrderActionError('Payment URL not found'));
         }
+      },
+    );
+  }
+
+  /// Simulate payment success for testing
+  Future<void> simulatePaymentSuccess(String orderId, double amount) async {
+    emit(OrderActionLoading());
+    final result = await _repository.simulatePaymentWebhook(orderId, amount);
+    result.fold(
+      (failure) => emit(OrderActionError(failure.errMessage)),
+      (_) {
+        emit(const OrderActionSuccess('Payment simulation successful'));
+        fetchOrderDetails(orderId);
       },
     );
   }

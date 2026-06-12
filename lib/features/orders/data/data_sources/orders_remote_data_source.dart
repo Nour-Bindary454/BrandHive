@@ -32,10 +32,24 @@ class OrdersRemoteDataSource {
 
   Future<CheckoutResponseModel> retryPayment(String orderId) async {
     final response = await _apiService.postData(
-      endPoint: 'payment/retry/$orderId', // Ensure EndPoints has this or keep it hardcoded
+      endPoint: 'payment/retry/$orderId',
       data: {},
     );
     return CheckoutResponseModel.fromJson(response.data);
+  }
+
+  /// Simulate a successful payment webhook for testing
+  Future<void> simulatePaymentWebhook(String orderId, double amount) async {
+    await _apiService.postData(
+      endPoint: EndPoints.paymentWebhook,
+      data: {
+        "obj": {
+          "order": {"id": orderId},
+          "success": true,
+          "amount_cents": (amount * 100).toInt(),
+        }
+      },
+    );
   }
 
   // Admin endpoints

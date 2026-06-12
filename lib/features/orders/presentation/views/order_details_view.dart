@@ -350,23 +350,25 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                     if (isPaymob && isPaymentFailed) ...[
                       BasicButton(
                         text: 'retry_payment'.tr(),
-                        onPressed: () =>
-                            context.read<OrdersCubit>().retryPayment(order.id!),
-                        colors: const [
-                          BasicColors.linearGradientDark,
-                          BasicColors.linearGradientLight,
-                        ],
+                        onPressed: () => context.read<OrdersCubit>().retryPayment(order.id!),
+                        colors: const [BasicColors.linearGradientDark, BasicColors.linearGradientLight],
                         radius: 25.r,
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 12.h),
+                      // Simulate success for testing
+                      SizedBox(
+                        width: double.infinity,
+                        child: TextButton(
+                          onPressed: () => context.read<OrdersCubit>().simulatePaymentSuccess(order.id!, order.total),
+                          child: const Text('Simulate Success (Dev Only)', style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline)),
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
                     ],
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () => _showCancelDialog(
-                          context,
-                          context.read<OrdersCubit>(),
-                        ),
+                        onPressed: () => _showCancelDialog(context, context.read<OrdersCubit>()),
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 14.h),
                           shape: RoundedRectangleBorder(

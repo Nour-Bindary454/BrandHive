@@ -58,6 +58,18 @@ class OrdersRepository {
     }
   }
 
+  Future<Either<Failure, void>> simulatePaymentWebhook(String orderId, double amount) async {
+    try {
+      await _remoteDataSource.simulatePaymentWebhook(orderId, amount);
+      return const Right(null);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
   // Admin
   Future<Either<Failure, List<OrderModel>>> getAllAdminOrders() async {
     try {

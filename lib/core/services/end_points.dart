@@ -23,8 +23,6 @@ class EndPoints {
   static String shippingFee = "shipping-fee";
   static String paymentWebhook = "payment/webhook/paymob";
 
-  static String newArrivals = "product/new-arrivals";
-
   static const String resetPassword = "auth/reset-password";
   static const String notifications = "notifications";
   static const String notificationsUnreadCount = "notifications/unread-count";
@@ -34,7 +32,4 @@ class EndPoints {
   static String activateBrand(String id) => "brand/$id/activate";
   static String deactivateBrand(String id) => "brand/$id/deactivate";
   static String brandAction(String id) => "brand/$id";
-  static const String notifications = "notifications";
-  static const String notificationsUnreadCount = "notifications/unread-count";
-  static const String notificationsReadAll = "notifications/read-all";
 }

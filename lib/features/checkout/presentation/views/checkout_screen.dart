@@ -39,37 +39,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (_) => OrderSuccessScreen(
-          response: state.orderSuccessResult!,
-        ),
+        builder: (_) => OrderSuccessScreen(response: state.orderSuccessResult!),
       ),
       (route) => route.isFirst,
     );
   }
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          sl<CheckoutCubit>()..initCheckout(items: items, subtotal: subtotal),
-      child: BlocConsumer<CheckoutCubit, CheckoutState>(
-        listener: (context, state) {
-          if (state.orderSuccessResult != null) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) =>
-                    OrderSuccessScreen(response: state.orderSuccessResult!),
-              ),
-            );
-          }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CheckoutCubit>()
-        ..initCheckout(
-          items: widget.items,
-          subtotal: widget.subtotal,
-        ),
+      create: (context) =>
+          sl<CheckoutCubit>()
+            ..initCheckout(items: widget.items, subtotal: widget.subtotal),
       child: BlocConsumer<CheckoutCubit, CheckoutState>(
         listenWhen: (prev, curr) {
           // Only re-evaluate when loading stops or result appears
@@ -103,9 +84,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => OrderSuccessScreen(
-                      response: state.orderSuccessResult!,
-                    ),
+                    builder: (_) =>
+                        OrderSuccessScreen(response: state.orderSuccessResult!),
                   ),
                   (route) => route.isFirst,
                 );

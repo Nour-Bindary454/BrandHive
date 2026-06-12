@@ -9,6 +9,7 @@ import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_rese
 import 'package:brand/features/forgetPassword/presentaion/viewsModel/verify_reset_code_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 class Verify extends StatefulWidget {
   const Verify({super.key});
@@ -63,11 +64,21 @@ class _VerifyState extends State<Verify> {
             if (state is ConfirmEmailSuccess) {
               Navigator.pop(context);
 
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => Mainlayout()),
-                (route) => false,
-              );
+              final token = CacheHelper.getData(key: 'token');
+              if (token != null && token.isNotEmpty) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => Mainlayout()),
+                  (route) => false,
+                );
+              } else {
+                Toast.showSuccessToast(msg: "Email verified successfully! Please log in.", context: context);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  (route) => false,
+                );
+              }
             }
 
             if (state is ConfirmEmailError) {
