@@ -52,7 +52,7 @@ class BrandRequestCubit extends Cubit<BrandRequestState> {
         "phone": phone,
         if (website != null) "website": website,
         if (whatsappLink != null) "whatsappLink": whatsappLink,
-        "shipsInternationally": shipsInternationally ? 1 : 0,
+        "shipsInternationally": shipsInternationally,
         if (logo != null) "logo": logo,
       };
 
