@@ -1,6 +1,9 @@
 import 'package:brand/features/seller_registration/data/repository/seller_reg_impl.dart';
 import 'package:brand/features/seller_registration/data/repository/seller_reg_repo.dart';
 import 'package:brand/features/seller_registration/presentation/viewModel/seller_reg_cubit.dart';
+import 'package:brand/features/help_support/data/repository/support_repo.dart';
+import 'package:brand/features/help_support/data/repository/support_repo_impl.dart';
+import 'package:brand/features/help_support/presentation/viewModel/support_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -62,6 +65,8 @@ import '../../features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
 import '../../features/newArrivals/presentation/viewModel/new_arrivals_cubit.dart';
 import '../../features/notifications/presentation/viewmodel/notifications_cubit.dart';
 import '../../features/admin_dashboard/presentation/view_model/admin_cubit.dart';
+import '../../features/admin_dashboard/presentation/view_model/admin_support_cubit.dart';
+import '../../features/admin_dashboard/presentation/view_model/admin_notification_cubit.dart';
 import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
 // ================= GetIt =================
 
@@ -119,6 +124,7 @@ void setup() {
   sl.registerLazySingleton<CheckoutRepository>(() => CheckoutRepository(sl()));
 
   sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
+  sl.registerLazySingleton<SupportRepository>(() => SupportRepoImpl(sl()));
 
   // ================= CUBITS =================
 
@@ -138,4 +144,7 @@ void setup() {
   sl.registerFactory(() => AdminCubit(sl()));
   sl.registerFactory(() => CheckoutCubit(sl()));
   sl.registerFactory(() => BrandRequestCubit(sl()));
+  sl.registerFactory(() => SupportCubit(sl()));
+  sl.registerFactory(() => AdminSupportCubit(sl()));
+  sl.registerFactory(() => AdminNotificationCubit(sl()));
 }

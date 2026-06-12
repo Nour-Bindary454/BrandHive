@@ -25,8 +25,19 @@ import 'widgets/home_shimmer_loading.dart';
 import 'widgets/recommended_for_you_section.dart';
 import 'widgets/featured_products_section.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().loadHomeData();
+  }
 
   @override
   Widget build(BuildContext context) {

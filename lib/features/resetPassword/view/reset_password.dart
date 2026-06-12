@@ -48,84 +48,87 @@ class _ResetPasswordState extends State<ResetPassword> {
                 }
               },
               builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20.h),
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20.h),
 
-                    CustomBackarrow(),
-                    SizedBox(height: 45.h),
+                      CustomBackarrow(),
+                      SizedBox(height: 45.h),
 
-                    BasicText(
-                      text: 'reset_password'.tr(),
-                      fontSize: 28,
-                      color:
-                          Theme.of(context).textTheme.bodyLarge?.color ??
-                          Colors.black,
-                      isBold: true,
-                    ),
+                      BasicText(
+                        text: 'reset_password'.tr(),
+                        fontSize: 28,
+                        color:
+                            Theme.of(context).textTheme.bodyLarge?.color ??
+                            Colors.black,
+                        isBold: true,
+                      ),
 
-                    BasicText(
-                      text: 'please_type_something_you_ll_remember'.tr(),
-                      fontSize: 12,
-                      color: const Color.fromARGB(255, 28, 28, 28),
-                      isBold: false,
-                    ),
+                      BasicText(
+                        text: 'please_type_something_you_ll_remember'.tr(),
+                        fontSize: 12,
+                        color: const Color.fromARGB(255, 28, 28, 28),
+                        isBold: false,
+                      ),
 
-                    SizedBox(height: 45.h),
+                      SizedBox(height: 45.h),
 
-                    Column(
-                      children: [
-                        SizedBox(width: double.infinity),
+                      Column(
+                        children: [
+                          SizedBox(width: double.infinity),
 
-                        BasicTextField(
-                          label: 'New Password',
-                          hint: 'At least 8 characters',
-                          controller: passwordController,
-                          isPassword: true,
-                        ),
+                          BasicTextField(
+                            label: 'New Password',
+                            hint: 'At least 8 characters',
+                            controller: passwordController,
+                            isPassword: true,
+                          ),
 
-                        SizedBox(height: 10.h),
+                          SizedBox(height: 10.h),
 
-                        BasicTextField(
-                          label: 'Confirm Password',
-                          hint: 'repeat password',
-                          controller: confirmPasswordController,
-                          isPassword: true,
-                        ),
+                          BasicTextField(
+                            label: 'Confirm Password',
+                            hint: 'repeat password',
+                            controller: confirmPasswordController,
+                            isPassword: true,
+                          ),
 
-                        SizedBox(height: 45.h),
+                          SizedBox(height: 45.h),
 
-                        state is ChangePassLoading
-                            ? const CircularProgressIndicator()
-                            : BasicButton(
-                                text: 'reset_password'.tr(),
-                                colors: const [Color(0xFF2D4373)],
-                                radius: 12.r,
-                                onPressed: () {
-                                  if (passwordController.text !=
-                                      confirmPasswordController.text) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'passwords_don_t_match'.tr(),
+                          state is ChangePassLoading
+                              ? const CircularProgressIndicator()
+                              : BasicButton(
+                                  text: 'reset_password'.tr(),
+                                  colors: const [Color(0xFF2D4373)],
+                                  radius: 12.r,
+                                  onPressed: () {
+                                    if (passwordController.text !=
+                                        confirmPasswordController.text) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'passwords_don_t_match'.tr(),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  context
-                                      .read<ChangePassCubit>()
-                                      .changePassword(
-                                        email: widget.email,
-                                        password: passwordController.text,
                                       );
-                                },
-                              ),
-                      ],
-                    ),
-                  ],
+                                      return;
+                                    }
+
+                                    context
+                                        .read<ChangePassCubit>()
+                                        .changePassword(
+                                          email: widget.email,
+                                          password: passwordController.text,
+                                        );
+                                  },
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

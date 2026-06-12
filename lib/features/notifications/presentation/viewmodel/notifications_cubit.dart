@@ -1,6 +1,8 @@
+import 'package:brand/core/services/cache_helper.dart';
 import 'package:brand/features/notifications/data/repository/notifications_repo.dart';
 import 'package:brand/features/notifications/presentation/viewmodel/notifications_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
   final NotificationsRepository repo;
@@ -21,6 +23,17 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       },
       (notifications) {
         final unread = notifications.where((n) => !n.isRead).length;
+
+        // Auto-detect brand approval from notifications and update local role
+        for (final n in notifications) {
+          if (n.title.toLowerCase().contains("brand") &&
+              n.body.toLowerCase().contains("approved")) {
+            CacheHelper.saveData(key: 'role', value: 'seller');
+            debugPrint("🎉 [NotificationsCubit] Brand approval detected in notifications! Updated local role to 'seller'");
+            break;
+          }
+        }
+
         emit(state.copyWith(
           isLoading: false,
           notifications: notifications,

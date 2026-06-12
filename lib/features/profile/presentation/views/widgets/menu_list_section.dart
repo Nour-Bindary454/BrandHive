@@ -6,6 +6,7 @@ import 'menu_item_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
 
 class MenuListSection extends StatelessWidget {
   final List<MenuItemModel> items;
@@ -46,6 +47,7 @@ class MenuListSection extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = items[index];
           String? badgeText = item.badgeText;
+          bool isBadgeRed = item.isBadgeRed;
 
           if (item.title == 'wishlist'.tr()) {
             final wishlistCount = context
@@ -53,13 +55,20 @@ class MenuListSection extends StatelessWidget {
                 .wishlistedProductIds
                 .length;
             badgeText = '$wishlistCount items';
+          } else if (item.title == 'notifications'.tr()) {
+            final unreadCount = context
+                .watch<NotificationsCubit>()
+                .state
+                .unreadCount;
+            badgeText = unreadCount > 0 ? 'New' : null;
+            isBadgeRed = unreadCount > 0;
           }
 
           final displayItem = MenuItemModel(
             title: item.title,
             icon: item.icon,
             badgeText: badgeText,
-            isBadgeRed: item.isBadgeRed,
+            isBadgeRed: isBadgeRed,
           );
 
           return MenuItemTile(

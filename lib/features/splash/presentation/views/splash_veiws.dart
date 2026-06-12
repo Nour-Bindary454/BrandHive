@@ -19,7 +19,12 @@ class _SplashState extends State<Splash> {
     Timer(const Duration(seconds: 2), () {
       final token = CacheHelper.getData(key: 'token');
       if (token != null && token.isNotEmpty) {
-        Navigator.pushReplacementNamed(context, '/mainlayout');
+        final role = CacheHelper.getData(key: 'role');
+        if (role?.toLowerCase() == 'seller') {
+          Navigator.pushReplacementNamed(context, '/sellerLayout');
+        } else {
+          Navigator.pushReplacementNamed(context, '/mainlayout');
+        }
       } else {
         Navigator.pushReplacementNamed(context, '/onboarding');
       }

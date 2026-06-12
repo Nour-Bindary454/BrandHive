@@ -171,6 +171,8 @@ class NotificationsBody extends StatelessWidget {
         return Icons.inventory_2_outlined;
       case 'message':
         return Icons.chat_bubble_outline_rounded;
+      case 'support':
+        return Icons.support_agent;
       case 'sale':
       case 'offer':
         return Icons.local_offer_outlined;
@@ -192,6 +194,8 @@ class NotificationsBody extends StatelessWidget {
         return const Color(0xFFDBEAFE);
       case 'message':
         return const Color(0xFFD1FAE5);
+      case 'support':
+        return const Color(0xFFE0F2FE);
       case 'sale':
       case 'offer':
         return const Color(0xFFFFEDD5);
@@ -213,6 +217,8 @@ class NotificationsBody extends StatelessWidget {
         return const Color(0xFF2563EB);
       case 'message':
         return const Color(0xFF059669);
+      case 'support':
+        return const Color(0xFF0369A1);
       case 'sale':
       case 'offer':
         return const Color(0xFFEA580C);

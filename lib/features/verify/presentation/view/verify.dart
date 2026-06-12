@@ -1,5 +1,4 @@
 import 'package:brand/core/utils/toast/toast.dart';
-import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
 import 'package:brand/features/verify/presentation/view/widgets/custom_keyboard.dart';
 import 'package:brand/features/verify/presentation/view/widgets/otp_inputs.dart';
 import 'package:brand/features/verify/presentation/view/widgets/verify_button_section.dart';
@@ -62,10 +61,13 @@ class _VerifyState extends State<Verify> {
 
             if (state is ConfirmEmailSuccess) {
               Navigator.pop(context);
-
-              Navigator.pushAndRemoveUntil(
+              Toast.showSuccessToast(
+                msg: "Email verified successfully! Please log in.",
+                context: context,
+              );
+              Navigator.pushNamedAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => Mainlayout()),
+                '/login',
                 (route) => false,
               );
             }

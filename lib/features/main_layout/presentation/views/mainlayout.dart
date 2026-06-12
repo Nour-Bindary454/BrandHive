@@ -17,6 +17,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
+
 class Mainlayout extends StatelessWidget {
   Mainlayout({super.key});
 
@@ -91,6 +93,14 @@ class Mainlayout extends StatelessWidget {
           label: 'Profile',
         ),
       ];
+    }
+
+    if (!isAdmin) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          context.read<NotificationsCubit>().fetchUnreadCount();
+        }
+      });
     }
 
     return MultiBlocProvider(

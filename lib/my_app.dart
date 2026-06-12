@@ -26,6 +26,7 @@ import 'package:brand/features/seller_registration/presentation/views/seller_reg
 import 'package:brand/features/seller_registration/presentation/views/seller_registration_success_view.dart';
 import 'package:brand/features/payment_methods/presentation/views/payment_methods_view.dart';
 import 'package:brand/features/wishlist/presentation/views/wishlist_view.dart';
+import 'package:brand/features/seller/seller_main_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,7 @@ import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart'
 
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
 
 class MyApp extends StatelessWidget {
@@ -45,8 +47,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider<NotificationsCubit>(create: (_) => sl<NotificationsCubit>()),
         BlocProvider<WishlistCubit>(create: (_) => sl<WishlistCubit>()),
-        BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()..loadHomeData()),
+        BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()),
         Provider<CartRepository>(
           create: (_) => CartRepository(sl<ApiService>()),
         ),
@@ -119,6 +122,7 @@ class MyApp extends StatelessWidget {
                   '/settings': (context) => const SettingsView(),
                   '/notifications': (context) => const NotificationsView(),
                   '/orders': (context) => const OrdersView(),
+                  '/sellerLayout': (context) => SellerMainLayout(),
                 },
               );
             },
