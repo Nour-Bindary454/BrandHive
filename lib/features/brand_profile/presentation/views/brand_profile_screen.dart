@@ -49,163 +49,167 @@ class BrandProfileScreen extends StatelessWidget {
             return const Scaffold(body: Center(child: Text("Brand not found")));
           }
 
-          return MultiBlocProvider(
-            providers: [
-              if (isAdmin) BlocProvider(create: (context) => sl<AdminCubit>()),
-            ],
-            child: BlocListener<AdminCubit, AdminState>(
-              listener: (context, adminState) {
-                if (adminState is AdminActionSuccess) {
-                  Toast.showSuccessToast(msg: adminState.message.tr(), context: context);
-                  if (adminState.id != null) {
-                    if (adminState.action == 'toggle_brand') {
-                      context.read<HomeCubit>().updateBrandStatus(adminState.id!, !brand.isActive);
-                      Navigator.pop(context);
-                    } else if (adminState.action == 'delete_brand') {
-                      context.read<HomeCubit>().removeBrand(adminState.id!);
-                      Navigator.pop(context);
-                    }
-                  }
-                } else if (adminState is AdminActionError) {
-                  Toast.showErrorToast(msg: adminState.message.tr(), context: context);
-                }
-              },
-              child: Scaffold(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          final scaffold = Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              SizedBox(
-                                width: double.infinity,
-                                height: 250.h,
-                                child: Transform.scale(
-                                  scale: 1.35,
-                                  child: Image.network(
-                                    brand.logoUrl.isNotEmpty ? brand.logoUrl : 'https://placehold.co/800x400/png',
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[200]),
-                                  ),
-                                ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 250.h,
+                            child: Transform.scale(
+                              scale: 1.35,
+                              child: Image.network(
+                                brand.logoUrl.isNotEmpty ? brand.logoUrl : 'https://placehold.co/800x400/png',
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[200]),
                               ),
-                              Positioned(
-                                bottom: -130.h,
-                                left: 0,
-                                right: 0,
-                                child: BrandHeaderSection(brand: brand),
-                              ),
-                            ],
+                            ),
                           ),
-                          SizedBox(height: 150.h),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'collection'.tr(),
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 6.w),
-                                    Text(
-                                      '(${state.products.length})',
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.grey[500],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 12.h),
-                              if (state.products.isEmpty && !state.isLoading)
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 50.h),
-                                  child: Center(child: Text('no_products_brand'.tr())),
-                                )
-                              else if (state.isLoading && state.products.isEmpty)
-                                const Center(child: CircularProgressIndicator())
-                              else
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 0.59,
-                                      crossAxisSpacing: 16,
-                                      mainAxisSpacing: 16,
-                                    ),
-                                    itemCount: state.products.length,
-                                    itemBuilder: (context, index) {
-                                      final homeProduct = state.products[index];
-                                      final product = Product(
-                                        id: homeProduct.id,
-                                        brandId: brand.id,
-                                        brandName: brand.name,
-                                        name: homeProduct.name,
-                                        description: homeProduct.description,
-                                        image: homeProduct.imageUrl,
-                                        rating: homeProduct.rating,
-                                        price: homeProduct.price,
-                                        currency: 'EGP',
-                                        isFavorite: false,
-                                      );
-
-                                      return ProductCard(
-                                        product: product,
-                                        onFavoritePressed: () {},
-                                        onAddToCartPressed: () {},
-                                      );
-                                    },
-                                  ),
-                                ),
-                              SizedBox(height: 32.h),
-                            ],
+                          Positioned(
+                            bottom: -130.h,
+                            left: 0,
+                            right: 0,
+                            child: BrandHeaderSection(brand: brand),
                           ),
                         ],
                       ),
-                    ),
-                    Positioned(
-                      top: MediaQuery.of(context).padding.top + 8.h,
-                      left: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
-                              onPressed: () => Navigator.of(context).pop(),
-                              style: IconButton.styleFrom(
-                                backgroundColor: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
-                                shape: const CircleBorder(),
+                      SizedBox(height: 150.h),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'collection'.tr(),
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                                  ),
+                                ),
+                                SizedBox(width: 6.w),
+                                Text(
+                                  '(${state.products.length})',
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey[500],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 12.h),
+                          if (state.products.isEmpty && !state.isLoading)
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 50.h),
+                              child: Center(child: Text('no_products_brand'.tr())),
+                            )
+                          else if (state.isLoading && state.products.isEmpty)
+                            const Center(child: CircularProgressIndicator())
+                          else
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.59,
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                ),
+                                itemCount: state.products.length,
+                                itemBuilder: (context, index) {
+                                  final homeProduct = state.products[index];
+                                  final product = Product(
+                                    id: homeProduct.id,
+                                    brandId: brand.id,
+                                    brandName: brand.name,
+                                    name: homeProduct.name,
+                                    description: homeProduct.description,
+                                    image: homeProduct.imageUrl,
+                                    rating: homeProduct.rating,
+                                    price: homeProduct.price,
+                                    currency: 'EGP',
+                                    isFavorite: false,
+                                  );
+
+                                  return ProductCard(
+                                    product: product,
+                                    onFavoritePressed: () {},
+                                    onAddToCartPressed: () {},
+                                  );
+                                },
                               ),
                             ),
-                            if (isAdmin) _AdminPopupMenu(brand: brand),
-                          ],
-                        ),
+                          SizedBox(height: 32.h),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 8.h,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: IconButton.styleFrom(
+                            backgroundColor: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
+                            shape: const CircleBorder(),
+                          ),
+                        ),
+                        if (isAdmin) _AdminPopupMenu(brand: brand),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
+
+          if (isAdmin) {
+            return BlocProvider(
+              create: (context) => sl<AdminCubit>(),
+              child: BlocListener<AdminCubit, AdminState>(
+                listener: (context, adminState) {
+                  if (adminState is AdminActionSuccess) {
+                    Toast.showSuccessToast(msg: adminState.message.tr(), context: context);
+                    if (adminState.id != null) {
+                      if (adminState.action == 'toggle_brand') {
+                        context.read<HomeCubit>().updateBrandStatus(adminState.id!, !brand.isActive);
+                        Navigator.pop(context);
+                      } else if (adminState.action == 'delete_brand') {
+                        context.read<HomeCubit>().removeBrand(adminState.id!);
+                        Navigator.pop(context);
+                      }
+                    }
+                  } else if (adminState is AdminActionError) {
+                    Toast.showErrorToast(msg: adminState.message.tr(), context: context);
+                  }
+                },
+                child: scaffold,
+              ),
+            );
+          }
+
+          return scaffold;
         },
       ),
     );
