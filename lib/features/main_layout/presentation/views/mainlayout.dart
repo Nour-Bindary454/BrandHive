@@ -3,6 +3,7 @@ import 'package:brand/core/services/service_locator.dart';
 
 import 'package:brand/features/cart/presentation/cart_screen.dart';
 import 'package:brand/features/explore/presentaion/views/explore.dart';
+import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:brand/features/home/presentation/views/home.dart';
 import 'package:brand/features/main_layout/presentation/view_model/nav_cubit.dart';
 import 'package:brand/features/profile/presentation/views/profile_screen.dart';
@@ -99,6 +100,14 @@ class Mainlayout extends StatelessWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (context.mounted) {
           context.read<NotificationsCubit>().fetchUnreadCount();
+        }
+      });
+    } else {
+      // Admin doesn't visit HomeScreen, so we must manually trigger home data
+      // (brands & products) so AdminBrandsView and AdminProductsView have data
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          context.read<HomeCubit>().loadHomeData();
         }
       });
     }

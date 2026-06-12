@@ -58,5 +58,10 @@
   "no_brands_found": "لا توجد براندات حالياً",
   "search_products": "ابحث عن المنتجات...",
   "no_products_found": "لا توجد منتجات حالياً",
-  "all_orders": "جميع الطلبات"
+  "all_orders": "جميع الطلبات",
+  "filter_all": "الكل",
+  "filter_pending": "قيد الانتظار",
+  "filter_approved": "مقبولة",
+  "filter_rejected": "مرفوضة",
+  "no_requests_found_for_filter": "لا توجد طلبات مطابقة لهذا الفلتر"
 }

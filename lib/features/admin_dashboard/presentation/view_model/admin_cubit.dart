@@ -49,12 +49,34 @@ class AdminCubit extends Cubit<AdminState> {
           return r.copyWith(category: categoryName);
         }).toList();
 
+        // Sort brand requests descendingly by createdAt timestamp (newest first)
+        mappedRequests.sort((a, b) {
+          final aDate = DateTime.tryParse(a.rawData['createdAt']?.toString() ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final bDate = DateTime.tryParse(b.rawData['createdAt']?.toString() ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return bDate.compareTo(aDate);
+        });
+
+        // Recalculate the pending count from actual loaded requests and patch the Pending stat card
+        final pendingCount = mappedRequests.where((r) => r.status == BrandStatus.pending).length;
+        final correctedStats = stats.map((s) {
+          if (s.label == 'Pending') {
+            return AdminStatModel(
+              value: pendingCount.toString(),
+              label: s.label,
+              subtitle: s.subtitle,
+              icon: s.icon,
+              color: s.color,
+            );
+          }
+          return s;
+        }).toList();
+
         notificationsResult.fold(
           (failure) =>
-              emit(AdminSuccess(stats: stats, requests: mappedRequests)),
+              emit(AdminSuccess(stats: correctedStats, requests: mappedRequests)),
           (notifications) => emit(
             AdminSuccess(
-              stats: stats,
+              stats: correctedStats,
               requests: mappedRequests,
               notifications: notifications,
             ),
