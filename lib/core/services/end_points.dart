@@ -33,4 +33,22 @@ class EndPoints {
   static String deactivateBrand(String id) => "brand/$id/deactivate";
   static String brandAction(String id) => "brand/$id";
   static String support = "support";
+
+  // Seller Endpoints
+  static const String sellerDashboard = "seller/dashboard";
+  static const String sellerProducts = "seller/products";
+  static String sellerProductDetail(String id) => "seller/products/$id";
+  static const String sellerStockAlerts = "seller/inventory/alerts";
+  static String sellerAdjustStock(String id) => "seller/inventory/$id/adjust";
+  static const String sellerOrders = "seller/orders";
+  static String sellerOrderDetail(String id) => "seller/orders/$id";
+  static const String sellerAnalytics = "seller/analytics";
+  static const String sellerReviews = "seller/reviews";
+
+  // Bazaar Endpoints
+  static const String myBazaar = "seller/bazaar";
+  static const String searchBazaars = "seller/bazaar/search";
+  static const String notifyFollowers = "seller/bazaar/notify";
+  static const String adminAllBazaars = "seller/bazaar/admin/all";
+  static String toggleBazaar(String id) => "seller/bazaar/admin/$id/toggle";
 }

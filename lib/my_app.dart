@@ -27,6 +27,12 @@ import 'package:brand/features/seller_registration/presentation/views/seller_reg
 import 'package:brand/features/payment_methods/presentation/views/payment_methods_view.dart';
 import 'package:brand/features/wishlist/presentation/views/wishlist_view.dart';
 import 'package:brand/features/seller/seller_main_layout.dart';
+import 'package:brand/features/bazaar/presentation/cubit/bazaar_cubit.dart';
+import 'package:brand/features/bazaar/presentation/views/all_bazaars_screen.dart';
+import 'package:brand/features/seller/presentation/views/my_bazaar_screen.dart';
+import 'package:brand/features/seller/presentation/views/edit_bazaar_screen.dart';
+import 'package:brand/features/seller/presentation/views/send_announcement_screen.dart';
+import 'package:brand/features/event/presentation/cubit/event_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,6 +56,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<NotificationsCubit>(create: (_) => sl<NotificationsCubit>()),
         BlocProvider<WishlistCubit>(create: (_) => sl<WishlistCubit>()),
         BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()),
+        BlocProvider<BazaarCubit>(create: (_) => sl<BazaarCubit>()),
+        BlocProvider<EventCubit>(create: (_) => sl<EventCubit>()),
         Provider<CartRepository>(
           create: (_) => CartRepository(sl<ApiService>()),
         ),
@@ -123,6 +131,10 @@ class MyApp extends StatelessWidget {
                   '/notifications': (context) => const NotificationsView(),
                   '/orders': (context) => const OrdersView(),
                   '/sellerLayout': (context) => SellerMainLayout(),
+                  '/allBazaars': (context) => const AllBazaarsScreen(),
+                  '/myBazaar': (context) => const MyBazaarScreen(),
+                  '/editBazaar': (context) => const EditBazaarScreen(),
+                  '/sendAnnouncement': (context) => const SendAnnouncementScreen(),
                 },
               );
             },

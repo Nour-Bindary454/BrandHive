@@ -31,13 +31,53 @@ class ExploreRepositoryImpl implements ExploreRepository {
   }
 
   @override
-  Future<Either<Failure, List<HomeProduct>>> searchProducts(String query) async {
+  Future<Either<Failure, List<HomeProduct>>> searchProducts(
+    String query, {
+    String? categoryId,
+    String? brandId,
+    double? minPrice,
+    double? maxPrice,
+    double? minRating,
+    bool? inStock,
+    bool? onSale,
+    bool? shipsInternationally,
+  }) async {
     try {
+      final Map<String, dynamic> queryParams = {};
+      if (query.trim().isNotEmpty) {
+        queryParams['search'] = query.trim();
+      }
+      if (categoryId != null && categoryId.isNotEmpty) {
+        queryParams['category'] = categoryId;
+      }
+      if (brandId != null && brandId.isNotEmpty) {
+        queryParams['brand'] = brandId;
+      }
+      if (minPrice != null) {
+        queryParams['minPrice'] = minPrice;
+      }
+      if (maxPrice != null) {
+        queryParams['maxPrice'] = maxPrice;
+      }
+      if (minRating != null) {
+        queryParams['minRating'] = minRating;
+      }
+      if (inStock != null) {
+        queryParams['inStock'] = inStock;
+      }
+      if (onSale != null) {
+        queryParams['onSale'] = onSale;
+      }
+      if (shipsInternationally != null) {
+        queryParams['shipsInternationally'] = shipsInternationally;
+      }
+
       final response = await apiService.getData(
-        endPoint: "search/products?search=$query",
+        endPoint: "search/products",
+        query: queryParams.isNotEmpty ? queryParams : null,
       );
 
-      final List<dynamic> data = response.data['data'] ?? [];
+      final List<dynamic> data = response.data['data'] ?? response.data ?? [];
       final List<HomeProduct> products = data
           .map((p) => HomeProduct.fromJson(p))
           .toList();

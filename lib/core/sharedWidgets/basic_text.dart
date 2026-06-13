@@ -5,10 +5,11 @@ class BasicText extends StatelessWidget {
     super.key,
     required this.text,
     required this.fontSize,
-    required this.color,
-    required this.isBold,
+    this.color = const Color(0xFF0F172A),
+    this.isBold = false,
     this.textAlign,
     this.fontFamily = 'Poppins',
+    this.maxLines,
   });
   final String text;
   final double fontSize;
@@ -16,12 +17,15 @@ class BasicText extends StatelessWidget {
   final bool isBold;
   final TextAlign? textAlign;
   final String? fontFamily;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: maxLines != null ? TextOverflow.ellipsis : null,
       style: TextStyle(
         color: color,
         fontSize: fontSize,

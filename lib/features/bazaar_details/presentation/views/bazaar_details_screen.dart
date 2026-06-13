@@ -1,6 +1,13 @@
+import 'package:brand/core/services/service_locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_state.dart';
+import 'package:brand/features/event/presentation/cubit/event_cubit.dart';
+import 'package:brand/features/event/presentation/cubit/event_states.dart';
+import 'package:brand/features/event/presentation/views/event_details_screen.dart';
 import '../viewmodels/bazaar_details_viewmodel.dart';
 import '../../data/models/bazaar_details_model.dart';
 import 'widgets/bazaar_hero_header.dart';
@@ -103,7 +110,12 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                             borderRadius: BorderRadius.circular(20.r),
                             boxShadow: [
                               BoxShadow(
-                                color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.08),
+                                color:
+                                    (Theme.of(
+                                              context,
+                                            ).textTheme.bodyLarge?.color ??
+                                            Colors.black)
+                                        .withOpacity(0.08),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -116,7 +128,11 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                                 text: details.title,
                                 fontSize: 20.sp,
                                 fontFamily: 'Outfit',
-                                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge?.color ??
+                                    Colors.black,
                                 isBold: true,
                               ),
                               SizedBox(height: 5.h),
@@ -124,7 +140,11 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                               BasicText(
                                 text: details.description,
                                 fontSize: 13.sp,
-                                color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.color ??
+                                    Colors.grey,
                                 isBold: false,
                               ),
 
@@ -177,6 +197,10 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
                         ),
                       ],
 
+                      _buildAnnouncementsSection(),
+
+                      _buildUpcomingEventsSection(details.id),
+
                       if (details.participatingBrands.isNotEmpty) ...[
                         BazaarSectionTitle(title: 'participating_brands'.tr()),
                         ...details.participatingBrands.map(
@@ -227,14 +251,18 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
               BasicText(
                 text: date.dateRange,
                 fontSize: 14.sp,
-                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                color:
+                    Theme.of(context).textTheme.bodyLarge?.color ??
+                    Colors.black,
                 isBold: true,
               ),
               SizedBox(height: 4.h),
               BasicText(
                 text: date.fullDateString,
                 fontSize: 12.sp,
-                color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
+                color:
+                    Theme.of(context).textTheme.bodyMedium?.color ??
+                    Colors.grey,
                 isBold: false,
               ),
             ],
@@ -306,13 +334,178 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black).withOpacity(0.2)),
+        border: Border.all(
+          color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
+              .withOpacity(0.2),
+        ),
       ),
       child: BasicText(
         text: text,
         fontSize: 12.sp,
         color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
         isBold: true,
+      ),
+    );
+  }
+
+  Widget _buildAnnouncementsSection() {
+    return BlocBuilder<NotificationsCubit, NotificationsState>(
+      builder: (context, state) {
+        final announcements = state.notifications.where((n) {
+          return n.title.toLowerCase().contains('sale') ||
+              n.body.toLowerCase().contains('discount') ||
+              n.type.toLowerCase() == 'announcement' ||
+              n.type.toLowerCase() == 'bazaar';
+        }).toList();
+
+        if (announcements.isEmpty) return const SizedBox.shrink();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BazaarSectionTitle(title: 'announcements'.tr()),
+            ...announcements.map(
+              (ann) => Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 12.h),
+                padding: EdgeInsets.all(16.r),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF9E6),
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: const Color(0xFFFFD166),
+                    width: 1.w,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.campaign,
+                          color: const Color(0xFFD98A00),
+                          size: 20.sp,
+                        ),
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: BasicText(
+                            text: ann.title,
+                            fontSize: 14.sp,
+                            color: const Color(0xFFD98A00),
+                            isBold: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 6.h),
+                    BasicText(
+                      text: ann.body,
+                      fontSize: 12.sp,
+                      color: Colors.black87,
+                    ),
+                    SizedBox(height: 4.h),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: BasicText(
+                        text: ann.createdAt.split('T').first,
+                        fontSize: 9.sp,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildUpcomingEventsSection(String bazaarId) {
+    return BlocProvider(
+      create: (context) => sl<EventCubit>()..getBazaarEvents(bazaarId),
+      child: BlocBuilder<EventCubit, EventState>(
+        builder: (context, state) {
+          if (state is EventsLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: Color(0xFF2D4373)),
+            );
+          }
+          if (state is EventsSuccess) {
+            final events = state.events;
+            if (events.isEmpty) return const SizedBox.shrink();
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BazaarSectionTitle(title: 'upcoming_events'.tr()),
+                ...events.map(
+                  (event) => GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EventDetailsScreen(eventId: event.id),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      padding: EdgeInsets.all(16.r),
+                      decoration: BoxDecoration(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(color: Colors.grey.shade200),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.event_available,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20.sp,
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BasicText(
+                                  text: event.title,
+                                  fontSize: 14.sp,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                  isBold: true,
+                                ),
+                                SizedBox(height: 4.h),
+                                BasicText(
+                                  text: '${event.date} • ${event.time}',
+                                  fontSize: 11.sp,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 14.sp,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }

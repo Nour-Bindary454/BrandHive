@@ -1,4 +1,5 @@
 import 'package:brand/core/utils/toast/toast.dart';
+import 'package:brand/features/main_layout/presentation/views/mainlayout.dart';
 import 'package:brand/features/verify/presentation/view/widgets/custom_keyboard.dart';
 import 'package:brand/features/verify/presentation/view/widgets/otp_inputs.dart';
 import 'package:brand/features/verify/presentation/view/widgets/verify_button_section.dart';
@@ -62,7 +63,6 @@ class _VerifyState extends State<Verify> {
 
             if (state is ConfirmEmailSuccess) {
               Navigator.pop(context);
-<<<<<<< HEAD
 
               final token = CacheHelper.getData(key: 'token');
               if (token != null && token.isNotEmpty) {
@@ -72,14 +72,17 @@ class _VerifyState extends State<Verify> {
                   (route) => false,
                 );
               } else {
-                Toast.showSuccessToast(msg: "Email verified successfully! Please log in.", context: context);
+                Toast.showSuccessToast(
+                  msg: "Email verified successfully! Please log in.",
+                  context: context,
+                );
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/login',
                   (route) => false,
                 );
               }
-=======
+
               Toast.showSuccessToast(
                 msg: "Email verified successfully! Please log in.",
                 context: context,
@@ -89,7 +92,6 @@ class _VerifyState extends State<Verify> {
                 '/login',
                 (route) => false,
               );
->>>>>>> 7fb95dce1b12f4a095d3ab21e369c1c3a1c7248f
             }
 
             if (state is ConfirmEmailError) {

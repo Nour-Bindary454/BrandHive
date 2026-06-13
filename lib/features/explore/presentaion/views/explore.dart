@@ -94,6 +94,7 @@ class Explore extends StatelessWidget {
                                                 initialCategory: state.category,
                                                 initialMinPrice: state.minPrice,
                                                 initialMaxPrice: state.maxPrice,
+                                                initialShipping: state.shipping,
                                                 categories: state.categories
                                                     .map((c) => c.name)
                                                     .toList(),
@@ -105,6 +106,7 @@ class Explore extends StatelessWidget {
                                         category: result['category'],
                                         minPrice: result['minPrice'],
                                         maxPrice: result['maxPrice'],
+                                        shipping: result['shipping'],
                                       );
                                     }
                                   },

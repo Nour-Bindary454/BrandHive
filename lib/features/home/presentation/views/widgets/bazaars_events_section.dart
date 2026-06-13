@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/features/event/presentation/views/event_details_screen.dart';
 
 class BazaarsEventsSection extends StatelessWidget {
   final List<EventModel> events;
@@ -52,60 +53,70 @@ class BazaarsEventsSection extends StatelessWidget {
           separatorBuilder: (context, index) => SizedBox(height: 12.h),
           itemBuilder: (context, index) {
             final event = events[index];
-            return Container(
-              padding: EdgeInsets.all(16.r),
-              decoration: BoxDecoration(
-                color: Theme.of(
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
                   context,
-                ).colorScheme.primaryContainer.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        size: 15.sp,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      SizedBox(width: 6.w),
-                      Text(
-                        event.date,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 12.sp,
-
-                          fontWeight: FontWeight.bold,
+                  MaterialPageRoute(
+                    builder: (context) => EventDetailsScreen(eventId: event.id),
+                  ),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(16.r),
+                decoration: BoxDecoration(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primaryContainer.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          size: 15.sp,
                           color: Theme.of(context).colorScheme.primary,
                         ),
+                        SizedBox(width: 6.w),
+                        Text(
+                          event.date,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.sp,
+
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      event.title,
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 19.sp,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Text(
-                    event.title,
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 19.sp,
-                      fontWeight: FontWeight.w800,
-                      color: Theme.of(context).colorScheme.onSurface,
                     ),
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    event.location,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.6),
+                    SizedBox(height: 6.h),
+                    Text(
+                      event.location,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.6),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

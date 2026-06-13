@@ -6,6 +6,7 @@ class FilterBottomSheet extends StatefulWidget {
   final String initialCategory;
   final String initialMinPrice;
   final String initialMaxPrice;
+  final String initialShipping;
   final List<String> categories;
 
   const FilterBottomSheet({
@@ -14,6 +15,7 @@ class FilterBottomSheet extends StatefulWidget {
     required this.initialCategory,
     required this.initialMinPrice,
     required this.initialMaxPrice,
+    required this.initialShipping,
     required this.categories,
   });
 
@@ -24,7 +26,7 @@ class FilterBottomSheet extends StatefulWidget {
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   late String selectedSort;
   late String selectedCategory;
-  String selectedShipping = 'All';
+  late String selectedShipping;
 
   static const Map<String, String> _categoryDisplayNames = {
     'handicrafts': 'Hand Crafts',
@@ -46,6 +48,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     super.initState();
     selectedSort = widget.initialSort;
     selectedCategory = widget.initialCategory;
+    selectedShipping = widget.initialShipping;
     minPriceController = TextEditingController(text: widget.initialMinPrice);
     maxPriceController = TextEditingController(text: widget.initialMaxPrice);
   }
@@ -218,6 +221,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     'category': selectedCategory,
                     'minPrice': minPriceController.text,
                     'maxPrice': maxPriceController.text,
+                    'shipping': selectedShipping,
                   });
                 },
                 style: ElevatedButton.styleFrom(

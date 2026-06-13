@@ -9,6 +9,7 @@ class OrderCard extends StatelessWidget {
   final String orderNo;
   final String items;
   final String price;
+  final String status;
 
   const OrderCard({
     super.key,
@@ -17,10 +18,36 @@ class OrderCard extends StatelessWidget {
     required this.orderNo,
     required this.items,
     required this.price,
+    this.status = 'pending',
   });
 
   @override
   Widget build(BuildContext context) {
+    Color statusBgColor;
+    Color statusTextColor;
+
+    switch (status.toLowerCase()) {
+      case 'completed':
+      case 'delivered':
+        statusBgColor = const Color(0xFFECFDF5);
+        statusTextColor = const Color(0xFF10B981);
+        break;
+      case 'processing':
+      case 'shipped':
+        statusBgColor = const Color(0xFFEFF6FF);
+        statusTextColor = const Color(0xFF3B82F6);
+        break;
+      case 'cancelled':
+      case 'canceled':
+        statusBgColor = const Color(0xFFFEF2F2);
+        statusTextColor = const Color(0xFFEF4444);
+        break;
+      default: // pending
+        statusBgColor = const Color(0xFFFFF8E5);
+        statusTextColor = const Color(0xFFF5A623);
+        break;
+    }
+
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(12.r),
@@ -81,13 +108,13 @@ class OrderCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFF8E5), // Light yellow bg
+                  color: statusBgColor,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: BasicText(
-                  text: 'pending'.tr(),
+                  text: status.tr(),
                   fontSize: 10,
-                  color: const Color(0xFFF5A623), // Deep yellow text
+                  color: statusTextColor,
                   isBold: true,
                 ),
               ),

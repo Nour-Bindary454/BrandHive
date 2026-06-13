@@ -20,6 +20,7 @@ import 'widgets/home_header.dart';
 import 'widgets/home_hero_banner.dart';
 import 'widgets/categories_section.dart';
 import 'widgets/bazaars_events_section.dart';
+import 'widgets/bazaar_section.dart';
 
 import 'widgets/home_shimmer_loading.dart';
 import 'widgets/recommended_for_you_section.dart';
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: 20.h),
                         ],
 
-                        SizedBox(height: 32.h),
+                        SizedBox(height: 30.h),
 
                         /// 4. Categories
                         if (state.categories.isNotEmpty) ...[
@@ -134,6 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 32.h),
                         ],
+
+                        /// Bazaars Section
+                        const HomeBazaarSection(),
+                        SizedBox(height: 32.h),
 
                         /// 5. Events
                         if (state.events.isNotEmpty) ...[

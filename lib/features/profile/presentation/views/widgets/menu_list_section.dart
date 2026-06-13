@@ -6,11 +6,10 @@ import 'menu_item_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_cubit.dart';
-<<<<<<< HEAD
+
 import 'package:brand/features/address/presentation/views/address_list_screen.dart';
-=======
+
 import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
->>>>>>> 7fb95dce1b12f4a095d3ab21e369c1c3a1c7248f
 
 class MenuListSection extends StatelessWidget {
   final List<MenuItemModel> items;
@@ -85,7 +84,9 @@ class MenuListSection extends StatelessWidget {
               } else if (item.title == 'my_addresses'.tr()) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AddressListScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => const AddressListScreen(),
+                  ),
                 );
               } else if (item.title == 'my_orders'.tr()) {
                 Navigator.pushNamed(context, '/orders');

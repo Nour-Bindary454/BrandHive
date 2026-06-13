@@ -10,6 +10,7 @@ class ExploreState {
   final String category;
   final String minPrice;
   final String maxPrice;
+  final String shipping;
   final List<CategoryModel> categories;
 
   ExploreState({
@@ -22,6 +23,7 @@ class ExploreState {
     this.category = 'All',
     this.minPrice = '',
     this.maxPrice = '',
+    this.shipping = 'All',
     this.categories = const [],
   });
 
@@ -35,6 +37,7 @@ class ExploreState {
     String? category,
     String? minPrice,
     String? maxPrice,
+    String? shipping,
     List<CategoryModel>? categories,
   }) {
     return ExploreState(
@@ -47,6 +50,7 @@ class ExploreState {
       category: category ?? this.category,
       minPrice: minPrice ?? this.minPrice,
       maxPrice: maxPrice ?? this.maxPrice,
+      shipping: shipping ?? this.shipping,
       categories: categories ?? this.categories,
     );
   }

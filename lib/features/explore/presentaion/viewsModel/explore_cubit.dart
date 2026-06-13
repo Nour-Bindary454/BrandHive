@@ -49,68 +49,74 @@ class ExploreCubit extends Cubit<ExploreState> {
     String? category,
     String? minPrice,
     String? maxPrice,
+    String? shipping,
   }) async {
-    List<HomeProduct> result;
+    emit(state.copyWith(isLoading: true, error: null));
+    try {
+      String? categoryId;
+      if (category != null && category != 'All') {
+        final cat = state.categories.firstWhere(
+          (c) => c.name.toLowerCase() == category.toLowerCase(),
+          orElse: () => CategoryModel(id: '', name: category, slug: ''),
+        );
+        if (cat.id.isNotEmpty) {
+          categoryId = cat.id;
+        }
+      }
 
-    // If a specific category is selected, fetch from API by category ID
-    if (category != null && category != 'All') {
-      final cat = state.categories.firstWhere(
-        (c) => c.name.toLowerCase() == category.toLowerCase(),
-        orElse: () => CategoryModel(id: '', name: category, slug: ''),
+      double? minP = (minPrice != null && minPrice.isNotEmpty) ? double.tryParse(minPrice) : null;
+      double? maxP = (maxPrice != null && maxPrice.isNotEmpty) ? double.tryParse(maxPrice) : null;
+
+      bool? shipsInternationally;
+      if (shipping == 'Global Only') {
+        shipsInternationally = true;
+      } else if (shipping == 'Egypt Only') {
+        shipsInternationally = false;
+      }
+
+      final result = await repo.searchProducts(
+        "",
+        categoryId: categoryId,
+        minPrice: minP,
+        maxPrice: maxP,
+        shipsInternationally: shipsInternationally,
       );
 
-      if (cat.id.isNotEmpty) {
-        emit(state.copyWith(isLoading: true));
-        final apiResult = await sl<HomeRepository>().getProductsByCategory(cat.id);
-        result = apiResult.fold(
-          (_) => <HomeProduct>[],
-          (products) => products,
-        );
-        emit(state.copyWith(isLoading: false));
-      } else {
-        // Fallback to local filtering
-        result = state.products
-            .where((p) => p.category.toLowerCase() == category.toLowerCase())
-            .toList();
-      }
-    } else {
-      result = List.from(state.products);
-    }
+      result.fold(
+        (failure) {
+          emit(state.copyWith(isLoading: false, error: failure.errMessage));
+        },
+        (products) {
+          List<HomeProduct> sortedList = List.from(products);
+          if (sortBy != null) {
+            if (sortBy == 'Price: Low') {
+              sortedList.sort((a, b) => a.price.compareTo(b.price));
+            } else if (sortBy == 'Price: High') {
+              sortedList.sort((a, b) => b.price.compareTo(a.price));
+            } else if (sortBy == 'Top Rated') {
+              sortedList.sort((a, b) => b.rating.compareTo(a.rating));
+            }
+          }
 
-    // Apply Price Filter
-    if (minPrice != null && minPrice.isNotEmpty) {
-      final min = double.tryParse(minPrice);
-      if (min != null) {
-        result = result.where((p) => p.price >= min).toList();
-      }
+          emit(
+            state.copyWith(
+              isLoading: false,
+              isFiltering: (category != null && category != 'All') ||
+                  (minPrice != null && minPrice.isNotEmpty) ||
+                  (maxPrice != null && maxPrice.isNotEmpty) ||
+                  (shipping != null && shipping != 'All'),
+              filteredProducts: sortedList,
+              sortBy: sortBy,
+              category: category,
+              minPrice: minPrice,
+              maxPrice: maxPrice,
+              shipping: shipping,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
     }
-    if (maxPrice != null && maxPrice.isNotEmpty) {
-      final max = double.tryParse(maxPrice);
-      if (max != null) {
-        result = result.where((p) => p.price <= max).toList();
-      }
-    }
-
-    // Apply Sort
-    if (sortBy != null) {
-      if (sortBy == 'Price: Low') {
-        result.sort((a, b) => a.price.compareTo(b.price));
-      } else if (sortBy == 'Price: High') {
-        result.sort((a, b) => b.price.compareTo(a.price));
-      } else if (sortBy == 'Top Rated') {
-        result.sort((a, b) => b.rating.compareTo(a.rating));
-      }
-    }
-
-    emit(
-      state.copyWith(
-        isFiltering: category != null && category != 'All',
-        filteredProducts: result,
-        sortBy: sortBy,
-        category: category,
-        minPrice: minPrice,
-        maxPrice: maxPrice,
-      ),
-    );
   }
 }

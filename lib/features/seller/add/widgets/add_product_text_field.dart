@@ -8,6 +8,8 @@ class AddProductTextField extends StatelessWidget {
   final int maxLines;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const AddProductTextField({
     super.key,
@@ -16,6 +18,8 @@ class AddProductTextField extends StatelessWidget {
     this.maxLines = 1,
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
+    this.controller,
+    this.validator,
   });
 
   @override
@@ -34,8 +38,10 @@ class AddProductTextField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          controller: controller,
           maxLines: maxLines,
           keyboardType: keyboardType,
+          validator: validator,
           style: TextStyle(
             fontSize: 12.sp,
             color: const Color(0xFF0F172A),
@@ -56,6 +62,14 @@ class AddProductTextField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: const BorderSide(color: Color(0xFF1B354D)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: const BorderSide(color: Colors.red),
             ),
           ),
         ),

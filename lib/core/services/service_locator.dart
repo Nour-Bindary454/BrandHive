@@ -1,6 +1,9 @@
 import 'package:brand/features/seller_registration/data/repository/seller_reg_impl.dart';
 import 'package:brand/features/seller_registration/data/repository/seller_reg_repo.dart';
 import 'package:brand/features/seller_registration/presentation/viewModel/seller_reg_cubit.dart';
+import 'package:brand/features/seller/data/repository/seller_repo.dart';
+import 'package:brand/features/seller/data/repository/seller_repo_impl.dart';
+import 'package:brand/features/seller/presentation/view_model/seller_cubit.dart';
 import 'package:brand/features/help_support/data/repository/support_repo.dart';
 import 'package:brand/features/help_support/data/repository/support_repo_impl.dart';
 import 'package:brand/features/help_support/presentation/viewModel/support_cubit.dart';
@@ -8,6 +11,15 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import 'api_services.dart';
+
+import 'package:brand/features/bazaar/data/repository/bazaar_repository_impl.dart';
+import 'package:brand/features/bazaar/domain/repository/bazaar_repository.dart';
+import 'package:brand/features/bazaar/presentation/cubit/bazaar_cubit.dart';
+
+import 'package:brand/features/event/data/repository/event_repository_impl.dart';
+import 'package:brand/features/event/domain/repository/event_repository.dart';
+import 'package:brand/features/event/presentation/cubit/event_cubit.dart';
+
 
 // ================= Repositories =================
 import '../../features/signup/data/repository/register_repo_impl.dart';
@@ -82,8 +94,6 @@ import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
 import '../../features/address/presentation/viewmodels/address_cubit.dart';
 import '../../features/orders/presentation/viewmodels/orders_cubit.dart';
 
-import '../../features/seller_registration/presentation/viewModel/seller_reg_cubit.dart';
-
 // ================= GetIt =================
 final sl = GetIt.instance;
 
@@ -142,6 +152,9 @@ void setup() {
 
   // ================= NEW: Brand Request Repo =================
   sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
+  sl.registerLazySingleton<SellerRepository>(() => SellerRepositoryImpl(sl()));
+  sl.registerLazySingleton<BazaarRepository>(() => BazaarRepositoryImpl(sl()));
+  sl.registerLazySingleton<EventRepository>(() => EventRepositoryImpl(sl()));
 
   // ================= Data Sources =================
   sl.registerLazySingleton<CheckoutRemoteDataSource>(
@@ -149,15 +162,12 @@ void setup() {
   );
   sl.registerLazySingleton<CheckoutRepository>(() => CheckoutRepository(sl()));
 
-<<<<<<< HEAD
   sl.registerLazySingleton<AddressRemoteDataSource>(
     () => AddressRemoteDataSource(sl()),
   );
   sl.registerLazySingleton<AddressRepository>(() => AddressRepository(sl()));
-=======
-  sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
+
   sl.registerLazySingleton<SupportRepository>(() => SupportRepoImpl(sl()));
->>>>>>> 7fb95dce1b12f4a095d3ab21e369c1c3a1c7248f
 
   sl.registerLazySingleton<OrdersRemoteDataSource>(
     () => OrdersRemoteDataSource(sl()),
@@ -189,7 +199,10 @@ void setup() {
 
   // ================= FIXED =================
   sl.registerFactory(() => BrandRequestCubit(sl()));
+  sl.registerFactory(() => SellerCubit(sl(), sl()));
   sl.registerFactory(() => SupportCubit(sl()));
   sl.registerFactory(() => AdminSupportCubit(sl()));
   sl.registerFactory(() => AdminNotificationCubit(sl()));
+  sl.registerFactory(() => BazaarCubit(sl()));
+  sl.registerFactory(() => EventCubit(sl()));
 }

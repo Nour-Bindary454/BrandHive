@@ -30,9 +30,9 @@ class CategoriesSection extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 14.h),
         SizedBox(
-          height: 100.h,
+          height: 105.h,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
@@ -65,7 +65,9 @@ class CategoriesSection extends StatelessWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.05),
                             blurRadius: 5.r,
                             offset: Offset(0, 2),
                           ),
@@ -77,7 +79,9 @@ class CategoriesSection extends StatelessWidget {
                       category.name,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.w300,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w300,
                         color: isSelected
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(context).colorScheme.onSurface,
