@@ -42,9 +42,8 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
   void _updateAddress() {
     context.read<CheckoutCubit>().selectAddress(
       AddressModel(
-        governorate: '',
+        governorate: _cityController.text,
         fullName: _fullNameController.text,
-
         phone: _phoneController.text,
         street: _streetController.text,
         city: _cityController.text,

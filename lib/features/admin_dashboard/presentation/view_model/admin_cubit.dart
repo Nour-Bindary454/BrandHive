@@ -15,7 +15,6 @@ class AdminCubit extends Cubit<AdminState> {
 
     final statsResult = await repo.getDashboardStats();
     final requestsResult = await repo.getBrandRequests();
-    final categoriesResult = await repo.getCategories();
     final notificationsResult = await repo.getNotifications();
 
     statsResult.fold((failure) => emit(AdminError(failure.errMessage)), (
@@ -214,6 +213,15 @@ class AdminCubit extends Cubit<AdminState> {
     result.fold(
       (failure) => emit(AdminOrdersError(failure.errMessage)),
       (orders) => emit(AdminOrdersSuccess(orders)),
+    );
+  }
+
+  Future<void> updateOrderStatus(String id, String status) async {
+    emit(AdminOrderStatusUpdateLoading());
+    final result = await repo.updateOrderStatus(id, status);
+    result.fold(
+      (failure) => emit(AdminOrderStatusUpdateError(failure.errMessage)),
+      (_) => emit(AdminOrderStatusUpdateSuccess(id, status)),
     );
   }
 }

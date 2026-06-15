@@ -31,5 +31,15 @@
   "unknown_brand": "Unbekannte Marke",
   "egp": "EGP",
   "no_description": "Keine Beschreibung verfügbar.",
-  "no_products_brand": "Keine Produkte gefunden."
+  "no_products_brand": "Keine Produkte gefunden.",
+  "similar_products": "Ähnliche Produkte",
+  "reviews": "Bewertungen",
+  "write_review": "Bewertung schreiben",
+  "add_review": "Bewertung hinzufügen",
+  "empty_reviews": "Noch keine Bewertungen. Schreiben Sie die erste!",
+  "your_rating": "Ihre Bewertung",
+  "enter_comment": "Geben Sie Ihren Kommentar ein",
+  "submit": "Absenden",
+  "review_submitted": "Bewertung erfolgreich übermittelt",
+  "add": "Hinzufügen"
 }

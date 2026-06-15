@@ -32,24 +32,29 @@ class ProductBottomBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'total_price'.tr(),
-                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-                ),
-                Text(
-                  '${product.price.toInt()} ${product.currency}',
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Outfit',
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'total_price'.tr(),
+                    style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                   ),
-                ),
-              ],
+                  Text(
+                    '${product.price.toInt()} ${product.currency}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Outfit',
+                    ),
+                  ),
+                ],
+              ),
             ),
+            SizedBox(width: 12.w),
             _AddToCartButton(product: product),
           ],
         ),
@@ -74,18 +79,19 @@ class _AddToCartButton extends StatelessWidget {
         }
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(30.r),
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 20.sp),
             SizedBox(width: 8.w),
             Text(
               'add_to_cart'.tr(),
-              style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
           ],
         ),

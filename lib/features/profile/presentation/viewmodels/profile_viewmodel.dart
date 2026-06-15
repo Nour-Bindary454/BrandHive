@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../data/models/profile_model.dart';
 import '../../../../core/services/cache_helper.dart';
+import '../../../../core/services/service_locator.dart';
+import '../../../../core/services/api_services.dart';
+import '../../../../core/services/end_points.dart';
+import '../../../orders/data/models/user_order_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ProfileViewModel extends ChangeNotifier {
@@ -22,8 +26,19 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Simulating an API call
-      await Future.delayed(const Duration(seconds: 1));
+      // Fetch active orders count dynamically
+      int activeOrdersCount = 0;
+      try {
+        final response = await sl<ApiService>().getData(endPoint: EndPoints.myOrders);
+        final List data = response.data['data'] ?? [];
+        final orders = data.map((e) => UserOrderModel.fromJson(e)).toList();
+        activeOrdersCount = orders.where((o) => 
+          o.status.toLowerCase() != 'delivered' && 
+          o.status.toLowerCase() != 'cancelled'
+        ).length;
+      } catch (e) {
+        debugPrint("Failed to fetch active orders count: $e");
+      }
 
       _profileData = ProfileModel(
         name: CacheHelper.getData(key: 'name') ?? 'User',
@@ -36,7 +51,7 @@ class ProfileViewModel extends ChangeNotifier {
           MenuItemModel(
             title: 'my_orders'.tr(),
             icon: Icons.inventory_2_outlined,
-            badgeText: '2 active',
+            badgeText: activeOrdersCount > 0 ? '$activeOrdersCount active' : null,
           ),
           MenuItemModel(
             title: 'wishlist'.tr(),

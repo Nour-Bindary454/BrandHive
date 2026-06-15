@@ -117,21 +117,23 @@ class _VerifyState extends State<Verify> {
           child: Column(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      VerifyHeader(email: email),
-                      const SizedBox(height: 40),
-                      OtpInputs(otpCode: otpCode),
-                      const SizedBox(height: 40),
-
-                      VerifyButtonSection(
-                        otpCode: otpCode,
-                        email: email,
-                        isForgetPassword: isForgetPassword,
-                      ),
-                    ],
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        VerifyHeader(email: email),
+                        const SizedBox(height: 30),
+                        OtpInputs(otpCode: otpCode),
+                        const SizedBox(height: 30),
+  
+                        VerifyButtonSection(
+                          otpCode: otpCode,
+                          email: email,
+                          isForgetPassword: isForgetPassword,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/core/services/event_tracker.dart';
+import 'package:dio/dio.dart';
 import '../../data/models/address_model.dart';
 import '../../data/models/order_item_model.dart';
 import '../../data/models/order_model.dart';
@@ -80,6 +82,11 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         emit(state.copyWith(error: "Please complete all shipping address fields."));
         return;
       }
+      if (state.selectedAddress != null) {
+        _repository.saveAddress(state.selectedAddress!).then((_) {
+          fetchAddresses();
+        });
+      }
     } else if (state.currentStep == 2) {
       if (!isPaymentValid()) {
         emit(state.copyWith(error: "Please complete all payment details."));
@@ -109,7 +116,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     try {
       final order = OrderModel(
         shippingAddress: state.selectedAddress!,
-        paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cash',
+        paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cod',
         items: state.checkoutItems,
         subtotal: state.subtotal,
 
@@ -118,15 +125,32 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       );
 
       final result = await _repository.placeOrder(order);
+      for (var item in state.checkoutItems) {
+        EventTracker.track(productId: item.product, event: 'purchase');
+      }
       emit(state.copyWith(
         isLoading: false,
         paymentUrl: result.paymentUrl,
         orderSuccessResult: result,
       ));
     } catch (e) {
+      print("PLACE_ORDER_ERROR: $e");
+      String errMsg = "$e";
+      if (e is DioException) {
+        final data = e.response?.data;
+        print("PLACE_ORDER_RESPONSE_DATA: $data");
+        if (data is Map && data['message'] != null) {
+          final msg = data['message'];
+          if (msg is List) {
+            errMsg = msg.join(", ");
+          } else {
+            errMsg = msg.toString();
+          }
+        }
+      }
       emit(state.copyWith(
         isLoading: false,
-        error: "Failed to place order. Please try again.",
+        error: errMsg,
       ));
     }
   }

@@ -17,6 +17,7 @@ import 'package:brand/features/onboarding/presentation/views/onboarding.dart';
 import 'package:brand/features/resetPassword/view/reset_password.dart';
 import 'package:brand/features/signup/presentation/view_model/cubit/register_cubit.dart';
 import 'package:brand/features/signup/presentation/views/signup.dart';
+import 'package:brand/features/signup/presentation/views/category_selection_screen.dart';
 import 'package:brand/features/splash/presentation/views/splash_veiws.dart';
 import 'package:brand/features/verify/presentation/view/verify.dart';
 import 'package:brand/features/verify/presentation/view_model/cubit/confirm_email_cubit.dart';
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
                     create: (_) => sl<RegisterCubit>(),
                     child: Signup(),
                   ),
+                  '/interests': (context) => const CategorySelectionScreen(),
 
                   '/forgetPassword': (context) => BlocProvider(
                     create: (_) => sl<ForgetPasswordCubit>(),

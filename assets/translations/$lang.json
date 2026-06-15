@@ -124,5 +124,15 @@
   "please_check_your_nemail": "[$lang] ${entry.value}",
   "welcome": "[$lang] ${entry.value}",
   "sign_in": "[$lang] ${entry.value}",
-  "sign_up": "[$lang] ${entry.value}"
+  "sign_up": "[$lang] ${entry.value}",
+  "similar_products": "[$lang] ${entry.value}",
+  "reviews": "[$lang] ${entry.value}",
+  "write_review": "[$lang] ${entry.value}",
+  "add_review": "[$lang] ${entry.value}",
+  "empty_reviews": "[$lang] ${entry.value}",
+  "your_rating": "[$lang] ${entry.value}",
+  "enter_comment": "[$lang] ${entry.value}",
+  "submit": "[$lang] ${entry.value}",
+  "review_submitted": "[$lang] ${entry.value}",
+  "add": "[$lang] ${entry.value}"
 }

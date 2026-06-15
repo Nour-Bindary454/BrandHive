@@ -1,4 +1,5 @@
 import 'package:brand/core/services/cache_helper.dart';
+import 'package:brand/core/services/event_tracker.dart';
 import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/utils/toast/toast.dart';
 import 'package:brand/features/admin_dashboard/presentation/view_model/admin_cubit.dart';
@@ -7,15 +8,28 @@ import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/product_details/presentation/views/widgets/product_bottom_bar.dart';
 import 'package:brand/features/product_details/presentation/views/widgets/product_image_section.dart';
 import 'package:brand/features/product_details/presentation/views/widgets/product_info_section.dart';
+import 'package:brand/features/product_details/presentation/views/widgets/similar_products_section.dart';
+import 'package:brand/features/product_details/presentation/views/widgets/product_reviews_section.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final Product product;
 
   const ProductDetailsScreen({super.key, required this.product});
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    EventTracker.track(productId: widget.product.id, event: 'view');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +53,16 @@ class ProductDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProductImageSection(product: product),
-                    ProductInfoSection(product: product),
+                    ProductImageSection(product: widget.product),
+                    ProductInfoSection(product: widget.product),
+                    SimilarProductsSection(product: widget.product),
+                    ProductReviewsSection(product: widget.product),
                     SizedBox(height: 100.h),
                   ],
                 ),
               ),
               if (CacheHelper.getData(key: 'role')?.toLowerCase() != 'admin')
-                ProductBottomBar(product: product),
+                ProductBottomBar(product: widget.product),
             ],
           ),
         ),

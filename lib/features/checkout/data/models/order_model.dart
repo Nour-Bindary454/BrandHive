@@ -4,7 +4,7 @@ import 'order_item_model.dart';
 class OrderModel {
   final String? id;
   final String? orderNumber;
-  final String? user;
+  final dynamic user;
   final AddressModel shippingAddress;
   final String paymentMethod;
   final List<OrderItemModel> items;

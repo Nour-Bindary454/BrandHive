@@ -9,6 +9,17 @@ mixin AdminOrdersHelper {
     return data.map((e) => AdminOrderModel.fromJson(e)).toList();
   }
 
+  Future<void> performUpdateOrderStatus(
+    ApiService apiService,
+    String id,
+    String status,
+  ) async {
+    await apiService.patchData(
+      endPoint: EndPoints.updateOrderStatus(id),
+      data: {'status': status.toLowerCase()},
+    );
+  }
+
   Future<List<NotificationModel>> fetchNotifications(ApiService apiService) async {
     final response = await apiService.getData(endPoint: EndPoints.notifications);
     final List data = response.data['data'] ?? [];

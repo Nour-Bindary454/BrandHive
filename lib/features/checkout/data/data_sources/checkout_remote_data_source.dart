@@ -11,31 +11,30 @@ class CheckoutRemoteDataSource {
 
   /// Fetch saved addresses from API
   Future<List<AddressModel>> fetchSavedAddresses() async {
-    // Note: If there's no specific address endpoint yet, we might keep it mocked
-    // or use a profile/user endpoint. For now, assuming EndPoints.orders might have a related one
-    // or we use a hardcoded endpoint for addresses if available.
-    // Given the task, I'll stick to the orders integration.
-
-    // For now, keeping mock addresses as there's no address endpoint in EndPoints
+    // For now, keeping mock addresses empty as there's no address endpoint in EndPoints
     await Future.delayed(const Duration(milliseconds: 500));
-    return [
-      // AddressModel(
-      //   id: 'addr1',
-      //   firstName: 'Muhamed',
-      //   lastName: 'Hassan',
-      //   phoneNumber: '+20 123 456 7890',
-      //   streetAddress: '15 El Tahrir St.',
-      //   city: 'Cairo',
-      //   areaDistrict: 'Zamalek',
-      // ),
-    ];
+    return [];
   }
 
   /// Place an order via API
   Future<CheckoutResponseModel> submitOrder(OrderModel order) async {
+    final addressJson = order.shippingAddress.toJson();
+    if (addressJson['governorate'] == null ||
+        addressJson['governorate'].toString().trim().isEmpty) {
+      addressJson['governorate'] = order.shippingAddress.city.trim().isNotEmpty
+          ? order.shippingAddress.city.trim()
+          : 'Cairo';
+    }
+
+    final dataToSend = {
+      'shippingAddress': addressJson,
+      'paymentMethod': order.paymentMethod,
+    };
+    print("SENDING_ORDER_DATA: $dataToSend");
+
     final response = await _apiService.postData(
       endPoint: EndPoints.orders,
-      data: order.toJson(),
+      data: dataToSend,
     );
 
     return CheckoutResponseModel.fromJson(response.data);

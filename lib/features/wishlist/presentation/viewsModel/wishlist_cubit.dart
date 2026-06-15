@@ -1,3 +1,4 @@
+import 'package:brand/core/services/event_tracker.dart';
 import 'package:brand/features/wishlist/data/repository/wishlist_repo.dart';
 import 'package:brand/features/wishlist/presentation/viewsModel/wishlist_states.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
@@ -99,6 +100,9 @@ class WishlistCubit extends Cubit<WishlistState> {
         emit(WishlistUpdatedState());
       },
       (wishlist) {
+        if (!isFav) {
+          EventTracker.track(productId: productId, event: 'favorite');
+        }
         // sync مع السيرفر
         wishlistedProductIds.clear();
         wishlistProducts.clear();

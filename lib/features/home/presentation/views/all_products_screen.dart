@@ -8,8 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllProductsScreen extends StatelessWidget {
   final List<HomeProduct> products;
+  final String? title;
 
-  const AllProductsScreen({super.key, required this.products});
+  const AllProductsScreen({super.key, required this.products, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class AllProductsScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'all_products'.tr(),
+          title ?? 'all_products'.tr(),
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 20.sp,

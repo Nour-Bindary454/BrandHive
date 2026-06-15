@@ -50,6 +50,8 @@ import '../../features/admin_dashboard/data/repository/admin_repo_impl.dart';
 
 import '../../features/checkout/data/data_sources/checkout_remote_data_source.dart';
 import '../../features/checkout/data/repository/checkout_repository.dart';
+import '../../features/orders/data/repository/orders_repo.dart';
+import '../../features/orders/data/repository/orders_repo_impl.dart';
 
 import '../../features/signup/presentation/view_model/cubit/register_cubit.dart';
 import '../../features/login/presentation/viewsModel/login_cubit.dart';
@@ -68,6 +70,9 @@ import '../../features/admin_dashboard/presentation/view_model/admin_cubit.dart'
 import '../../features/admin_dashboard/presentation/view_model/admin_support_cubit.dart';
 import '../../features/admin_dashboard/presentation/view_model/admin_notification_cubit.dart';
 import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
+import 'package:brand/features/product_details/presentation/view_model/similar_products_cubit.dart';
+import '../../features/orders/presentation/view_model/orders_cubit.dart';
+
 // ================= GetIt =================
 
 final sl = GetIt.instance;
@@ -122,6 +127,7 @@ void setup() {
     () => CheckoutRemoteDataSource(sl()),
   );
   sl.registerLazySingleton<CheckoutRepository>(() => CheckoutRepository(sl()));
+  sl.registerLazySingleton<OrdersRepo>(() => OrdersRepoImpl(sl()));
 
   sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
   sl.registerLazySingleton<SupportRepository>(() => SupportRepoImpl(sl()));
@@ -143,8 +149,10 @@ void setup() {
   sl.registerFactory(() => NotificationsCubit(sl()));
   sl.registerFactory(() => AdminCubit(sl()));
   sl.registerFactory(() => CheckoutCubit(sl()));
+  sl.registerFactory(() => OrdersCubit(sl()));
   sl.registerFactory(() => BrandRequestCubit(sl()));
   sl.registerFactory(() => SupportCubit(sl()));
   sl.registerFactory(() => AdminSupportCubit(sl()));
   sl.registerFactory(() => AdminNotificationCubit(sl()));
+  sl.registerFactory(() => SimilarProductsCubit(sl()));
 }

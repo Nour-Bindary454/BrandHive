@@ -63,5 +63,15 @@
   "filter_pending": "قيد الانتظار",
   "filter_approved": "مقبولة",
   "filter_rejected": "مرفوضة",
-  "no_requests_found_for_filter": "لا توجد طلبات مطابقة لهذا الفلتر"
+  "no_requests_found_for_filter": "لا توجد طلبات مطابقة لهذا الفلتر",
+  "similar_products": "منتجات مشابهة",
+  "reviews": "التقييمات",
+  "write_review": "اكتب تقييمًا",
+  "add_review": "إضافة تقييم",
+  "empty_reviews": "لا توجد تقييمات بعد. كن أول من يقيم!",
+  "your_rating": "تقييمك",
+  "enter_comment": "اكتب تعليقك هنا",
+  "submit": "إرسال",
+  "review_submitted": "تم تقديم التقييم بنجاح",
+  "add": "إضافة"
 }
