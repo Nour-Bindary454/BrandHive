@@ -97,6 +97,28 @@ class AdminOrderModel {
           [],
     );
   }
+
+  AdminOrderModel copyWith({
+    String? id,
+    String? orderNumber,
+    String? userEmail,
+    String? status,
+    double? total,
+    String? createdAt,
+    String? paymentMethod,
+    List<AdminOrderItem>? items,
+  }) {
+    return AdminOrderModel(
+      id: id ?? this.id,
+      orderNumber: orderNumber ?? this.orderNumber,
+      userEmail: userEmail ?? this.userEmail,
+      status: status ?? this.status,
+      total: total ?? this.total,
+      createdAt: createdAt ?? this.createdAt,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      items: items ?? this.items,
+    );
+  }
 }
 
 class AdminOrderItem {

@@ -86,4 +86,130 @@ class HomeRepositoryImpl implements HomeRepository {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<HomeProduct>>> getCategoryRecommendations(List<String> categories) async {
+    try {
+      final response = await apiService.postData(
+        endPoint: EndPoints.productRecommendations,
+        data: {
+          "categories": categories,
+        },
+      );
+      final List<dynamic> productsData = response.data['products'] ?? [];
+      final List<HomeProduct> products = productsData.map((p) {
+        final id = p['id'] ?? p['_id'] ?? '';
+        final brandName = p['brand_name'] ?? (p['brand'] is Map ? (p['brand']['name'] ?? '') : (p['brand']?.toString() ?? ''));
+        final category = p['category_name'] ?? (p['category'] is Map ? (p['category']['name'] ?? '') : (p['category']?.toString() ?? ''));
+        final name = p['name'] ?? '';
+        final description = p['description'] ?? '';
+        
+        final priceVal = p['finalPrice'] ?? p['discountPrice'] ?? p['price'] ?? 0.0;
+        final double price = double.tryParse(priceVal.toString()) ?? 0.0;
+
+        final double rawScore = double.tryParse((p['score'] ?? p['match_score'] ?? 0.0).toString()) ?? 0.0;
+        int matchPercentage = (rawScore <= 1.0 && rawScore > 0.0) ? (rawScore * 100).round() : rawScore.round();
+        if (matchPercentage == 0) matchPercentage = 95;
+
+        final ratingVal = p['stats_averageRating'] ?? (p['stats'] is Map ? (p['stats']['averageRating'] ?? 0.0) : 0.0);
+        final double rating = double.tryParse(ratingVal.toString()) ?? 0.0;
+
+        String imageUrl = '';
+        final catLower = category.toString().toLowerCase();
+        if (catLower.contains('accessories')) {
+          imageUrl = "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400";
+        } else if (catLower.contains('beauty')) {
+          imageUrl = "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=400";
+        } else if (catLower.contains('fashion')) {
+          imageUrl = "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=400";
+        } else if (catLower.contains('home decor') || catLower.contains('decor')) {
+          imageUrl = "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=400";
+        } else if (catLower.contains('handicraft')) {
+          imageUrl = "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=400";
+        } else {
+          imageUrl = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=400";
+        }
+
+        return HomeProduct(
+          id: id,
+          brandName: brandName,
+          category: category,
+          name: name,
+          description: description,
+          imageUrl: imageUrl,
+          price: price,
+          matchPercentage: matchPercentage,
+          rating: rating,
+          isActive: true,
+        );
+      }).toList();
+
+      return right(products);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HomeProduct>>> getBehavioralRecommendations(List<Map<String, dynamic>> interactions) async {
+    try {
+      final response = await apiService.postData(
+        endPoint: EndPoints.behavioralRecommend,
+        data: {
+          "interactions": interactions,
+        },
+      );
+      final List<dynamic> productsData = response.data['recommendations'] ?? [];
+      final List<HomeProduct> products = productsData.map((p) {
+        final id = p['id'] ?? p['_id'] ?? '';
+        final brandName = p['brand_name'] ?? (p['brand'] is Map ? (p['brand']['name'] ?? '') : (p['brand']?.toString() ?? ''));
+        final category = p['category_name'] ?? (p['category'] is Map ? (p['category']['name'] ?? '') : (p['category']?.toString() ?? ''));
+        final name = p['name'] ?? '';
+        final description = p['description'] ?? '';
+        
+        final priceVal = p['finalPrice'] ?? p['discountPrice'] ?? p['price'] ?? 0.0;
+        final double price = double.tryParse(priceVal.toString()) ?? 0.0;
+
+        final double rawScore = double.tryParse((p['score'] ?? p['match_score'] ?? 0.0).toString()) ?? 0.0;
+        int matchPercentage = (rawScore <= 1.0 && rawScore > 0.0) ? (rawScore * 100).round() : rawScore.round();
+        if (matchPercentage == 0) matchPercentage = 95;
+
+        final ratingVal = p['stats_averageRating'] ?? (p['stats'] is Map ? (p['stats']['averageRating'] ?? 0.0) : 0.0);
+        final double rating = double.tryParse(ratingVal.toString()) ?? 0.0;
+
+        String imageUrl = '';
+        final catLower = category.toString().toLowerCase();
+        if (catLower.contains('accessories')) {
+          imageUrl = "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400";
+        } else if (catLower.contains('beauty')) {
+          imageUrl = "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=400";
+        } else if (catLower.contains('fashion')) {
+          imageUrl = "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=400";
+        } else if (catLower.contains('home decor') || catLower.contains('decor')) {
+          imageUrl = "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=400";
+        } else if (catLower.contains('handicraft')) {
+          imageUrl = "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=400";
+        } else {
+          imageUrl = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=400";
+        }
+
+        return HomeProduct(
+          id: id,
+          brandName: brandName,
+          category: category,
+          name: name,
+          description: description,
+          imageUrl: imageUrl,
+          price: price,
+          matchPercentage: matchPercentage,
+          rating: rating,
+          isActive: true,
+        );
+      }).toList();
+
+      return right(products);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

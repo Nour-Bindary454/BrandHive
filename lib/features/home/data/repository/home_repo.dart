@@ -7,4 +7,6 @@ abstract class HomeRepository {
   Future<Either<Failure, List<HomeProduct>>> getAllProducts({int page = 1});
   Future<Either<Failure, List<HomeProduct>>> getProductsByCategory(String categoryId, {int page = 1});
   Future<Either<Failure, List<CategoryModel>>> getAllCategories();
+  Future<Either<Failure, List<HomeProduct>>> getCategoryRecommendations(List<String> categories);
+  Future<Either<Failure, List<HomeProduct>>> getBehavioralRecommendations(List<Map<String, dynamic>> interactions);
 }

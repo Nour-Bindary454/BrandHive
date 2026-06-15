@@ -138,6 +138,20 @@ class AdminRepositoryImpl
   }
 
   @override
+  Future<Either<Failure, Unit>> updateOrderStatus(String id, String status) async {
+    try {
+      await performUpdateOrderStatus(apiService, id, status);
+      return right(unit);
+    } catch (e) {
+      return left(
+        e is DioException
+            ? ServerFailure.fromDioError(e)
+            : ServerFailure(e.toString()),
+      );
+    }
+  }
+
+  @override
   Future<Either<Failure, List<NotificationModel>>> getNotifications() async {
     try {
       final notifications = await fetchNotifications(apiService);

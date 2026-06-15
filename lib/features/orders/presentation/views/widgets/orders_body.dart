@@ -5,10 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/backarrow.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
+<<<<<<< HEAD
 import 'package:brand/features/orders/presentation/viewmodels/orders_cubit.dart';
 import 'package:brand/features/orders/presentation/viewmodels/orders_state.dart';
 import 'package:brand/features/orders/presentation/views/widgets/order_card.dart';
 import 'package:brand/features/orders/presentation/views/order_details_view.dart';
+=======
+import 'package:brand/features/orders/presentation/view_model/orders_cubit.dart';
+import 'package:brand/features/orders/presentation/view_model/orders_state.dart';
+import 'package:brand/features/orders/presentation/views/widgets/orders_list_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 
 class OrdersBody extends StatelessWidget {
   const OrdersBody({super.key});
@@ -26,6 +35,7 @@ class OrdersBody extends StatelessWidget {
               children: [
                 const CustomBackarrow(),
                 SizedBox(width: 15.w),
+<<<<<<< HEAD
                 Expanded(
                   child: BlocBuilder<OrdersCubit, OrdersState>(
                     builder: (context, state) {
@@ -53,6 +63,35 @@ class OrdersBody extends StatelessWidget {
                       );
                     },
                   ),
+=======
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BasicText(
+                      text: "My Orders",
+                      fontSize: 20.sp,
+                      color: const Color(0xFF1E293B),
+                      isBold: true,
+                    ),
+                    BlocBuilder<OrdersCubit, OrdersState>(
+                      builder: (context, state) {
+                        String countStr = "";
+                        if (state is OrdersSuccess) {
+                          final count = state.orders.length;
+                          countStr = "$count ${count == 1 ? 'order' : 'orders'}";
+                        } else if (state is OrdersLoading) {
+                          countStr = "Loading...";
+                        }
+                        return BasicText(
+                          text: countStr,
+                          fontSize: 13.sp,
+                          color: const Color(0xFF64748B),
+                          isBold: false,
+                        );
+                      },
+                    ),
+                  ],
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
                 ),
               ],
             ),
@@ -64,6 +103,7 @@ class OrdersBody extends StatelessWidget {
             child: BlocBuilder<OrdersCubit, OrdersState>(
               builder: (context, state) {
                 if (state is OrdersLoading) {
+<<<<<<< HEAD
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is OrdersError) {
                   return Center(
@@ -137,6 +177,37 @@ class OrdersBody extends StatelessWidget {
                   );
                 }
                 return const SizedBox.shrink();
+=======
+                  return const Center(
+                    child: CircularProgressIndicator(color: Color(0xFF2D4373)),
+                  );
+                }
+                if (state is OrdersError) {
+                  return Center(
+                    child: BasicText(
+                      text: state.errMessage,
+                      fontSize: 14.sp,
+                      color: Colors.red,
+                      isBold: false,
+                    ),
+                  );
+                }
+                if (state is OrdersSuccess) {
+                  final orders = state.orders;
+                  if (orders.isEmpty) {
+                    return Center(
+                      child: BasicText(
+                        text: "You don't have any orders yet.",
+                        fontSize: 15.sp,
+                        color: const Color(0xFF64748B),
+                        isBold: false,
+                      ),
+                    );
+                  }
+                  return OrdersListView(orders: orders);
+                }
+                return const SizedBox();
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
               },
             ),
           ),

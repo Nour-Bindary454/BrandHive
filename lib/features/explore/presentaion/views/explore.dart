@@ -10,9 +10,7 @@ import 'package:brand/features/explore/presentaion/viewsModel/explore_cubit.dart
 import 'package:brand/features/explore/presentaion/viewsModel/explore_states.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/collections_container.dart';
 import 'package:brand/features/explore/presentaion/views/widgets/filter_bottom_sheet.dart';
-import 'package:brand/features/explore/presentaion/views/widgets/featured_brands.dart';
 import 'package:brand/features/home/presentation/views/search_results_screen.dart';
-import 'package:brand/features/explore/presentaion/views/widgets/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,7 +92,12 @@ class Explore extends StatelessWidget {
                                                 initialCategory: state.category,
                                                 initialMinPrice: state.minPrice,
                                                 initialMaxPrice: state.maxPrice,
+<<<<<<< HEAD
                                                 initialShipping: state.shipping,
+=======
+                                                initialShipping:
+                                                    state.selectedShipping,
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
                                                 categories: state.categories
                                                     .map((c) => c.name)
                                                     .toList(),
@@ -106,7 +109,12 @@ class Explore extends StatelessWidget {
                                         category: result['category'],
                                         minPrice: result['minPrice'],
                                         maxPrice: result['maxPrice'],
+<<<<<<< HEAD
                                         shipping: result['shipping'],
+=======
+                                        selectedShipping:
+                                            result['selectedShipping'],
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
                                       );
                                     }
                                   },
@@ -174,16 +182,44 @@ class Explore extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 10.h),
-                            Wrap(
-                              spacing: 10,
-                              runSpacing: 10,
-                              children: [
-                                TrendingItemName(label: '#Linen Shirt'),
-                                TrendingItemName(label: '#Leather Bag'),
-                                TrendingItemName(label: '#Ceramic Bowl'),
-                                TrendingItemName(label: '#Wall Art'),
-                                TrendingItemName(label: '#Bracelet'),
-                              ],
+                            BlocBuilder<ExploreCubit, ExploreState>(
+                              builder: (context, state) {
+                                if (state.isLoading &&
+                                    state.trendingProducts.isEmpty) {
+                                  return SizedBox(
+                                    height: 230.h,
+                                    child: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                                if (state.trendingProducts.isEmpty) {
+                                  return const SizedBox();
+                                }
+                                return SizedBox(
+                                  height: 230.h,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: state.trendingProducts.length,
+                                    itemBuilder: (context, index) {
+                                      final product =
+                                          state.trendingProducts[index];
+                                      return Padding(
+                                        padding: EdgeInsets.only(right: 14.w),
+                                        child: SizedBox(
+                                          width: 155.w,
+                                          child: ProductCard(
+                                            product: product,
+                                            onFavoritePressed: () {},
+                                            onAddToCartPressed: () {},
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                             SizedBox(height: 20.h),
                             BlocBuilder<ExploreCubit, ExploreState>(
@@ -290,10 +326,6 @@ class Explore extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 20.h),
-
-                            // Featured Brands Section
-                            FeaturedBrands(),
                             SizedBox(height: 20.h),
                           ],
                         ),

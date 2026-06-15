@@ -221,7 +221,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     'category': selectedCategory,
                     'minPrice': minPriceController.text,
                     'maxPrice': maxPriceController.text,
+<<<<<<< HEAD
                     'shipping': selectedShipping,
+=======
+                    'selectedShipping': selectedShipping,
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
                   });
                 },
                 style: ElevatedButton.styleFrom(

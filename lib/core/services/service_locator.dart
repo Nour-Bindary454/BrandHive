@@ -64,6 +64,8 @@ import '../../features/admin_dashboard/data/repository/admin_repo_impl.dart';
 // ================= Data Sources =================
 import '../../features/checkout/data/data_sources/checkout_remote_data_source.dart';
 import '../../features/checkout/data/repository/checkout_repository.dart';
+import '../../features/orders/data/repository/orders_repo.dart';
+import '../../features/orders/data/repository/orders_repo_impl.dart';
 
 import '../../features/address/data/data_sources/address_remote_data_source.dart';
 import '../../features/address/data/repository/address_repository.dart';
@@ -91,8 +93,15 @@ import '../../features/admin_dashboard/presentation/view_model/admin_cubit.dart'
 import '../../features/admin_dashboard/presentation/view_model/admin_support_cubit.dart';
 import '../../features/admin_dashboard/presentation/view_model/admin_notification_cubit.dart';
 import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
+<<<<<<< HEAD
 import '../../features/address/presentation/viewmodels/address_cubit.dart';
 import '../../features/orders/presentation/viewmodels/orders_cubit.dart';
+=======
+import 'package:brand/features/product_details/presentation/view_model/similar_products_cubit.dart';
+import '../../features/orders/presentation/view_model/orders_cubit.dart';
+
+// ================= GetIt =================
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 
 // ================= GetIt =================
 final sl = GetIt.instance;
@@ -161,6 +170,7 @@ void setup() {
     () => CheckoutRemoteDataSource(sl()),
   );
   sl.registerLazySingleton<CheckoutRepository>(() => CheckoutRepository(sl()));
+  sl.registerLazySingleton<OrdersRepo>(() => OrdersRepoImpl(sl()));
 
   sl.registerLazySingleton<AddressRemoteDataSource>(
     () => AddressRemoteDataSource(sl()),
@@ -194,15 +204,23 @@ void setup() {
   sl.registerFactory(() => AdminCubit(sl()));
 
   sl.registerFactory(() => CheckoutCubit(sl()));
+<<<<<<< HEAD
   sl.registerFactory(() => AddressCubit(sl()));
   sl.registerFactory(() => OrdersCubit(sl()));
 
   // ================= FIXED =================
+=======
+  sl.registerFactory(() => OrdersCubit(sl()));
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
   sl.registerFactory(() => BrandRequestCubit(sl()));
   sl.registerFactory(() => SellerCubit(sl(), sl()));
   sl.registerFactory(() => SupportCubit(sl()));
   sl.registerFactory(() => AdminSupportCubit(sl()));
   sl.registerFactory(() => AdminNotificationCubit(sl()));
+<<<<<<< HEAD
   sl.registerFactory(() => BazaarCubit(sl()));
   sl.registerFactory(() => EventCubit(sl()));
+=======
+  sl.registerFactory(() => SimilarProductsCubit(sl()));
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 }

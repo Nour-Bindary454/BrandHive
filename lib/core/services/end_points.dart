@@ -12,12 +12,15 @@ class EndPoints {
   static String getall = "brand";
   static String getone = "brand/get-one";
   static String products = "product";
+  static String aiTrending = "product/ai-trending";
   static String wishlist = "wishlist";
+
 
   static String newArrivals = "product/new-arrivals";
 
   static String cart = "cart";
   static String orders = "orders";
+  static String myOrders = "orders/my-orders";
   static String brandRequest = "brand/request";
   static String addresses = "addresses";
   static String shippingFee = "shipping-fee";
@@ -28,11 +31,13 @@ class EndPoints {
   static const String notificationsUnreadCount = "notifications/unread-count";
   static const String notificationsReadAll = "notifications/read-all";
   static String adminOrders = "orders/admin/all";
+  static String updateOrderStatus(String id) => "orders/admin/$id/status";
 
   static String activateBrand(String id) => "brand/$id/activate";
   static String deactivateBrand(String id) => "brand/$id/deactivate";
   static String brandAction(String id) => "brand/$id";
   static String support = "support";
+<<<<<<< HEAD
 
   // Seller Endpoints
   static const String sellerDashboard = "seller/dashboard";
@@ -51,4 +56,11 @@ class EndPoints {
   static const String notifyFollowers = "seller/bazaar/notify";
   static const String adminAllBazaars = "seller/bazaar/admin/all";
   static String toggleBazaar(String id) => "seller/bazaar/admin/$id/toggle";
+=======
+  static String similarProducts(String id) => "product/similar/$id";
+  static String productReviews(String id) => "reviews/product/$id";
+  static String trackEvent = "product/behavioral/track";
+  static const String productRecommendations = "product/recommendations";
+  static const String behavioralRecommend = "product/behavioral/recommend";
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 }

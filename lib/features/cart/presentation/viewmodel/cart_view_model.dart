@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brand/core/services/event_tracker.dart';
 import '../../data/model/cart_item_model.dart';
 import '../../data/model/cart_response_model.dart';
 import '../../services/cart_service.dart';
@@ -44,6 +45,7 @@ class CartViewModel extends ChangeNotifier {
   Future<void> addToCart(String productId, {int quantity = 1}) async {
     try {
       await _cartService.addItemToCart(productId, quantity: quantity);
+      EventTracker.track(productId: productId, event: 'cart');
       await fetchCart(); // Refresh the cart from server to ensure data is synced
     } catch (e) {
       // Handle error gracefully

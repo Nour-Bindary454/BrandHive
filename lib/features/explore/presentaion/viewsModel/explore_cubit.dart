@@ -1,4 +1,5 @@
 import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/explore/data/repository/explore_repo.dart';
 import 'package:brand/features/explore/presentaion/viewsModel/explore_states.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
@@ -16,6 +17,16 @@ class ExploreCubit extends Cubit<ExploreState> {
     emit(state.copyWith(isLoading: true, error: null));
 
     final result = await repo.getAllProducts(page: 1);
+
+    // Fetch trending products from API
+    List<Product> trending = [];
+    final trendingResult = await repo.getTrendingProducts();
+    trendingResult.fold(
+      (_) {},
+      (trendingProducts) {
+        trending = trendingProducts;
+      },
+    );
 
     // Also fetch categories from API
     List<CategoryModel> categories = [];
@@ -38,6 +49,7 @@ class ExploreCubit extends Cubit<ExploreState> {
             products: products,
             filteredProducts: products,
             categories: categories,
+            trendingProducts: trending,
           ),
         );
       },
@@ -49,6 +61,7 @@ class ExploreCubit extends Cubit<ExploreState> {
     String? category,
     String? minPrice,
     String? maxPrice,
+<<<<<<< HEAD
     String? shipping,
   }) async {
     emit(state.copyWith(isLoading: true, error: null));
@@ -80,8 +93,25 @@ class ExploreCubit extends Cubit<ExploreState> {
         minPrice: minP,
         maxPrice: maxP,
         shipsInternationally: shipsInternationally,
-      );
+=======
+    String? selectedShipping,
+  }) async {
+    List<HomeProduct> result;
+    final shippingFilter = selectedShipping ?? state.selectedShipping;
 
+    // Check if we need to filter by international shipping from the API
+    if (shippingFilter != 'All') {
+      emit(state.copyWith(isLoading: true));
+      final bool isGlobal = shippingFilter == 'Global Only';
+      final apiResult = await repo.searchProducts('', shipsInternationally: isGlobal);
+      result = apiResult.fold(
+        (_) => <HomeProduct>[],
+        (products) => products,
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+      );
+      emit(state.copyWith(isLoading: false));
+
+<<<<<<< HEAD
       result.fold(
         (failure) {
           emit(state.copyWith(isLoading: false, error: failure.errMessage));
@@ -97,6 +127,40 @@ class ExploreCubit extends Cubit<ExploreState> {
               sortedList.sort((a, b) => b.rating.compareTo(a.rating));
             }
           }
+=======
+      // Apply category filter locally if selected
+      if (category != null && category != 'All') {
+        result = result
+            .where((p) => p.category.toLowerCase() == category.toLowerCase())
+            .toList();
+      }
+    } else {
+      // If shipping is 'All', follow existing category fetching logic
+      if (category != null && category != 'All') {
+        final cat = state.categories.firstWhere(
+          (c) => c.name.toLowerCase() == category.toLowerCase(),
+          orElse: () => CategoryModel(id: '', name: category, slug: ''),
+        );
+
+        if (cat.id.isNotEmpty) {
+          emit(state.copyWith(isLoading: true));
+          final apiResult = await sl<HomeRepository>().getProductsByCategory(cat.id);
+          result = apiResult.fold(
+            (_) => <HomeProduct>[],
+            (products) => products,
+          );
+          emit(state.copyWith(isLoading: false));
+        } else {
+          // Fallback to local filtering
+          result = state.products
+              .where((p) => p.category.toLowerCase() == category.toLowerCase())
+              .toList();
+        }
+      } else {
+        result = List.from(state.products);
+      }
+    }
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 
           emit(
             state.copyWith(
@@ -118,5 +182,37 @@ class ExploreCubit extends Cubit<ExploreState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
     }
+<<<<<<< HEAD
+=======
+    if (maxPrice != null && maxPrice.isNotEmpty) {
+      final max = double.tryParse(maxPrice);
+      if (max != null) {
+        result = result.where((p) => p.price <= max).toList();
+      }
+    }
+
+    // Apply Sort
+    if (sortBy != null) {
+      if (sortBy == 'Price: Low') {
+        result.sort((a, b) => a.price.compareTo(b.price));
+      } else if (sortBy == 'Price: High') {
+        result.sort((a, b) => b.price.compareTo(a.price));
+      } else if (sortBy == 'Top Rated') {
+        result.sort((a, b) => b.rating.compareTo(a.rating));
+      }
+    }
+
+    emit(
+      state.copyWith(
+        isFiltering: (category != null && category != 'All') || shippingFilter != 'All',
+        filteredProducts: result,
+        sortBy: sortBy,
+        category: category,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        selectedShipping: shippingFilter,
+      ),
+    );
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
   }
 }

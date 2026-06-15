@@ -1,8 +1,10 @@
 import 'package:brand/core/sharedWidgets/shared_order_card.dart';
 import 'package:brand/features/admin_dashboard/data/models/admin_models.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_order_details_view.dart';
+import 'package:brand/features/admin_dashboard/presentation/view_model/admin_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminOrderCard extends StatelessWidget {
   final AdminOrderModel order;
@@ -38,7 +40,10 @@ class AdminOrderCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AdminOrderDetailsView(order: order),
+            builder: (innerContext) => BlocProvider.value(
+              value: BlocProvider.of<AdminCubit>(context),
+              child: AdminOrderDetailsView(order: order),
+            ),
           ),
         );
       },

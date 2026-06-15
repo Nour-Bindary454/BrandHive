@@ -49,3 +49,16 @@ class AdminOrdersError extends AdminState {
   final String message;
   AdminOrdersError(this.message);
 }
+
+class AdminOrderStatusUpdateLoading extends AdminState {}
+
+class AdminOrderStatusUpdateSuccess extends AdminState {
+  final String orderId;
+  final String newStatus;
+  AdminOrderStatusUpdateSuccess(this.orderId, this.newStatus);
+}
+
+class AdminOrderStatusUpdateError extends AdminState {
+  final String message;
+  AdminOrderStatusUpdateError(this.message);
+}

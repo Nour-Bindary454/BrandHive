@@ -20,8 +20,20 @@ class OrderItemModel {
   });
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
+    final rawProduct = json['product'];
+    String productId = '';
+    if (rawProduct is String) {
+      productId = rawProduct;
+    } else if (rawProduct is Map) {
+      productId = rawProduct['_id']?.toString() ?? rawProduct['id']?.toString() ?? '';
+    }
+
     return OrderItemModel(
+<<<<<<< HEAD
       product: json['product'] is Map ? json['product']['_id'] ?? '' : json['product'] ?? '',
+=======
+      product: productId,
+>>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
       productName: json['productName'] ?? '',
       productImage: json['productImage'] ?? '',
       sku: json['sku'],

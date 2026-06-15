@@ -14,6 +14,7 @@ abstract class AdminRepository {
   Future<Either<Failure, Unit>> toggleProductStatus(String id, bool isActive);
   Future<Either<Failure, List<CategoryModel>>> getCategories();
   Future<Either<Failure, List<AdminOrderModel>>> getAllOrders();
+  Future<Either<Failure, Unit>> updateOrderStatus(String id, String status);
   Future<Either<Failure, List<NotificationModel>>> getNotifications();
   Future<Either<Failure, List<AdminSupportMessageModel>>> getSupportMessages();
   Future<Either<Failure, AdminSupportMessageModel>> replyToSupportMessage(String id, String reply);

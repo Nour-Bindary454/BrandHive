@@ -180,5 +180,15 @@
   "filter_pending": "Pending",
   "filter_approved": "Approved",
   "filter_rejected": "Rejected",
-  "no_requests_found_for_filter": "No requests found for this filter"
+  "no_requests_found_for_filter": "No requests found for this filter",
+  "similar_products": "Similar Products",
+  "reviews": "Reviews",
+  "write_review": "Write a Review",
+  "add_review": "Add Review",
+  "empty_reviews": "No reviews yet. Be the first to review!",
+  "your_rating": "Your Rating",
+  "enter_comment": "Enter your comment",
+  "submit": "Submit",
+  "review_submitted": "Review submitted successfully",
+  "add": "Add"
 }

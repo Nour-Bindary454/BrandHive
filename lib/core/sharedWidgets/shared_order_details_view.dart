@@ -25,6 +25,7 @@ class SharedOrderDetailsView extends StatelessWidget {
   final String userEmail;
   final double total;
   final List<SharedOrderItemModel> items;
+  final VoidCallback? onStatusTap;
 
   const SharedOrderDetailsView({
     super.key,
@@ -35,6 +36,7 @@ class SharedOrderDetailsView extends StatelessWidget {
     required this.userEmail,
     required this.total,
     required this.items,
+    this.onStatusTap,
   });
 
   @override
@@ -223,17 +225,33 @@ class SharedOrderDetailsView extends StatelessWidget {
         SizedBox(width: 15.w),
         Flexible(
           child: isStatus
-              ? Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2D4373).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: BasicText(
-                    text: value,
-                    fontSize: 11.sp,
-                    color: const Color(0xFF2D4373),
-                    isBold: true,
+              ? GestureDetector(
+                  onTap: onStatusTap,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2D4373).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BasicText(
+                          text: value,
+                          fontSize: 11.sp,
+                          color: const Color(0xFF2D4373),
+                          isBold: true,
+                        ),
+                        if (onStatusTap != null) ...[
+                          SizedBox(width: 4.w),
+                          Icon(
+                            Icons.edit_note,
+                            size: 14.sp,
+                            color: const Color(0xFF2D4373),
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                 )
               : BasicText(

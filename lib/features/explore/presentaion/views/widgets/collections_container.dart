@@ -3,6 +3,7 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/newArrivals/presentation/viewModel/new_arrivals_cubit.dart';
 import 'package:brand/features/newArrivals/presentation/viewModel/new_arrivals_states.dart';
 import 'package:brand/features/newArrivals/presentation/views/new_arrivals_screen.dart';
+import 'package:brand/features/explore/presentaion/views/best_sellers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,20 +21,18 @@ class CollectionsContainer extends StatefulWidget {
 class _CollectionsContainerState extends State<CollectionsContainer> {
   final newArrivalsCubit = sl<NewArrivalsCubit>();
 
-  List<String> collectionName = ['New Arrivals', 'Best Sellers', 'Ramadan'];
+  List<String> collectionName = ['New Arrivals', 'Best Sellers'];
 
-  List<String> itemsNumber = ["45", "32", 'Festive decors'];
+  List<String> itemsNumber = ["45", "25"];
 
   List<Color> boxColorsLight = [
     BasicColors.linearGradientLight,
     const Color(0xffAD46FF),
-    const Color(0xff615FFF),
   ];
 
   List<Color> boxColorsDark = [
     BasicColors.linearGradientDark,
     const Color(0xff361A4B),
-    const Color(0xff155DFC),
   ];
 
   @override
@@ -60,6 +59,13 @@ class _CollectionsContainerState extends State<CollectionsContainer> {
                       value: newArrivalsCubit,
                       child: const NewArrivalsScreen(),
                     ),
+                  ),
+                );
+              } else if (index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const BestSellersScreen(),
                   ),
                 );
               }

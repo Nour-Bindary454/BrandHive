@@ -176,13 +176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         /// 7. Recommended
                         if (state.recommended.isNotEmpty) ...[
                           RecommendedForYouSection(
-                            products: state.recommended.take(10).toList(),
+                            products: state.recommended.take(4).toList(),
                             onViewMoreTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => AllProductsScreen(
                                     products: state.recommended,
+                                    title: 'recommended_for_you'.tr(),
                                   ),
                                 ),
                               );
@@ -216,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         /// 8. Featured
                         if (state.featured.isNotEmpty) ...[
-                          FeaturedProductsSection(
+                           FeaturedProductsSection(
                             products: state.featured.take(10).toList(),
                             onViewAllTap: () {
                               Navigator.push(
@@ -224,6 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => AllProductsScreen(
                                     products: state.featured,
+                                    title: 'featured_products'.tr(),
                                   ),
                                 ),
                               );
