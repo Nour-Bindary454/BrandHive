@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
+import 'package:brand/core/utils/toast/toast.dart';
 import 'package:brand/features/bazaar/presentation/cubit/bazaar_cubit.dart';
 import 'package:brand/features/bazaar/presentation/cubit/bazaar_states.dart';
+import 'package:brand/features/bazaar/data/models/bazaar_model.dart';
 import 'package:brand/features/seller/presentation/views/edit_bazaar_screen.dart';
 import 'package:brand/features/seller/presentation/views/send_announcement_screen.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -57,10 +59,15 @@ class _MyBazaarScreenState extends State<MyBazaarScreen> {
               return _buildEmptyState(context);
             }
 
+            final isApproved = bazaar.status?.toLowerCase() == 'approved';
+
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  /// Status Banner
+                  _buildStatusBanner(bazaar),
+
                   /// Bazaar Card
                   SettingsCard(
                     child: Column(
@@ -131,23 +138,36 @@ class _MyBazaarScreenState extends State<MyBazaarScreen> {
                         SizedBox(width: 12.w),
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SendAnnouncementScreen(),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.campaign, color: Color(0xFF2D4373), size: 16),
+                            onPressed: isApproved
+                                ? () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const SendAnnouncementScreen(),
+                                      ),
+                                    );
+                                  }
+                                : () {
+                                    Toast.showErrorToast(
+                                      msg: 'Announcements are only available for approved bazaars.'.tr(),
+                                      context: context,
+                                    );
+                                  },
+                            icon: Icon(
+                              Icons.campaign,
+                              color: isApproved ? const Color(0xFF2D4373) : Colors.grey,
+                              size: 16,
+                            ),
                             label: BasicText(
                               text: 'Announce'.tr(),
                               fontSize: 13,
-                              color: const Color(0xFF2D4373),
+                              color: isApproved ? const Color(0xFF2D4373) : Colors.grey,
                               isBold: true,
                             ),
                             style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Color(0xFF2D4373)),
+                              side: BorderSide(
+                                color: isApproved ? const Color(0xFF2D4373) : Colors.grey.shade300,
+                              ),
                               padding: EdgeInsets.symmetric(vertical: 12.h),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                             ),
@@ -161,6 +181,89 @@ class _MyBazaarScreenState extends State<MyBazaarScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildStatusBanner(BazaarModel bazaar) {
+    final status = bazaar.status?.toLowerCase() ?? 'pending';
+    final isActive = bazaar.isActive ?? false;
+
+    Color bg;
+    Color border;
+    Color text;
+    IconData icon;
+    String title;
+    String desc;
+
+    if (status == 'approved') {
+      if (isActive) {
+        bg = const Color(0xFFE6F4EA);
+        border = const Color(0xFF34A853).withOpacity(0.4);
+        text = const Color(0xFF137333);
+        icon = Icons.check_circle_outline;
+        title = 'Bazaar Profile Active';
+        desc = 'Your bazaar is approved and active. Customers can now discover and explore your store.';
+      } else {
+        bg = const Color(0xFFFEF7E0);
+        border = const Color(0xFFFBBC04).withOpacity(0.4);
+        text = const Color(0xFFB06000);
+        icon = Icons.pause_circle_outline;
+        title = 'Bazaar Profile Inactive';
+        desc = 'Your bazaar is approved but currently inactive. Contact support to toggle visibility.';
+      }
+    } else if (status == 'rejected') {
+      bg = const Color(0xFFFCE8E6);
+      border = const Color(0xFFEA4335).withOpacity(0.4);
+      text = const Color(0xFFC5221F);
+      icon = Icons.error_outline;
+      title = 'Bazaar Request Rejected';
+      desc = bazaar.rejectionReason != null && bazaar.rejectionReason!.isNotEmpty
+          ? 'Rejection reason: "${bazaar.rejectionReason}"\nPlease edit your bazaar details and submit again for review.'
+          : 'Your bazaar profile request was rejected. Please review and update your storefront details.';
+    } else {
+      bg = const Color(0xFFE8F0FE);
+      border = const Color(0xFF1A73E8).withOpacity(0.4);
+      text = const Color(0xFF174EA6);
+      icon = Icons.info_outline;
+      title = 'Under Review';
+      desc = 'Your bazaar profile is pending admin approval. You will be able to post announcements and receive customers once approved.';
+    }
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+      padding: EdgeInsets.all(16.r),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: border, width: 1),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: text, size: 24.sp),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BasicText(
+                  text: title,
+                  fontSize: 14.sp,
+                  color: text,
+                  isBold: true,
+                ),
+                SizedBox(height: 4.h),
+                BasicText(
+                  text: desc,
+                  fontSize: 11.5.sp,
+                  color: text.withOpacity(0.85),
+                  maxLines: 4,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

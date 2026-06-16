@@ -16,10 +16,14 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   void initCheckout({
     required List<OrderItemModel> items,
     required double subtotal,
+    String? couponCode,
+    double couponDiscount = 0,
   }) {
     emit(state.copyWith(
       checkoutItems: items,
       subtotal: subtotal,
+      couponCode: couponCode,
+      couponDiscount: couponDiscount,
       currentStep: 1,
       error: null,
       orderSuccessResult: null,
@@ -119,27 +123,15 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cod',
         items: state.checkoutItems,
         subtotal: state.subtotal,
-
         shippingFee: state.shippingFee,
+        discount: state.couponDiscount,
         total: state.totalAmount,
       );
 
       final result = await _repository.placeOrder(order);
-<<<<<<< HEAD
-      
-      // Clear cart after successful order creation
-      try {
-        await _repository.clearCart();
-      } catch (e) {
-        // Log error but don't fail the checkout since order is already placed
-        print('Failed to clear cart: $e');
-      }
-
-=======
       for (var item in state.checkoutItems) {
         EventTracker.track(productId: item.product, event: 'purchase');
       }
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
       emit(state.copyWith(
         isLoading: false,
         paymentUrl: result.paymentUrl,

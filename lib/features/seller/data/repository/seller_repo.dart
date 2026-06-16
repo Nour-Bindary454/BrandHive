@@ -14,4 +14,5 @@ abstract class SellerRepository {
   Future<OrderModel> getOrderDetails(String id);
   Future<SellerAnalyticsData> getAnalytics();
   Future<List<SellerReviewModel>> getReviews();
+  Future<ProductInsightsData> getProductInsights();
 }

@@ -47,7 +47,7 @@ class OrderModel extends Equatable {
       id: json['_id'],
       orderNumber: json['orderNumber'],
       user: json['user'] is Map ? json['user']['_id'] : json['user'],
-      shippingAddress: AddressModel.fromJson(json['shippingAddress']),
+      shippingAddress: AddressModel.fromJson(json['shippingAddress'] ?? {}),
       paymentMethod: json['paymentMethod'] ?? '',
       items: (json['items'] as List?)
               ?.map((item) => OrderItemModel.fromJson(item))

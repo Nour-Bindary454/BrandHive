@@ -6,6 +6,10 @@ import 'package:brand/features/admin_dashboard/presentation/views/deactivated_br
 import 'package:brand/features/admin_dashboard/presentation/views/admin_orders_view.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_support_messages_view.dart';
 import 'package:brand/features/admin_dashboard/presentation/views/admin_send_notification_view.dart';
+import 'package:brand/features/admin_dashboard/presentation/views/admin_bazaars_view.dart';
+import 'package:brand/features/coupon/presentation/views/admin_coupons_view.dart';
+import 'package:brand/features/coupon/presentation/cubit/coupon_cubit.dart';
+import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/features/home/presentation/view_models/cubit/home_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,6 +103,39 @@ class AdminSection extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const AdminSendNotificationView(),
+                  ),
+                );
+              },
+            ),
+            const SettingsDivider(),
+            SettingsArrowItem(
+              icon: CupertinoIcons.home,
+              iconBgColor: const Color(0xFFECFDF5),
+              iconColor: const Color(0xFF059669),
+              title: "Bazaar Requests".tr(),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AdminBazaarsView(),
+                  ),
+                );
+              },
+            ),
+            const SettingsDivider(),
+            SettingsArrowItem(
+              icon: CupertinoIcons.tag,
+              iconBgColor: const Color(0xFFFFF7ED),
+              iconColor: const Color(0xFFEA580C),
+              title: "manage_coupons".tr(),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (_) => sl<CouponCubit>(),
+                      child: const AdminCouponsView(),
+                    ),
                   ),
                 );
               },

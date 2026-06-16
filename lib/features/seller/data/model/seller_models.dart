@@ -18,15 +18,27 @@ class SellerDashboardData {
   });
 
   factory SellerDashboardData.fromJson(Map<String, dynamic> json) {
+    final productsMap = json['products'] as Map<String, dynamic>?;
+    final ordersMap = json['orders'] as Map<String, dynamic>?;
+    final revenueMap = json['revenue'] as Map<String, dynamic>?;
+    final reviewsMap = json['reviews'] as Map<String, dynamic>?;
+    final engagementMap = json['engagement'] as Map<String, dynamic>?;
+
+    final double totalRevenue = (revenueMap?['total'] ?? json['totalRevenue'] ?? json['revenue'] ?? 0).toDouble();
+    final int activeOrdersCount = ordersMap?['pending'] ?? ordersMap?['total'] ?? json['activeOrdersCount'] ?? json['activeOrders'] ?? 0;
+    final int profileViews = engagementMap?['totalViews'] ?? json['profileViews'] ?? 0;
+    final int productsCount = productsMap?['total'] ?? json['productsCount'] ?? json['products'] ?? 0;
+    final double rating = (reviewsMap?['averageRating'] ?? json['rating'] ?? 0.0).toDouble();
+
     var ordersList = json['recentOrders'] as List? ?? [];
     List<OrderModel> orders = ordersList.map((e) => OrderModel.fromJson(e)).toList();
 
     return SellerDashboardData(
-      totalRevenue: (json['totalRevenue'] ?? json['revenue'] ?? 0).toDouble(),
-      activeOrdersCount: json['activeOrdersCount'] ?? json['activeOrders'] ?? 0,
-      profileViews: json['profileViews'] ?? 0,
-      productsCount: json['productsCount'] ?? json['products'] ?? 0,
-      rating: (json['rating'] ?? 0.0).toDouble(),
+      totalRevenue: totalRevenue,
+      activeOrdersCount: activeOrdersCount,
+      profileViews: profileViews,
+      productsCount: productsCount,
+      rating: rating,
       recentOrders: orders,
     );
   }
@@ -73,12 +85,25 @@ class SellerProductModel {
     // Handling different format of image or images array
     String mainImage = '';
     List<String> imagesList = [];
+    
     if (json['images'] is List) {
-      imagesList = List<String>.from(json['images']);
-      if (imagesList.isNotEmpty) mainImage = imagesList.first;
+      for (var item in json['images']) {
+        if (item is String) {
+          imagesList.add(item);
+        } else if (item is Map && item['url'] != null) {
+          imagesList.add(item['url'].toString());
+        }
+      }
     }
-    if (mainImage.isEmpty && json['image'] != null) {
+    
+    if (json['image'] is String) {
       mainImage = json['image'].toString();
+    } else if (json['image'] is Map && json['image']['url'] != null) {
+      mainImage = json['image']['url'].toString();
+    }
+    
+    if (mainImage.isEmpty && imagesList.isNotEmpty) {
+      mainImage = imagesList.first;
     }
     if (imagesList.isEmpty && mainImage.isNotEmpty) {
       imagesList = [mainImage];
@@ -208,6 +233,66 @@ class SellerAnalyticsData {
       totalOrders: json['totalOrders'] ?? json['orders'] ?? 0,
       averageOrderValue: (json['averageOrderValue'] ?? 0.0).toDouble(),
       monthlySales: json['monthlySales'] ?? json['chartData'] ?? [],
+    );
+  }
+}
+
+class ProductInsightItem {
+  final String id;
+  final String name;
+  final String categoryName;
+  final int viewCount;
+  final int cartCount;
+  final int wishlistCount;
+
+  ProductInsightItem({
+    required this.id,
+    required this.name,
+    required this.categoryName,
+    required this.viewCount,
+    required this.cartCount,
+    required this.wishlistCount,
+  });
+
+  factory ProductInsightItem.fromJson(Map<String, dynamic> json) {
+    return ProductInsightItem(
+      id: json['id'] ?? json['_id'] ?? '',
+      name: json['name'] ?? '',
+      categoryName: json['category_name'] ??
+          (json['category'] is Map
+              ? json['category']['name'] ?? ''
+              : json['category']?.toString() ?? ''),
+      viewCount: json['viewCount'] ?? json['views'] ?? 0,
+      cartCount: json['cartCount'] ?? json['cartAdds'] ?? 0,
+      wishlistCount: json['wishlistCount'] ?? json['wishlists'] ?? 0,
+    );
+  }
+}
+
+class ProductInsightsData {
+  final List<ProductInsightItem> products;
+
+  ProductInsightsData({required this.products});
+
+  factory ProductInsightsData.fromJson(dynamic raw) {
+    if (raw is List) {
+      return ProductInsightsData(
+        products: raw
+            .whereType<Map>()
+            .map((e) => ProductInsightItem.fromJson(Map<String, dynamic>.from(e)))
+            .toList(),
+      );
+    }
+
+    final map = raw is Map ? Map<String, dynamic>.from(raw) : <String, dynamic>{};
+    final data = map['data'] ?? map;
+    final list = (data is Map ? data['products'] : map['products']) as List? ?? [];
+
+    return ProductInsightsData(
+      products: list
+          .whereType<Map>()
+          .map((e) => ProductInsightItem.fromJson(Map<String, dynamic>.from(e)))
+          .toList(),
     );
   }
 }

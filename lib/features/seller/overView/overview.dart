@@ -1,5 +1,7 @@
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/data/model/seller_models.dart';
+import 'package:brand/features/seller/overView/widgets/market_trends_section.dart';
+import 'package:brand/features/seller/overView/widgets/product_insights_section.dart';
 import 'package:brand/features/seller/overView/widgets/overview_header.dart';
 import 'package:brand/features/seller/overView/widgets/pro_tip_card.dart';
 import 'package:brand/features/seller/overView/widgets/recent_orders.dart';
@@ -33,6 +35,8 @@ class _OverviewState extends State<Overview> {
             await cubit.getProducts();
             await cubit.getOrders();
             await cubit.getStockAlerts();
+            await cubit.getAnalytics();
+            await cubit.getProductInsights();
           },
           child: BlocConsumer<SellerCubit, SellerState>(
             listener: (context, state) {
@@ -64,6 +68,8 @@ class _OverviewState extends State<Overview> {
                     ],
                     const RecentOrders(),
                     const StoreAnalytics(),
+                    const ProductInsightsSection(),
+                    const MarketTrendsSection(),
                     const ProTipCard(),
                     SizedBox(height: 100.h), // padding for bottom navigation bar
                   ],

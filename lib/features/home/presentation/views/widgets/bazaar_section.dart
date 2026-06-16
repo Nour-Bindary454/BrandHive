@@ -28,7 +28,10 @@ class _HomeBazaarSectionState extends State<HomeBazaarSection> {
     return BlocBuilder<BazaarCubit, BazaarState>(
       builder: (context, state) {
         final cubit = context.read<BazaarCubit>();
-        final bazaars = cubit.allBazaars.take(5).toList();
+        final bazaars = cubit.allBazaars
+            .where((b) => b.status?.toLowerCase() == 'approved' || (b.isActive ?? false))
+            .take(5)
+            .toList();
 
         if (bazaars.isEmpty) return const SizedBox.shrink();
 
@@ -70,7 +73,7 @@ class _HomeBazaarSectionState extends State<HomeBazaarSection> {
             ),
             SizedBox(height: 8.h),
             SizedBox(
-              height: 180.h,
+              height: 100.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
@@ -88,51 +91,31 @@ class _HomeBazaarSectionState extends State<HomeBazaarSection> {
                       );
                     },
                     child: Container(
-                      width: 250.w,
+                      width: 220.w,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(16.r),
                         border: Border.all(color: Colors.grey.shade200),
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 105.h,
-                              width: double.infinity,
-                              child: bazaar.imageUrl != null && bazaar.imageUrl!.startsWith('http')
-                                  ? Image.network(
-                                      bazaar.imageUrl!,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) => _buildPlaceholder(),
-                                    )
-                                  : _buildPlaceholder(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  BasicText(
-                                    text: bazaar.name,
-                                    fontSize: 14.sp,
-                                    color: Theme.of(context).colorScheme.onSurface,
-                                    isBold: true,
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  BasicText(
-                                    text: bazaar.description,
-                                    fontSize: 11.sp,
-                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                                    maxLines: 1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BasicText(
+                            text: bazaar.name,
+                            fontSize: 14.sp,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            isBold: true,
+                          ),
+                          SizedBox(height: 6.h),
+                          BasicText(
+                            text: bazaar.description,
+                            fontSize: 11.sp,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            maxLines: 2,
+                          ),
+                        ],
                       ),
                     ),
                   );

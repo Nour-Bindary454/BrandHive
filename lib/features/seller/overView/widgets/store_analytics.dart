@@ -18,11 +18,19 @@ class StoreAnalytics extends StatelessWidget {
         final views = cubit.dashboardData?.profileViews ?? 0;
         final products = cubit.dashboardData?.productsCount ?? 0;
         final rating = cubit.dashboardData?.rating ?? 0.0;
+        final analytics = cubit.analyticsData;
 
         // Formats views like 1200 -> 1.2k
         String formattedViews = views.toString();
         if (views >= 1000) {
           formattedViews = '${(views / 1000).toStringAsFixed(1)}k';
+        }
+
+        String formatAmount(double value) {
+          if (value >= 1000) {
+            return '${(value / 1000).toStringAsFixed(1)}k';
+          }
+          return value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1);
         }
 
         return Padding(
@@ -79,6 +87,39 @@ class StoreAnalytics extends StatelessWidget {
                   ),
                 ],
               ),
+              if (analytics != null) ...[
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.payments_outlined, color: const Color(0xFF16A34A), size: 24.sp),
+                        formatAmount(analytics.totalSales),
+                        'total_sales'.tr(),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.receipt_long_outlined, color: const Color(0xFF5384DB), size: 24.sp),
+                        analytics.totalOrders.toString(),
+                        'total_orders'.tr(),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.trending_up, color: const Color(0xFFF5A623), size: 24.sp),
+                        formatAmount(analytics.averageOrderValue),
+                        'avg_order_value'.tr(),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         );

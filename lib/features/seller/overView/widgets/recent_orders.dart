@@ -16,7 +16,9 @@ class RecentOrders extends StatelessWidget {
     return BlocBuilder<SellerCubit, SellerState>(
       builder: (context, state) {
         final cubit = context.read<SellerCubit>();
-        final recentOrders = cubit.dashboardData?.recentOrders ?? [];
+        final recentOrders = (cubit.dashboardData?.recentOrders != null && cubit.dashboardData!.recentOrders.isNotEmpty)
+            ? cubit.dashboardData!.recentOrders
+            : cubit.orders;
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),

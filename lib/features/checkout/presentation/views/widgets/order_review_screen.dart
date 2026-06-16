@@ -141,6 +141,28 @@ class OrderReviewScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      if (state.couponDiscount > 0) ...[
+                        SizedBox(height: 8.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Coupon (${state.couponCode ?? ''})',
+                              style: TextStyle(
+                                color: const Color(0xFF059669),
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            Text(
+                              '-${state.couponDiscount.toStringAsFixed(0)} EGP',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: const Color(0xFF059669),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                       SizedBox(height: 16.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

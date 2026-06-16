@@ -29,6 +29,7 @@ class SellerCubit extends Cubit<SellerState> {
   List<CategoryModel> categories = [];
   List<SellerReviewModel> reviews = [];
   SellerAnalyticsData? analyticsData;
+  ProductInsightsData? productInsights;
 
   BrandModel? brand;
   File? pickedBrandLogo;
@@ -196,8 +197,38 @@ class SellerCubit extends Cubit<SellerState> {
       }
     } catch (_) {}
 
-    // 3. Fallback: Query brand requests
     final currentUserId = CacheHelper.getData(key: 'id');
+
+    // 3. Try scanning brand list directly for owner/user/requestedBy matches
+    if (currentUserId != null && currentUserId.isNotEmpty) {
+      try {
+        final brandsResponse = await sl<ApiService>().getData(endPoint: "brand");
+        final List brands = brandsResponse.data['data'] ?? brandsResponse.data ?? [];
+        for (var b in brands) {
+          if (b is Map) {
+            String ownerId = '';
+            if (b['owner'] is Map) {
+              ownerId = b['owner']['_id']?.toString() ?? b['owner']['id']?.toString() ?? '';
+            } else if (b['owner'] != null) {
+              ownerId = b['owner'].toString();
+            } else if (b['requestedBy'] is Map) {
+              ownerId = b['requestedBy']['_id']?.toString() ?? b['requestedBy']['id']?.toString() ?? '';
+            } else if (b['requestedBy'] != null) {
+              ownerId = b['requestedBy'].toString();
+            } else if (b['user'] is Map) {
+              ownerId = b['user']['_id']?.toString() ?? b['user']['id']?.toString() ?? '';
+            } else if (b['user'] != null) {
+              ownerId = b['user'].toString();
+            }
+            if (ownerId == currentUserId) {
+              return b['_id']?.toString() ?? b['id']?.toString();
+            }
+          }
+        }
+      } catch (_) {}
+    }
+
+    // 4. Fallback: Query brand requests
     if (currentUserId != null && currentUserId.isNotEmpty) {
       try {
         final response = await sl<ApiService>().getData(endPoint: "brand/request");
@@ -225,7 +256,7 @@ class SellerCubit extends Cubit<SellerState> {
       } catch (_) {}
     }
 
-    // 4. Try matching user name with brand name in full brand list
+    // 5. Try matching user name with brand name in full brand list
     final currentUserName = CacheHelper.getData(key: 'name');
     if (currentUserName != null && currentUserName.isNotEmpty) {
       try {
@@ -258,11 +289,9 @@ class SellerCubit extends Cubit<SellerState> {
   }) async {
     emit(SellerProductActionLoading());
     try {
+      // Try to resolve brand ID, but don't block if it fails —
+      // the /seller/products endpoint should auto-associate based on auth token
       final brandId = await _resolveBrandId();
-      if (brandId == null) {
-        emit(SellerProductActionFailure('Could not resolve seller brand ID. Make sure you are registered.'));
-        return;
-      }
 
       final body = {
         'name': name,
@@ -270,7 +299,7 @@ class SellerCubit extends Cubit<SellerState> {
         'price': price,
         'stock': stock,
         'category': categoryId,
-        'brand': brandId,
+        if (brandId != null) 'brand': brandId,
         if (sku != null) 'sku': sku,
         if (tags != null) 'tags': tags,
         if (pickedImage != null) 'image': pickedImage,
@@ -426,6 +455,19 @@ class SellerCubit extends Cubit<SellerState> {
       emit(SellerAnalyticsFailure(failure.errMessage));
     } catch (e) {
       emit(SellerAnalyticsFailure(e.toString()));
+    }
+  }
+
+  Future<void> getProductInsights() async {
+    emit(SellerProductInsightsLoading());
+    try {
+      productInsights = await _repo.getProductInsights();
+      emit(SellerProductInsightsSuccess(productInsights!));
+    } on DioException catch (e) {
+      final failure = ServerFailure.fromDioError(e);
+      emit(SellerProductInsightsFailure(failure.errMessage));
+    } catch (e) {
+      emit(SellerProductInsightsFailure(e.toString()));
     }
   }
 

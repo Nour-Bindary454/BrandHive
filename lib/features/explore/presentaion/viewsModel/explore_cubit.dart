@@ -21,22 +21,16 @@ class ExploreCubit extends Cubit<ExploreState> {
     // Fetch trending products from API
     List<Product> trending = [];
     final trendingResult = await repo.getTrendingProducts();
-    trendingResult.fold(
-      (_) {},
-      (trendingProducts) {
-        trending = trendingProducts;
-      },
-    );
+    trendingResult.fold((_) {}, (trendingProducts) {
+      trending = trendingProducts;
+    });
 
     // Also fetch categories from API
     List<CategoryModel> categories = [];
     final catResult = await sl<HomeRepository>().getAllCategories();
-    catResult.fold(
-      (_) {},
-      (cats) {
-        categories = cats;
-      },
-    );
+    catResult.fold((_) {}, (cats) {
+      categories = cats;
+    });
 
     result.fold(
       (failure) {
@@ -61,39 +55,6 @@ class ExploreCubit extends Cubit<ExploreState> {
     String? category,
     String? minPrice,
     String? maxPrice,
-<<<<<<< HEAD
-    String? shipping,
-  }) async {
-    emit(state.copyWith(isLoading: true, error: null));
-    try {
-      String? categoryId;
-      if (category != null && category != 'All') {
-        final cat = state.categories.firstWhere(
-          (c) => c.name.toLowerCase() == category.toLowerCase(),
-          orElse: () => CategoryModel(id: '', name: category, slug: ''),
-        );
-        if (cat.id.isNotEmpty) {
-          categoryId = cat.id;
-        }
-      }
-
-      double? minP = (minPrice != null && minPrice.isNotEmpty) ? double.tryParse(minPrice) : null;
-      double? maxP = (maxPrice != null && maxPrice.isNotEmpty) ? double.tryParse(maxPrice) : null;
-
-      bool? shipsInternationally;
-      if (shipping == 'Global Only') {
-        shipsInternationally = true;
-      } else if (shipping == 'Egypt Only') {
-        shipsInternationally = false;
-      }
-
-      final result = await repo.searchProducts(
-        "",
-        categoryId: categoryId,
-        minPrice: minP,
-        maxPrice: maxP,
-        shipsInternationally: shipsInternationally,
-=======
     String? selectedShipping,
   }) async {
     List<HomeProduct> result;
@@ -103,31 +64,13 @@ class ExploreCubit extends Cubit<ExploreState> {
     if (shippingFilter != 'All') {
       emit(state.copyWith(isLoading: true));
       final bool isGlobal = shippingFilter == 'Global Only';
-      final apiResult = await repo.searchProducts('', shipsInternationally: isGlobal);
-      result = apiResult.fold(
-        (_) => <HomeProduct>[],
-        (products) => products,
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+      final apiResult = await repo.searchProducts(
+        '',
+        shipsInternationally: isGlobal,
       );
+      result = apiResult.fold((_) => <HomeProduct>[], (products) => products);
       emit(state.copyWith(isLoading: false));
 
-<<<<<<< HEAD
-      result.fold(
-        (failure) {
-          emit(state.copyWith(isLoading: false, error: failure.errMessage));
-        },
-        (products) {
-          List<HomeProduct> sortedList = List.from(products);
-          if (sortBy != null) {
-            if (sortBy == 'Price: Low') {
-              sortedList.sort((a, b) => a.price.compareTo(b.price));
-            } else if (sortBy == 'Price: High') {
-              sortedList.sort((a, b) => b.price.compareTo(a.price));
-            } else if (sortBy == 'Top Rated') {
-              sortedList.sort((a, b) => b.rating.compareTo(a.rating));
-            }
-          }
-=======
       // Apply category filter locally if selected
       if (category != null && category != 'All') {
         result = result
@@ -144,7 +87,9 @@ class ExploreCubit extends Cubit<ExploreState> {
 
         if (cat.id.isNotEmpty) {
           emit(state.copyWith(isLoading: true));
-          final apiResult = await sl<HomeRepository>().getProductsByCategory(cat.id);
+          final apiResult = await sl<HomeRepository>().getProductsByCategory(
+            cat.id,
+          );
           result = apiResult.fold(
             (_) => <HomeProduct>[],
             (products) => products,
@@ -160,30 +105,14 @@ class ExploreCubit extends Cubit<ExploreState> {
         result = List.from(state.products);
       }
     }
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
 
-          emit(
-            state.copyWith(
-              isLoading: false,
-              isFiltering: (category != null && category != 'All') ||
-                  (minPrice != null && minPrice.isNotEmpty) ||
-                  (maxPrice != null && maxPrice.isNotEmpty) ||
-                  (shipping != null && shipping != 'All'),
-              filteredProducts: sortedList,
-              sortBy: sortBy,
-              category: category,
-              minPrice: minPrice,
-              maxPrice: maxPrice,
-              shipping: shipping,
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+    // Apply Price Filter
+    if (minPrice != null && minPrice.isNotEmpty) {
+      final min = double.tryParse(minPrice);
+      if (min != null) {
+        result = result.where((p) => p.price >= min).toList();
+      }
     }
-<<<<<<< HEAD
-=======
     if (maxPrice != null && maxPrice.isNotEmpty) {
       final max = double.tryParse(maxPrice);
       if (max != null) {
@@ -204,7 +133,8 @@ class ExploreCubit extends Cubit<ExploreState> {
 
     emit(
       state.copyWith(
-        isFiltering: (category != null && category != 'All') || shippingFilter != 'All',
+        isFiltering:
+            (category != null && category != 'All') || shippingFilter != 'All',
         filteredProducts: result,
         sortBy: sortBy,
         category: category,
@@ -213,6 +143,5 @@ class ExploreCubit extends Cubit<ExploreState> {
         selectedShipping: shippingFilter,
       ),
     );
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
   }
 }

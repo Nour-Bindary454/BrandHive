@@ -1,6 +1,7 @@
 import 'package:brand/core/errors/failure.dart';
 import 'package:brand/core/services/api_services.dart';
 import 'package:brand/core/services/end_points.dart';
+import 'package:brand/features/brand_profile/data/models/product_model.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:dartz/dartz.dart';
 
@@ -11,7 +12,6 @@ class HomeRepositoryImpl implements HomeRepository {
 
   HomeRepositoryImpl(this.apiService);
 
-  @override
   @override
   Future<Either<Failure, List<BrandModel>>> getAllBrands({int page = 1}) async {
     try {
@@ -211,5 +211,73 @@ class HomeRepositoryImpl implements HomeRepository {
     } catch (e) {
       return left(ServerFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<Product>>> getCrossSellProducts(
+    List<String> cartProductIds,
+  ) async {
+    if (cartProductIds.isEmpty) {
+      return right([]);
+    }
+
+    try {
+      final response = await apiService.postData(
+        endPoint: EndPoints.cartCrossSell,
+        data: {
+          'cart_product_ids': cartProductIds,
+        },
+      );
+
+      final List<dynamic> productsData = response.data['products'] ?? [];
+      final products = productsData.map((p) {
+        final product = Product.fromJson(p);
+        if (product.image.isNotEmpty &&
+            !product.image.contains('placehold.co')) {
+          return product;
+        }
+
+        final category = (p['category_name'] ?? p['category'] ?? '')
+            .toString()
+            .toLowerCase();
+        return Product(
+          id: product.id,
+          brandId: product.brandId,
+          brandName: product.brandName,
+          name: product.name,
+          description: product.description,
+          image: _categoryPlaceholderImage(category),
+          rating: product.rating,
+          price: product.price,
+          currency: product.currency,
+          isFavorite: product.isFavorite,
+          isActive: product.isActive,
+        );
+      }).toList();
+
+      return right(products);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  String _categoryPlaceholderImage(String category) {
+    final catLower = category.toLowerCase();
+    if (catLower.contains('accessories')) {
+      return 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400';
+    }
+    if (catLower.contains('beauty')) {
+      return 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=400';
+    }
+    if (catLower.contains('fashion')) {
+      return 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=400';
+    }
+    if (catLower.contains('home decor') || catLower.contains('decor')) {
+      return 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=400';
+    }
+    if (catLower.contains('handicraft')) {
+      return 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=400';
+    }
+    return 'https://placehold.co/300x300/png';
   }
 }

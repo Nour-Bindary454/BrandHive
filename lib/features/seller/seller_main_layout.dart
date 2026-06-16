@@ -37,6 +37,8 @@ class SellerMainLayout extends StatelessWidget {
           ..getProducts()
           ..getOrders()
           ..getStockAlerts()
+          ..getAnalytics()
+          ..getProductInsights()
           ..loadCategories()),
       ],
       child: BlocBuilder<LayoutCubit, int>(

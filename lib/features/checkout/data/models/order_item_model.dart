@@ -29,11 +29,7 @@ class OrderItemModel {
     }
 
     return OrderItemModel(
-<<<<<<< HEAD
-      product: json['product'] is Map ? json['product']['_id'] ?? '' : json['product'] ?? '',
-=======
       product: productId,
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
       productName: json['productName'] ?? '',
       productImage: json['productImage'] ?? '',
       sku: json['sku'],

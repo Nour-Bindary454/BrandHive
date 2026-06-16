@@ -18,11 +18,15 @@ import 'package:brand/core/sharedWidgets/basic_text.dart';
 class CheckoutScreen extends StatefulWidget {
   final List<OrderItemModel> items;
   final double subtotal;
+  final String? couponCode;
+  final double couponDiscount;
 
   const CheckoutScreen({
     super.key,
     required this.items,
     required this.subtotal,
+    this.couponCode,
+    this.couponDiscount = 0,
   });
 
   @override
@@ -50,7 +54,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return BlocProvider(
       create: (context) =>
           sl<CheckoutCubit>()
-            ..initCheckout(items: widget.items, subtotal: widget.subtotal),
+            ..initCheckout(
+              items: widget.items,
+              subtotal: widget.subtotal,
+              couponCode: widget.couponCode,
+              couponDiscount: widget.couponDiscount,
+            ),
       child: BlocConsumer<CheckoutCubit, CheckoutState>(
         listenWhen: (prev, curr) {
           // Only re-evaluate when loading stops or result appears

@@ -37,7 +37,7 @@ class EndPoints {
   static String deactivateBrand(String id) => "brand/$id/deactivate";
   static String brandAction(String id) => "brand/$id";
   static String support = "support";
-<<<<<<< HEAD
+
 
   // Seller Endpoints
   static const String sellerDashboard = "seller/dashboard";
@@ -56,11 +56,20 @@ class EndPoints {
   static const String notifyFollowers = "seller/bazaar/notify";
   static const String adminAllBazaars = "seller/bazaar/admin/all";
   static String toggleBazaar(String id) => "seller/bazaar/admin/$id/toggle";
-=======
+
   static String similarProducts(String id) => "product/similar/$id";
   static String productReviews(String id) => "reviews/product/$id";
   static String trackEvent = "product/behavioral/track";
   static const String productRecommendations = "product/recommendations";
   static const String behavioralRecommend = "product/behavioral/recommend";
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+  static const String cartCrossSell = "product/cart/cross-sell";
+  static const String productInsights = "api/insights/products";
+
+  // Coupon Endpoints
+  static const String coupons = "coupons";
+  static const String couponsAdminAll = "coupons/admin/all";
+  static const String couponsValidate = "coupons/validate";
+  static String couponAdminDetail(String id) => "coupons/admin/$id";
+  static String couponById(String id) => "coupons/$id";
+
 }

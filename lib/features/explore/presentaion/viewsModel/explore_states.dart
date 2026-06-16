@@ -11,11 +11,7 @@ class ExploreState {
   final String category;
   final String minPrice;
   final String maxPrice;
-<<<<<<< HEAD
-  final String shipping;
-=======
   final String selectedShipping;
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
   final List<CategoryModel> categories;
   final List<Product> trendingProducts;
 
@@ -29,11 +25,7 @@ class ExploreState {
     this.category = 'All',
     this.minPrice = '',
     this.maxPrice = '',
-<<<<<<< HEAD
-    this.shipping = 'All',
-=======
     this.selectedShipping = 'All',
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
     this.categories = const [],
     this.trendingProducts = const [],
   });
@@ -48,11 +40,7 @@ class ExploreState {
     String? category,
     String? minPrice,
     String? maxPrice,
-<<<<<<< HEAD
-    String? shipping,
-=======
     String? selectedShipping,
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
     List<CategoryModel>? categories,
     List<Product>? trendingProducts,
   }) {
@@ -66,14 +54,9 @@ class ExploreState {
       category: category ?? this.category,
       minPrice: minPrice ?? this.minPrice,
       maxPrice: maxPrice ?? this.maxPrice,
-<<<<<<< HEAD
-      shipping: shipping ?? this.shipping,
-=======
       selectedShipping: selectedShipping ?? this.selectedShipping,
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
       categories: categories ?? this.categories,
       trendingProducts: trendingProducts ?? this.trendingProducts,
     );
   }
 }
-

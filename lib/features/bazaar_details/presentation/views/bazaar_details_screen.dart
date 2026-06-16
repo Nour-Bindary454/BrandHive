@@ -236,7 +236,7 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
   Widget _buildDateCard(UpcomingDateModel date) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),

@@ -174,6 +174,12 @@ class SellerRepositoryImpl implements SellerRepository {
   }
 
   @override
+  Future<ProductInsightsData> getProductInsights() async {
+    final response = await _api.getData(endPoint: EndPoints.productInsights);
+    return ProductInsightsData.fromJson(response.data);
+  }
+
+  @override
   Future<List<SellerReviewModel>> getReviews() async {
     final response = await _api.getData(endPoint: EndPoints.sellerReviews);
     final List<dynamic> list = response.data['data'] ?? response.data ?? [];

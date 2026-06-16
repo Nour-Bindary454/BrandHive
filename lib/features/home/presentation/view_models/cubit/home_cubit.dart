@@ -33,16 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
         greeting: greeting,
       );
 
-      /// 2. BANNER
-      final banner = BannerModel(
-        id: '1',
-        label: 'New Arrival',
-        title: 'ramadan_collection'.tr(),
-        subtitle: 'handcrafted_lanterns_decor'.tr(),
-        imageUrl: 'https://placehold.co/1000x500/png',
-      );
-
-      /// 3. CATEGORIES (from API)
+      /// 2. CATEGORIES (from API)
       List<CategoryModel> categories = [];
       final categoryResult = await sl<HomeRepository>().getAllCategories();
       categoryResult.fold(
@@ -212,7 +203,6 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           isLoading: false,
           user: user,
-          banner: banner,
           categories: categories,
           events: events,
           brands: allBrands,

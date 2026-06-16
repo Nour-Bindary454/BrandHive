@@ -1,3 +1,4 @@
+import 'package:brand/core/services/service_locator.dart';
 import 'package:brand/core/sharedWidgets/cus_search_bar.dart';
 import 'package:brand/features/category/presentation/views/category_view.dart';
 import 'package:brand/features/home/presentation/views/search_results_screen.dart';
@@ -5,6 +6,9 @@ import 'package:brand/features/home/presentation/views/widgets/top_local_brands_
 import 'package:brand/features/home/presentation/views/all_brands_screen.dart';
 import 'package:brand/features/home/presentation/views/all_products_screen.dart';
 import 'package:brand/features/brand_profile/data/models/product_model.dart';
+import 'package:brand/features/newArrivals/presentation/viewModel/new_arrivals_cubit.dart';
+import 'package:brand/features/newArrivals/presentation/viewModel/new_arrivals_states.dart';
+import 'package:brand/features/newArrivals/presentation/views/new_arrivals_screen.dart';
 import 'package:brand/features/product_details/presentation/views/product_details_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +25,7 @@ import 'widgets/home_hero_banner.dart';
 import 'widgets/categories_section.dart';
 import 'widgets/bazaars_events_section.dart';
 import 'widgets/bazaar_section.dart';
+import 'package:brand/features/bazaar/presentation/views/all_bazaars_screen.dart';
 
 import 'widgets/home_shimmer_loading.dart';
 import 'widgets/recommended_for_you_section.dart';
@@ -34,10 +39,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _newArrivalsCubit = sl<NewArrivalsCubit>();
+
   @override
   void initState() {
     super.initState();
     context.read<HomeCubit>().loadHomeData();
+    _newArrivalsCubit.getNewArrivals();
   }
 
   @override
@@ -65,7 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
             /// ✅ Success UI
             return RefreshIndicator(
               onRefresh: () async {
-                context.read<HomeCubit>().loadHomeData(isRefresh: true);
+                await Future.wait([
+                  context.read<HomeCubit>().loadHomeData(isRefresh: true),
+                  _newArrivalsCubit.getNewArrivals(forceRefresh: true),
+                ]);
               },
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(
@@ -108,14 +119,81 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(height: 20.h),
 
-                        /// 3. Banner
-                        if (state.banner != null) ...[
-                          HomeHeroBanner(
-                            banner: state.banner!,
-                            onShopNowTap: () {},
-                          ),
-                          SizedBox(height: 20.h),
-                        ],
+                        /// 3. New Arrival Banner
+                        BlocBuilder<NewArrivalsCubit, NewArrivalsState>(
+                          bloc: _newArrivalsCubit,
+                          builder: (context, newArrivalsState) {
+                            final products = _newArrivalsCubit.products;
+
+                            if (newArrivalsState is NewArrivalsLoading &&
+                                products.isEmpty) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: 200.h,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.h),
+                                ],
+                              );
+                            }
+
+                            if (products.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+
+                            final product = products.first;
+
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BlocProvider.value(
+                                          value: _newArrivalsCubit,
+                                          child: const NewArrivalsScreen(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: HomeHeroBanner(
+                                    product: product,
+                                    onShopNowTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductDetailsScreen(
+                                            product: Product(
+                                              id: product.id,
+                                              brandId: '',
+                                              brandName: product.brandName,
+                                              name: product.name,
+                                              description: product.description,
+                                              image: product.image,
+                                              rating: product.rating,
+                                              price: product.finalPrice > 0
+                                                  ? product.finalPrice
+                                                  : product.price,
+                                              currency: 'EGP',
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                              ],
+                            );
+                          },
+                        ),
 
                         SizedBox(height: 30.h),
 
@@ -141,13 +219,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: 32.h),
 
                         /// 5. Events
-                        if (state.events.isNotEmpty) ...[
-                          BazaarsEventsSection(
-                            events: state.events,
-                            onViewAllTap: () {},
-                          ),
-                          SizedBox(height: 32.h),
-                        ],
+                        // if (state.events.isNotEmpty) ...[
+                        //   BazaarsEventsSection(
+                        //     events: state.events,
+                        //     onViewAllTap: () {
+                        //       Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder: (context) => const AllBazaarsScreen(),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        //   SizedBox(height: 32.h),
+                        // ],
 
                         /// 7. Top Local Brands
                         if (state.brands.isNotEmpty) ...[
@@ -217,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         /// 8. Featured
                         if (state.featured.isNotEmpty) ...[
-                           FeaturedProductsSection(
+                          FeaturedProductsSection(
                             products: state.featured.take(10).toList(),
                             onViewAllTap: () {
                               Navigator.push(

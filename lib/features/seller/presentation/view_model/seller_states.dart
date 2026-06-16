@@ -101,6 +101,16 @@ class SellerAnalyticsFailure extends SellerState {
   SellerAnalyticsFailure(this.error);
 }
 
+class SellerProductInsightsLoading extends SellerState {}
+class SellerProductInsightsSuccess extends SellerState {
+  final ProductInsightsData data;
+  SellerProductInsightsSuccess(this.data);
+}
+class SellerProductInsightsFailure extends SellerState {
+  final String error;
+  SellerProductInsightsFailure(this.error);
+}
+
 class SellerReviewsLoading extends SellerState {}
 class SellerReviewsSuccess extends SellerState {
   final List<SellerReviewModel> reviews;

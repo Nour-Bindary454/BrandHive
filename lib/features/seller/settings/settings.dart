@@ -6,6 +6,7 @@ import 'package:brand/features/seller/settings/widgets/danger_zone.dart';
 import 'package:brand/features/seller/settings/widgets/legal_policies.dart';
 import 'package:brand/features/seller/settings/widgets/notification_preferences.dart';
 import 'package:brand/features/seller/settings/widgets/payment_info.dart';
+import 'package:brand/features/seller/settings/widgets/seller_coupons_section.dart';
 import 'package:brand/features/seller/settings/widgets/security.dart';
 import 'package:brand/features/seller/settings/widgets/store_info.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,8 @@ class _SettingsState extends State<Settings> {
               const StoreInfo(),
               const ContactInfo(),
               const PaymentInfo(),
+              const SellerCouponsSection(),
+              SizedBox(height: 20.h),
               const NotificationPreferences(),
               const Security(),
               const LegalPolicies(),

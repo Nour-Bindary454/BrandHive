@@ -16,6 +16,10 @@ import 'package:brand/features/bazaar/data/repository/bazaar_repository_impl.dar
 import 'package:brand/features/bazaar/domain/repository/bazaar_repository.dart';
 import 'package:brand/features/bazaar/presentation/cubit/bazaar_cubit.dart';
 
+import 'package:brand/features/coupon/data/repository/coupon_repository_impl.dart';
+import 'package:brand/features/coupon/domain/repository/coupon_repository.dart';
+import 'package:brand/features/coupon/presentation/cubit/coupon_cubit.dart';
+
 import 'package:brand/features/event/data/repository/event_repository_impl.dart';
 import 'package:brand/features/event/domain/repository/event_repository.dart';
 import 'package:brand/features/event/presentation/cubit/event_cubit.dart';
@@ -93,15 +97,14 @@ import '../../features/admin_dashboard/presentation/view_model/admin_cubit.dart'
 import '../../features/admin_dashboard/presentation/view_model/admin_support_cubit.dart';
 import '../../features/admin_dashboard/presentation/view_model/admin_notification_cubit.dart';
 import '../../features/checkout/presentation/viewmodels/checkout_cubit.dart';
-<<<<<<< HEAD
 import '../../features/address/presentation/viewmodels/address_cubit.dart';
-import '../../features/orders/presentation/viewmodels/orders_cubit.dart';
-=======
-import 'package:brand/features/product_details/presentation/view_model/similar_products_cubit.dart';
 import '../../features/orders/presentation/view_model/orders_cubit.dart';
 
+import 'package:brand/features/product_details/presentation/view_model/similar_products_cubit.dart';
+
+
 // ================= GetIt =================
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+
 
 // ================= GetIt =================
 final sl = GetIt.instance;
@@ -163,6 +166,7 @@ void setup() {
   sl.registerLazySingleton<BrandRequestRepo>(() => BrandRequestRepoImpl(sl()));
   sl.registerLazySingleton<SellerRepository>(() => SellerRepositoryImpl(sl()));
   sl.registerLazySingleton<BazaarRepository>(() => BazaarRepositoryImpl(sl()));
+  sl.registerLazySingleton<CouponRepository>(() => CouponRepositoryImpl(sl()));
   sl.registerLazySingleton<EventRepository>(() => EventRepositoryImpl(sl()));
 
   // ================= Data Sources =================
@@ -204,23 +208,23 @@ void setup() {
   sl.registerFactory(() => AdminCubit(sl()));
 
   sl.registerFactory(() => CheckoutCubit(sl()));
-<<<<<<< HEAD
-  sl.registerFactory(() => AddressCubit(sl()));
-  sl.registerFactory(() => OrdersCubit(sl()));
 
+  sl.registerFactory(() => AddressCubit(sl()));
+   sl.registerFactory(() => OrdersCubit(sl()));
   // ================= FIXED =================
-=======
-  sl.registerFactory(() => OrdersCubit(sl()));
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+
+
+
   sl.registerFactory(() => BrandRequestCubit(sl()));
   sl.registerFactory(() => SellerCubit(sl(), sl()));
   sl.registerFactory(() => SupportCubit(sl()));
   sl.registerFactory(() => AdminSupportCubit(sl()));
   sl.registerFactory(() => AdminNotificationCubit(sl()));
-<<<<<<< HEAD
+
   sl.registerFactory(() => BazaarCubit(sl()));
+  sl.registerFactory(() => CouponCubit(sl()));
   sl.registerFactory(() => EventCubit(sl()));
-=======
+
   sl.registerFactory(() => SimilarProductsCubit(sl()));
->>>>>>> b638b3040374aa6e62f93d89ede990324fbda31e
+
 }

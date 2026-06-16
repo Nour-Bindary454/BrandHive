@@ -56,13 +56,21 @@ class BazaarCubit extends Cubit<BazaarState> {
   }) async {
     emit(BazaarUpdateLoading());
     final body = {
+      'storeName': name,
       'name': name,
       'description': description,
       'address': address,
+      'phone': contactInfo,
       'contactInfo': contactInfo,
+      if (pickedBazaarImage != null) 'logo': pickedBazaarImage,
       if (pickedBazaarImage != null) 'image': pickedBazaarImage,
     };
-    final result = await _repo.updateBazaar(body);
+    
+    final isCreation = myBazaar == null;
+    final result = isCreation 
+        ? await _repo.createBazaar(body) 
+        : await _repo.updateBazaar(body);
+
     result.fold(
       (failure) {
         emit(BazaarUpdateFailure(failure.errMessage));
@@ -70,7 +78,12 @@ class BazaarCubit extends Cubit<BazaarState> {
       (bazaar) {
         myBazaar = bazaar;
         pickedBazaarImage = null;
-        emit(BazaarUpdateSuccess(bazaar, 'Bazaar updated successfully!'));
+        emit(BazaarUpdateSuccess(
+          bazaar, 
+          isCreation 
+              ? 'Bazaar request submitted, pending admin approval' 
+              : 'Bazaar updated successfully!',
+        ));
       },
     );
   }
@@ -148,6 +161,22 @@ class BazaarCubit extends Cubit<BazaarState> {
       },
       (_) {
         emit(BazaarToggleSuccess(id));
+      },
+    );
+  }
+
+  // Review Bazaar (Admin)
+  Future<void> reviewBazaar(String sellerId, String status, {String? rejectionReason}) async {
+    emit(BazaarReviewLoading());
+    final result = await _repo.reviewBazaar(sellerId, status, rejectionReason: rejectionReason);
+    result.fold(
+      (failure) {
+        emit(BazaarReviewFailure(failure.errMessage));
+      },
+      (_) {
+        emit(BazaarReviewSuccess(sellerId, status));
+        // Refresh the bazaars list
+        getBazaars(isRefresh: true);
       },
     );
   }

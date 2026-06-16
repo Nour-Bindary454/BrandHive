@@ -60,3 +60,15 @@ class BazaarToggleFailure extends BazaarState {
   final String message;
   BazaarToggleFailure(this.message);
 }
+
+// Review Bazaar (Admin)
+class BazaarReviewLoading extends BazaarState {}
+class BazaarReviewSuccess extends BazaarState {
+  final String sellerId;
+  final String status;
+  BazaarReviewSuccess(this.sellerId, this.status);
+}
+class BazaarReviewFailure extends BazaarState {
+  final String message;
+  BazaarReviewFailure(this.message);
+}

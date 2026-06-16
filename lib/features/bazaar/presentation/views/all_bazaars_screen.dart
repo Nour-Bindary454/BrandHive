@@ -134,7 +134,9 @@ class _AllBazaarsScreenState extends State<AllBazaarsScreen> {
                     );
                   }
 
-                  final bazaars = cubit.allBazaars;
+                  final bazaars = cubit.allBazaars
+                      .where((b) => b.status?.toLowerCase() == 'approved' || (b.isActive ?? false))
+                      .toList();
 
                   if (bazaars.isEmpty) {
                     return Center(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'viewmodel/cart_view_model.dart';
 import 'widgets/cart_item_widget.dart';
+import 'widgets/cross_sell_section.dart';
 import 'widgets/order_summary_widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -70,8 +71,11 @@ class CartScreen extends StatelessWidget {
                     horizontal: 20.w,
                     vertical: 16.h,
                   ),
-                  itemCount: viewModel.items.length,
+                  itemCount: viewModel.items.length + 1,
                   itemBuilder: (context, index) {
+                    if (index == viewModel.items.length) {
+                      return const CrossSellSection();
+                    }
                     final item = viewModel.items[index];
                     return CartItemWidget(item: item);
                   },
