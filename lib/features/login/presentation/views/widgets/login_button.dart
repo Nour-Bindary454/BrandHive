@@ -18,28 +18,32 @@ class LoginButton extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width * 0.7,
-      height: 44.h,
+      height: 48.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: const Color.fromARGB(255, 251, 251, 251)),
+            side: const BorderSide(color: Color.fromARGB(255, 251, 251, 251)),
             borderRadius: BorderRadius.circular(7.6.r),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(image, fit: BoxFit.cover),
-            SizedBox(width: 10.w),
-            BasicText(
-              text: text,
-              fontSize: 13.sp,
-              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
-              isBold: false,
-            ),
-          ],
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(image, fit: BoxFit.cover),
+              SizedBox(width: 10.w),
+              BasicText(
+                text: text,
+                fontSize: 13.sp,
+                color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                isBold: false,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -25,15 +25,12 @@ class BazaarDetailsViewModel extends ChangeNotifier {
       BazaarModel? realBazaar;
       if (bazaarId.length == 24) {
         final result = await sl<BazaarRepository>().searchBazaars('');
-        result.fold(
-          (_) {},
-          (list) {
-            final found = list.where((element) => element.id == bazaarId);
-            if (found.isNotEmpty) {
-              realBazaar = found.first;
-            }
-          },
-        );
+        result.fold((_) {}, (list) {
+          final found = list.where((element) => element.id == bazaarId);
+          if (found.isNotEmpty) {
+            realBazaar = found.first;
+          }
+        });
       }
 
       if (realBazaar != null) {
@@ -41,16 +38,16 @@ class BazaarDetailsViewModel extends ChangeNotifier {
           id: realBazaar!.id,
           title: realBazaar!.name,
           description: realBazaar!.description,
-          imageUrl: realBazaar!.imageUrl ?? 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=300&auto=format&fit=crop',
+          imageUrl:
+              realBazaar!.imageUrl ??
+              'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=300&auto=format&fit=crop',
           date: 'Dec 15-17',
           time: '10:00 AM - 10:00 PM',
           location: realBazaar!.address,
           phone: realBazaar!.contactInfo,
           whatsapp: realBazaar!.contactInfo,
           organizer: 'Organizer',
-          additionalDetails: [
-            'Free entry.',
-          ],
+          additionalDetails: ['Free entry.'],
           upcomingDates: [
             UpcomingDateModel(
               id: 'd1',
@@ -66,9 +63,7 @@ class BazaarDetailsViewModel extends ChangeNotifier {
               isFeatured: true,
             ),
           ],
-          eventHighlights: [
-            'Special Discounts',
-          ],
+          eventHighlights: ['Special Discounts'],
         );
       } else {
         // Fallback to local mock data

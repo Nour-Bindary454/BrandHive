@@ -53,7 +53,7 @@ class FollowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36.h,
+      height: 40.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -64,11 +64,14 @@ class FollowButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.r),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         ),
-        child: Text(
-          isFollowed ? 'Following' : 'Follow',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            isFollowed ? 'Following' : 'Follow',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp),
+          ),
         ),
       ),
     );

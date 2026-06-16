@@ -268,15 +268,15 @@ class _BazaarDetailsScreenState extends State<BazaarDetailsScreen> {
             ],
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
             decoration: BoxDecoration(
               color: const Color(0xFFFFECCC),
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: Row(
               children: [
-                Icon(Icons.calendar_month, size: 14.sp),
-                SizedBox(width: 4.w),
+                Icon(Icons.calendar_month, size: 12.sp),
+                SizedBox(width: 3.w),
                 BasicText(
                   text: date.status,
                   fontSize: 12.sp,
