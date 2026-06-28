@@ -92,11 +92,19 @@ Website:
 
 > https://lnkd.in/eYXSSDuz
 ## 📸 Screenshots
-)
+
 ### Authentication
-
-assets/screenshots/Screenshot 2026-06-28 035636.png
-
+![authentication](assets/screenshots/auth.png)
+### home
+![home](assets/screenshots/home.png)
+### track order
+![track order](assets/screenshots/order.png)
+### seller register
+![seller register](assets/screenshots/seller.png)
+### admin dashboard
+![admin](assets/screenshots/admin.png)
+### settings
+![settings and admin](assets/screenshots/settings.png)
 
 
 ---
