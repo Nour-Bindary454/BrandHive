@@ -78,17 +78,6 @@ BrandHive was created to support local Egyptian brands by providing a complete d
 
 ---
 
-## 👥 Team
-
-* Mai Khalid
-* Nour Hassan
-* Sarah Magdy
-* Mostafa Mahmoud
-* Ziad Tamer
-* Rahma *(Flutter Developer)*
-
----
-
 ## 🎨 UI/UX Design
 
 Figma Design:
@@ -99,14 +88,12 @@ Figma Design:
 
 ## 🌐 Live Demo
 
-
 Website:
 
-
-
 > https://lnkd.in/eYXSSDuz
-
-
+## 📸 Screenshots
+##auth
+![authentication](assets\screenshots\Screenshot 2026-06-28 035636.png)
 
 
 
