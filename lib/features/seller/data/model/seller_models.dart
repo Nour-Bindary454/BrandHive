@@ -141,7 +141,7 @@ class SellerProductModel {
       sku: json['sku'],
       tags: json['tags'] != null ? List<String>.from(json['tags']) : [],
       isActive: json['isActive'] ?? true,
-      rating: (json['rating'] ?? 0.0).toDouble(),
+      rating: (json['rating'] ?? (json['stats'] is Map ? json['stats']['averageRating'] : null) ?? 0.0).toDouble(),
       brandId: bId,
       brandName: bName,
     );

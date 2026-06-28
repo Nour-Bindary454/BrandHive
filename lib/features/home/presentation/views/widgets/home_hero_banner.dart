@@ -15,7 +15,7 @@ class HomeHeroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.h,
+      height: 220.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
@@ -36,16 +36,13 @@ class HomeHeroBanner extends StatelessWidget {
               Image.network(
                 product.image,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  color: Colors.grey.shade300,
-                ),
+                errorBuilder: (_, __, ___) =>
+                    Container(color: Colors.grey.shade300),
               )
             else
               Container(color: Colors.grey.shade300),
 
-            Container(
-              color: Colors.black.withOpacity(0.18),
-            ),
+            Container(color: Colors.black.withOpacity(0.18)),
 
             Container(
               decoration: BoxDecoration(

@@ -97,6 +97,7 @@ class SellerCubit extends Cubit<SellerState> {
       if (categories.isEmpty) {
         categories = await _brandRequestRepo.getCategories();
       }
+      _enrichProductsCategoryNames();
       emit(SellerCategoriesSuccess(categories));
     } catch (e) {
       print("[DEBUG] Categories API failed. Starting fallback. Products count: ${products.length}");
@@ -143,6 +144,7 @@ class SellerCubit extends Cubit<SellerState> {
       if (harvested.isNotEmpty) {
         categories = harvested.values.toList();
         print("[DEBUG] Harvested categories count: ${categories.length} (Names: ${categories.map((c) => c.name).join(', ')})");
+        _enrichProductsCategoryNames();
         emit(SellerCategoriesSuccess(categories));
       } else {
         print("[DEBUG] No categories harvested from any fallback. Emitting failure.");
@@ -170,6 +172,8 @@ class SellerCubit extends Cubit<SellerState> {
     emit(SellerProductsLoading());
     try {
       products = await _repo.getProducts();
+      _enrichProductsCategoryNames();
+      _enrichProductsBrandNames();
       emit(SellerProductsSuccess(products));
     } on DioException catch (e) {
       final failure = ServerFailure.fromDioError(e);
@@ -299,6 +303,8 @@ class SellerCubit extends Cubit<SellerState> {
         'price': price,
         'stock': stock,
         'category': categoryId,
+        'isActive': isActive,
+        if (costPrice != null) 'costPrice': costPrice,
         if (brandId != null) 'brand': brandId,
         if (sku != null) 'sku': sku,
         if (tags != null) 'tags': tags,
@@ -339,6 +345,8 @@ class SellerCubit extends Cubit<SellerState> {
         'price': price,
         'stock': stock,
         'category': categoryId,
+        'isActive': isActive,
+        if (costPrice != null) 'costPrice': costPrice,
         if (sku != null) 'sku': sku,
         if (tags != null) 'tags': tags,
         if (pickedImage != null) 'image': pickedImage,
@@ -502,6 +510,7 @@ class SellerCubit extends Cubit<SellerState> {
         final data = response.data['data'];
         if (data != null) {
           brand = BrandModel.fromJson(data is List ? data.first : data);
+          _enrichProductsBrandNames();
           emit(SellerBrandSuccess(brand));
           return;
         }
@@ -516,6 +525,7 @@ class SellerCubit extends Cubit<SellerState> {
         final data = response.data['data'];
         if (data != null) {
           brand = BrandModel.fromJson(data is List ? data.first : data);
+          _enrichProductsBrandNames();
           emit(SellerBrandSuccess(brand));
           return;
         }
@@ -530,6 +540,7 @@ class SellerCubit extends Cubit<SellerState> {
       );
       if (match != null) {
         brand = BrandModel.fromJson(match);
+        _enrichProductsBrandNames();
         emit(SellerBrandSuccess(brand));
       } else {
         brand = null;
@@ -574,6 +585,7 @@ class SellerCubit extends Cubit<SellerState> {
       brand = BrandModel.fromJson(data is List ? data.first : data);
       pickedBrandLogo = null;
       emit(SellerBrandActionSuccess('Brand created successfully!'));
+      _enrichProductsBrandNames();
       emit(SellerBrandSuccess(brand));
     } on DioException catch (e) {
       final failure = ServerFailure.fromDioError(e);
@@ -615,12 +627,73 @@ class SellerCubit extends Cubit<SellerState> {
       brand = BrandModel.fromJson(data is List ? data.first : data);
       pickedBrandLogo = null;
       emit(SellerBrandActionSuccess('Brand updated successfully!'));
+      _enrichProductsBrandNames();
       emit(SellerBrandSuccess(brand));
     } on DioException catch (e) {
       final failure = ServerFailure.fromDioError(e);
       emit(SellerBrandFailure(failure.errMessage));
     } catch (e) {
       emit(SellerBrandFailure(e.toString()));
+    }
+  }
+
+  void _enrichProductsCategoryNames() {
+    if (categories.isEmpty || products.isEmpty) return;
+    for (int i = 0; i < products.length; i++) {
+      final p = products[i];
+      if (p.categoryName.isEmpty && p.categoryId.isNotEmpty) {
+        final cat = categories.firstWhere(
+          (c) => c.id == p.categoryId,
+          orElse: () => CategoryModel(id: '', name: ''),
+        );
+        if (cat.name.isNotEmpty) {
+          products[i] = SellerProductModel(
+            id: p.id,
+            name: p.name,
+            description: p.description,
+            price: p.price,
+            costPrice: p.costPrice,
+            stock: p.stock,
+            image: p.image,
+            images: p.images,
+            categoryId: p.categoryId,
+            categoryName: cat.name,
+            sku: p.sku,
+            tags: p.tags,
+            isActive: p.isActive,
+            rating: p.rating,
+            brandId: p.brandId,
+            brandName: p.brandName,
+          );
+        }
+      }
+    }
+  }
+
+  void _enrichProductsBrandNames() {
+    if (brand == null || products.isEmpty) return;
+    for (int i = 0; i < products.length; i++) {
+      final p = products[i];
+      if ((p.brandName == null || p.brandName!.isEmpty) && p.brandId == brand!.id) {
+        products[i] = SellerProductModel(
+          id: p.id,
+          name: p.name,
+          description: p.description,
+          price: p.price,
+          costPrice: p.costPrice,
+          stock: p.stock,
+          image: p.image,
+          images: p.images,
+          categoryId: p.categoryId,
+          categoryName: p.categoryName,
+          sku: p.sku,
+          tags: p.tags,
+          isActive: p.isActive,
+          rating: p.rating,
+          brandId: p.brandId,
+          brandName: brand!.name,
+        );
+      }
     }
   }
 }
