@@ -92,8 +92,10 @@ Website:
 
 > https://lnkd.in/eYXSSDuz
 ## 📸 Screenshots
+)
+### Authentication
 
-![authentication](assets\screenshots\Screenshot 2026-06-28 035636.png)
+![authentication](assets\screenshots\Screenshot 2026-06-28 035636.png).
 
 
 
