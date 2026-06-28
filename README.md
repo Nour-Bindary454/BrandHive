@@ -87,10 +87,13 @@ Figma Design:
 ---
 
 ## 🌐 Live Demo
+linkedin:
+>https://www.linkedin.com/posts/rahma-mahmoud-383287247_graduationproject-softwareengineering-flutterdeveloper-ugcPost-7474435678538301441-Kl4m/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0WQVMBU5f8JbzBbdXOqaLkdNroa6X4eHE
 
 Website:
 
 > https://lnkd.in/eYXSSDuz
+>
 ## 📸 Screenshots
 
 ### Authentication
