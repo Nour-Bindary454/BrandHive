@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class ItemsOrderedCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
@@ -20,7 +21,7 @@ class ItemsOrderedCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'ITEMS ORDERED',
+            text: 'items_ordered'.tr(),
             fontSize: 12,
             color: Colors.grey.shade600,
             isBold: true,
@@ -62,7 +63,7 @@ class ItemsOrderedCard extends StatelessWidget {
                         ),
                         SizedBox(height: 4.h),
                         BasicText(
-                          text: 'Qty: 1',
+                          text: 'qty_1'.tr(),
                           fontSize: 12,
                           color: Colors.grey.shade700,
                           isBold: false,

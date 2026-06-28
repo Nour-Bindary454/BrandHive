@@ -8,7 +8,7 @@ class BasicText extends StatelessWidget {
     required this.color,
     required this.isBold,
     this.textAlign,
-    this.fontFamily,
+    this.fontFamily = 'Poppins',
   });
   final String text;
   final double fontSize;

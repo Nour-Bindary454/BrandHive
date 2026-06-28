@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,13 +14,13 @@ class PendingActionButtons extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 10.h),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(8.r),
               border: Border.all(color: Colors.red.shade400),
             ),
             alignment: Alignment.center,
             child: BasicText(
-              text: 'Decline',
+              text: 'decline'.tr(),
               fontSize: 12,
               color: Colors.red.shade400,
               isBold: true,
@@ -36,7 +37,7 @@ class PendingActionButtons extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: BasicText(
-              text: 'Accept Order',
+              text: 'accept_order'.tr(),
               fontSize: 12,
               color: Colors.white,
               isBold: true,

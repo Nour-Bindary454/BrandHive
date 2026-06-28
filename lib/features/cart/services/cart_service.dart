@@ -1,4 +1,5 @@
 import '../data/model/cart_item_model.dart';
+import '../data/model/cart_response_model.dart';
 import '../data/repository/cart_repository.dart';
 
 class CartService {
@@ -6,21 +7,34 @@ class CartService {
 
   CartService(this._repository);
 
-  Future<List<CartItemModel>> fetchCartItems() async {
+  Future<CartDataModel> fetchCartItems() async {
     return await _repository.getCartItems();
   }
 
-  Future<void> addItemToCart(CartItemModel item) async {
-    await _repository.addToCart(item);
+  Future<CartDataModel> addItemToCart(
+    String productId, {
+    int quantity = 1,
+  }) async {
+    return await _repository.addToCart(productId, quantity: quantity);
   }
 
-  Future<void> removeItemFromCart(String productId) async {
-    await _repository.removeFromCart(productId);
+  Future<CartDataModel> removeItemFromCart(String productId) async {
+    print('REMOVE PRODUCT ID => $productId');
+
+    return await _repository.removeFromCart(productId);
   }
 
-  Future<void> updateItemQuantity(String productId, int newQuantity) async {
-    if (newQuantity < 1) return; // Enforce UI rule in business logic
-    await _repository.updateQuantity(productId, newQuantity);
+  Future<CartDataModel> updateItemQuantity(
+    String productId,
+    int newQuantity,
+  ) async {
+    print('UPDATE PRODUCT ID => $productId');
+
+    if (newQuantity < 1) {
+      return await fetchCartItems();
+    }
+
+    return await _repository.updateQuantity(productId, newQuantity);
   }
 
   Future<bool> processCheckout(List<CartItemModel> items, double total) async {

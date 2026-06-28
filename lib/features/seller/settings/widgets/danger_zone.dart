@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class DangerZone extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Danger Zone',
+            text: 'danger_zone'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,
@@ -23,7 +24,7 @@ class DangerZone extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               border: Border.all(color: Colors.red.shade200),
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -39,7 +40,7 @@ class DangerZone extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     BasicText(
-                      text: 'Deactivate Store',
+                      text: 'deactivate_store'.tr(),
                       fontSize: 11,
                       color: Colors.red.shade400,
                       isBold: true,
@@ -56,8 +57,7 @@ class DangerZone extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           BasicText(
-            text:
-                'Deactivating your store will hide all products from customers but keep your data intact.',
+            text: 'deactivating_your_store_will_hide_all_products_from_customers_but_keep_your_data_intact'.tr(),
             fontSize: 10,
             color: Colors.grey.shade500,
             isBold: false,

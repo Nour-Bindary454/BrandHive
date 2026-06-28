@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class StoreAnalytics extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Store Analytics',
+            text: 'store_analytics'.tr(),
             fontSize: 16,
             color: const Color(0xFF0F172A),
             isBold: true,
@@ -24,6 +25,7 @@ class StoreAnalytics extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildAnalyticBox(
+                  context,
                   ImageIcon(
                     AssetImage(PngImages.people),
                     color: const Color(0xFF5384DB),
@@ -36,6 +38,7 @@ class StoreAnalytics extends StatelessWidget {
               SizedBox(width: 10.w),
               Expanded(
                 child: _buildAnalyticBox(
+                  context,
                   ImageIcon(
                     AssetImage(PngImages.products),
                     color: const Color(0xFF5384DB),
@@ -48,6 +51,7 @@ class StoreAnalytics extends StatelessWidget {
               SizedBox(width: 10.w),
               Expanded(
                 child: _buildAnalyticBox(
+                  context,
                   ImageIcon(
                     AssetImage(PngImages.dollar),
                     color: const Color(0xFFF5A623),
@@ -64,11 +68,11 @@ class StoreAnalytics extends StatelessWidget {
     );
   }
 
-  Widget _buildAnalyticBox(Widget iconWidget, String value, String label) {
+  Widget _buildAnalyticBox(BuildContext context, Widget iconWidget, String value, String label) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade200),
       ),

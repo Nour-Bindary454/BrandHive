@@ -36,7 +36,7 @@ class LoginButton extends StatelessWidget {
             BasicText(
               text: text,
               fontSize: 13.sp,
-              color: Colors.black,
+              color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
               isBold: false,
             ),
           ],

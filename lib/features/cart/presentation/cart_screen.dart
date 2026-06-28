@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../../core/sharedWidgets/basic_colors.dart';
 import 'viewmodel/cart_view_model.dart';
 import 'widgets/cart_item_widget.dart';
 import 'widgets/order_summary_widget.dart';
@@ -20,7 +19,10 @@ class CartScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: BasicColors.black),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -28,7 +30,7 @@ class CartScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
-            color: BasicColors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
           ),
         ),
       ),
@@ -75,7 +77,7 @@ class CartScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const OrderSummaryWidget(),
+              OrderSummaryWidget(),
             ],
           );
         },

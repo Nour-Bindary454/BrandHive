@@ -1,11 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TopLocalBrandsSection extends StatelessWidget {
-  final List<HomeBrand> brands;
+  final List<BrandModel> brands;
   final VoidCallback onViewAllTap;
-  final Function(String id) onBrandTap;
+  final Function(BrandModel brand) onBrandTap;
 
   const TopLocalBrandsSection({
     super.key,
@@ -23,23 +24,23 @@ class TopLocalBrandsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Top Local Brands',
+              'top_local_brands'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B), // Dark slate
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             TextButton(
               onPressed: onViewAllTap,
               child: Text(
-                'View All',
+                'view_all'.tr(),
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A78B8),
+                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -47,7 +48,7 @@ class TopLocalBrandsSection extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         SizedBox(
-          height: 140.h, // Container for cards
+          height: 160.h, // Container for cards
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: brands.length,
@@ -55,102 +56,109 @@ class TopLocalBrandsSection extends StatelessWidget {
             itemBuilder: (context, index) {
               final brand = brands[index];
               return InkWell(
-                onTap: () => onBrandTap(brand.id),
-                borderRadius: BorderRadius.circular(16.r),
+                onTap: () => onBrandTap(brand),
+                // borderRadius: BorderRadius.circular(16.r),
                 child: SizedBox(
-                  width: 120.w,
+                  width: 85.w,
                   child: Column(
                     children: [
                       // Image and logo stack
-                      SizedBox(
-                        height: 90.h,
-                        width: 120.w,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              height: 80.h,
-                              margin: EdgeInsets.only(bottom: 15.h),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        // alignment: Alignment.bottomCenter,
+                        children: [
+                          CircleAvatar(
+                            radius: 40.r,
+                            backgroundImage: NetworkImage(brand.logoUrl),
+                            child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.r),
-                                image: DecorationImage(
-                                  image: NetworkImage(brand.coverImageUrl),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 4.r,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.black.withOpacity(0.3),
-                                      Colors.transparent,
-                                    ],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Small Circular Logo overlapping bottom edge
-                            Container(
-                              width: 30.w,
-                              height: 30.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
+                                shape: BoxShape.circle, // Make it circular
                                 border: Border.all(
-                                  color: Colors.white,
+                                  color: Theme.of(context).cardColor,
                                   width: 2.w,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color:
+                                        (Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color ??
+                                                Colors.black)
+                                            .withOpacity(0.1),
                                     blurRadius: 4.r,
                                     offset: Offset(0, 2),
                                   ),
                                 ],
                               ),
+                            ),
+                          ),
+
+                          // Small Circular Logo overlapping bottom edge
+                          Positioned(
+                            bottom: -12.h,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              width: 30.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Theme.of(context).cardColor,
+                                  width: 2.w,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        (Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color ??
+                                                Colors.black)
+                                            .withOpacity(0.1),
+                                    blurRadius: 4.r,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+
                               child: Center(
                                 child: Text(
-                                  brand.logoText,
+                                  brand.name.isNotEmpty
+                                      ? brand.name[0].toUpperCase()
+                                      : '',
                                   style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.black87,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 6.h),
+                      SizedBox(height: 15.h),
                       Text(
                         brand.name,
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        brand.category,
+                        brand.description,
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w100,
-                          color: Colors.grey[700],
+                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

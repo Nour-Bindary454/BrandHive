@@ -1,13 +1,16 @@
-import 'package:brand/features/seller/seller_main_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../viewmodels/profile_viewmodel.dart';
 import 'widgets/profile_header.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
 import 'widgets/seller_mode_card.dart';
 import 'widgets/stats_row.dart';
 import 'widgets/menu_list_section.dart';
 import 'widgets/sign_out_button.dart';
 import '../../../../core/sharedWidgets/basic_text.dart';
+import '../../../../core/services/cache_helper.dart';
+import '../../../../core/utils/toast/toast.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -34,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), // Light grey background
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: AnimatedBuilder(
           animation: _viewModel,
@@ -74,14 +77,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   // Seller Mode Banner
                   SellerModeCard(
-                    onTap: () {
-                      // Navigate to seller mode
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerMainLayout(),
-                        ),
-                      );
+                    onTap: () async {
+                      try {
+                        await context.read<NotificationsCubit>().fetchNotifications(forceRefresh: true);
+                      } catch (_) {}
+
+                      final String? role = CacheHelper.getData(key: 'role');
+                      if (role?.toLowerCase() == 'seller') {
+                        Navigator.pushNamedAndRemoveUntil(context, '/sellerLayout', (route) => false);
+                        return;
+                      }
+
+                      final userId = CacheHelper.getData(key: 'id') ?? '';
+                      final Object isPending =
+                          CacheHelper.getData(key: 'brand_request_pending_$userId') ??
+                          false;
+
+                      if (isPending == 'true') {
+                        Toast.showInfoToast(
+                          msg: 'Your request is currently pending approval',
+                          context: context,
+                        );
+                        return;
+                      }
+
+                      // Navigate to seller registration
+                      Navigator.pushNamed(context, '/sellerRegistration');
                     },
                   ),
                   SizedBox(height: 24.h),
@@ -95,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 32.h),
 
                   // Sign Out Button
-                  SignOutButton(onTap: () => _viewModel.signOut()),
+                  SignOutButton(onTap: () => _viewModel.signOut(context)),
                   SizedBox(height: 24.h),
                 ],
               ),

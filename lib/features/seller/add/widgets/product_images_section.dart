@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -14,7 +15,7 @@ class ProductImagesSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Product Images',
+            text: 'product_images'.tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
@@ -24,7 +25,7 @@ class ProductImagesSection extends StatelessWidget {
             height: 90.h,
             width: 90.w,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: Colors.grey.shade300, width: 1.5),
             ),
@@ -38,7 +39,7 @@ class ProductImagesSection extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 BasicText(
-                  text: 'Add Photo',
+                  text: 'add_photo'.tr(),
                   fontSize: 10,
                   color: Colors.grey.shade500,
                   isBold: false,
@@ -48,7 +49,7 @@ class ProductImagesSection extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           BasicText(
-            text: 'Upload up to 5 photos (recommended: 800x800px)',
+            text: 'upload_up_to_5_photos_recommended_800x800px'.tr(),
             fontSize: 10,
             color: Colors.grey.shade500,
             isBold: false,

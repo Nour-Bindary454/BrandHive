@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/add/widgets/add_product_text_field.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -21,7 +22,7 @@ class _ShippingInfoSectionState extends State<ShippingInfoSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Shipping Information',
+            text: 'shipping_information'.tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
@@ -30,26 +31,26 @@ class _ShippingInfoSectionState extends State<ShippingInfoSection> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: AddProductTextField(
                   label: 'Weight (Kg) *',
-                  hintText: '2.5',
+                  hintText: '2_5'.tr(),
                   keyboardType: TextInputType.number,
                 ),
               ),
               SizedBox(width: 10.w),
-              const Expanded(
+              Expanded(
                 child: AddProductTextField(
                   label: 'Length (cm) *',
-                  hintText: '100',
+                  hintText: '100'.tr(),
                   keyboardType: TextInputType.number,
                 ),
               ),
               SizedBox(width: 10.w),
-              const Expanded(
+              Expanded(
                 child: AddProductTextField(
                   label: 'Width (cm) *',
-                  hintText: '80',
+                  hintText: '80'.tr(),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -83,7 +84,7 @@ class _ShippingInfoSectionState extends State<ShippingInfoSection> {
                   ),
                   SizedBox(width: 10.w),
                   BasicText(
-                    text: 'Free Shipping Available',
+                    text: 'free_shipping_available'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF0F172A),
                     isBold: true,

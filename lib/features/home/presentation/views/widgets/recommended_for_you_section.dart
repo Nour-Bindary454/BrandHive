@@ -1,7 +1,8 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 
 class RecommendedForYouSection extends StatelessWidget {
   final List<HomeProduct> products;
@@ -26,12 +27,12 @@ class RecommendedForYouSection extends StatelessWidget {
             Icon(Icons.star),
             SizedBox(width: 8.w),
             Text(
-              'Recommended for You',
+              'recommended_for_you'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
@@ -53,11 +54,11 @@ class RecommendedForYouSection extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.08),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.08),
                         blurRadius: 10.r,
                         offset: const Offset(0, 4),
                       ),
@@ -90,7 +91,7 @@ class RecommendedForYouSection extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w700,
-                                color: const Color.fromARGB(255, 88, 123, 160),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             SizedBox(height: 4.h),
@@ -100,7 +101,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
-                                color: BasicColors.black,
+                                  color: Theme.of(context).colorScheme.onSurface,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -126,12 +127,7 @@ class RecommendedForYouSection extends StatelessWidget {
                                   child: Text(
                                     '${product.matchPercentage}% Match',
                                     style: TextStyle(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        54,
-                                        123,
-                                        57,
-                                      ),
+                                        color: Colors.green,
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -149,21 +145,16 @@ class RecommendedForYouSection extends StatelessWidget {
                                         fontFamily: 'Poppins',
                                         fontSize: 17.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Colors.black,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(width: 2.w),
                                     Text(
-                                      'EGP',
+                                      'egp'.tr(),
                                       style: TextStyle(
                                         fontSize: 11.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: const Color.fromARGB(
-                                          255,
-                                          124,
-                                          123,
-                                          123,
-                                        ),
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                       ),
                                     ),
                                   ],
@@ -176,17 +167,17 @@ class RecommendedForYouSection extends StatelessWidget {
 
                       SizedBox(width: 12.w),
 
-                      // 🔸 Star
+                      // 🔸 Favorite Button
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.grey.shade300),
+                          border: Border.all(color: Theme.of(context).dividerColor),
                         ),
-                        padding: EdgeInsets.all(5.r),
-                        child: Icon(
-                          Icons.star_border,
+                        child: FavoriteButton(
+                          productId: product.id,
+                          initialIsFavorite: false,
                           size: 18.sp,
-                          color: Colors.black54,
+                          padding: EdgeInsets.all(5.r),
                         ),
                       ),
                     ],
@@ -204,12 +195,12 @@ class RecommendedForYouSection extends StatelessWidget {
           child: InkWell(
             onTap: onViewMoreTap,
             child: Text(
-              'View more recommendations',
+              'view_all'.tr(),
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
               ),
             ),
           ),

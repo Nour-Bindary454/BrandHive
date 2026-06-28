@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:brand/core/utils/appImages/png_images.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,10 +13,21 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/onboarding');
+    Timer(const Duration(seconds: 2), () {
+      final token = CacheHelper.getData(key: 'token');
+      if (token != null && token.isNotEmpty) {
+        final role = CacheHelper.getData(key: 'role');
+        if (role?.toLowerCase() == 'seller') {
+          Navigator.pushReplacementNamed(context, '/sellerLayout');
+        } else {
+          Navigator.pushReplacementNamed(context, '/mainlayout');
+        }
+      } else {
+        Navigator.pushReplacementNamed(context, '/onboarding');
+      }
     });
   }
 
@@ -25,17 +37,14 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            width: mediaQuery.size.width,
-            height: mediaQuery.size.height,
-            color: Colors.white,
-          ),
+          Positioned.fill(child: Container(color: Colors.white)),
           Positioned(
             top: 0,
             right: 0,
             child: Image.asset(
               PngImages.frametop,
-              width: mediaQuery.size.width * 0.69,
+              width: mediaQuery.size.width * 0.7,
+              fit: BoxFit.cover,
             ),
           ),
           Positioned(
@@ -43,14 +52,11 @@ class _SplashState extends State<Splash> {
             left: 0,
             child: Image.asset(
               PngImages.framebottom,
-              width: mediaQuery.size.width * 0.95,
+              width: mediaQuery.size.width,
+              fit: BoxFit.cover,
             ),
           ),
-          Center(
-            child: Image.asset(
-              PngImages.logo,
-            ),
-          ),
+          Center(child: Image.asset(PngImages.logo, width: 260)),
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/sharedWidgets/basic_colors.dart';
 import '../../data/model/cart_item_model.dart';
 import '../viewmodel/cart_view_model.dart';
 
@@ -16,11 +15,11 @@ class CartItemWidget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -55,7 +54,7 @@ class CartItemWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
-                          color: BasicColors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -63,11 +62,14 @@ class CartItemWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     GestureDetector(
-                      onTap: () =>
-                          context.read<CartViewModel>().removeItem(item.id),
+                      onTap: () => context.read<CartViewModel>().removeItem(
+                        item.productId,
+                      ),
                       child: Icon(
                         Icons.delete_outline,
-                        color: Colors.grey,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.6),
                         size: 20.sp,
                       ),
                     ),
@@ -78,7 +80,9 @@ class CartItemWidget extends StatelessWidget {
                   item.brand,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: Colors.grey,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -91,7 +95,7 @@ class CartItemWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w800,
-                        color: BasicColors.buttonColorDark,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     _buildQuantityControls(context),
@@ -109,10 +113,11 @@ class CartItemWidget extends StatelessWidget {
     return Row(
       children: [
         _buildControlButton(
+          context,
           icon: Icons.remove,
           onTap: item.quantity > 1
               ? () => context.read<CartViewModel>().updateQuantity(
-                  item.id,
+                  item.productId,
                   item.quantity - 1,
                 )
               : null,
@@ -123,14 +128,15 @@ class CartItemWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
-            color: BasicColors.black,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         SizedBox(width: 12.w),
         _buildControlButton(
+          context,
           icon: Icons.add,
           onTap: () => context.read<CartViewModel>().updateQuantity(
-            item.id,
+            item.productId,
             item.quantity + 1,
           ),
         ),
@@ -138,7 +144,11 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildControlButton({required IconData icon, VoidCallback? onTap}) {
+  Widget _buildControlButton(
+    BuildContext context, {
+    required IconData icon,
+    VoidCallback? onTap,
+  }) {
     final bool isEnabled = onTap != null;
     return GestureDetector(
       onTap: onTap,
@@ -148,14 +158,16 @@ class CartItemWidget extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(
             color: isEnabled
-                ? Colors.grey.withOpacity(0.3)
+                ? Theme.of(context).dividerColor
                 : Colors.transparent,
           ),
         ),
         child: Icon(
           icon,
           size: 16.sp,
-          color: isEnabled ? BasicColors.black : Colors.grey.withOpacity(0.3),
+          color: isEnabled
+              ? Theme.of(context).colorScheme.onSurface
+              : Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
         ),
       ),
     );

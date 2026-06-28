@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
@@ -42,7 +43,7 @@ class Welcome extends StatelessWidget {
                 Image.asset(PngImages.logo2),
                 SizedBox(height: 30.h),
                 BasicText(
-                  text: 'Welcome !',
+                  text: 'welcome'.tr(),
                   fontSize: 35.sp,
                   isBold: true,
                   color: Colors.white,
@@ -64,7 +65,7 @@ class Welcome extends StatelessWidget {
                     ),
                   ),
                   child: BasicText(
-                    text: 'Sign in',
+                    text: 'sign_in'.tr(),
                     fontSize: 17.sp,
                     isBold: false,
                     color: Colors.white,
@@ -75,7 +76,7 @@ class Welcome extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/signup');
                   },
-                  text: 'Sign up',
+                  text: 'sign_up'.tr(),
 
                   radius: 24,
                   colors: [BasicColors.buttonColorDark],

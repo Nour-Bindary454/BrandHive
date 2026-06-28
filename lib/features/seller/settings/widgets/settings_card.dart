@@ -14,7 +14,7 @@ class SettingsCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: borderColor ?? Colors.grey.shade200),
       ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/add/widgets/add_product_text_field.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
@@ -14,20 +15,20 @@ class ProductDetailsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Product Details',
+            text: 'product_details'.tr(),
             fontSize: 14,
             color: const Color(0xFF0F172A),
             isBold: true,
           ),
           SizedBox(height: 15.h),
-          const AddProductTextField(
+          AddProductTextField(
             label: 'Product Name *',
-            hintText: 'e.g., Handwoven Kilim Rug',
+            hintText: 'e_g_handwoven_kilim_rug'.tr(),
           ),
           SizedBox(height: 12.h),
-          const AddProductTextField(
+          AddProductTextField(
             label: 'Description *',
-            hintText: 'Describe your product in detail . mention material, dimension, care instruction, etc ..',
+            hintText: 'describe_your_product_in_detail_mention_material_dimension_care_instruction_etc'.tr(),
             maxLines: 4,
           ),
           SizedBox(height: 12.h),
@@ -37,15 +38,15 @@ class ProductDetailsSection extends StatelessWidget {
               Expanded(
                 child: AddProductTextField(
                   label: 'Category *',
-                  hintText: 'Fashion',
+                  hintText: 'fashion'.tr(),
                   suffixIcon: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade700),
                 ),
               ),
               SizedBox(width: 10.w),
-              const Expanded(
+              Expanded(
                 child: AddProductTextField(
                   label: 'SKU (Optional)',
-                  hintText: 'e.g., KLM-001',
+                  hintText: 'e_g_klm_001'.tr(),
                 ),
               ),
             ],

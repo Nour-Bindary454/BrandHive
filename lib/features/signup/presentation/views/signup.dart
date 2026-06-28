@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_button.dart';
 import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
@@ -41,10 +42,76 @@ class _SignupState extends State<Signup> {
             msg: state.registerModel.message.toString(),
             context: context,
           );
-          Navigator.pushReplacementNamed(context, '/mainlayout');
+          Navigator.pushReplacementNamed(
+            context,
+            '/interests',
+            arguments: emailController.text.trim(),
+          );
         }
         if (state is SignUpError) {
-          Toast.showErrorToast(msg: state.message.toString(), context: context);
+          final errMsg = state.message.toString();
+          final errLower = errMsg.toLowerCase();
+          
+          if (errLower.contains("already in use") || 
+              errLower.contains("already exists") || 
+              errLower.contains("duplicate") ||
+              errLower.contains("registered")) {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+                title: Text(
+                  "Email Already In Use",
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.sp,
+                  ),
+                ),
+                content: Text(
+                  "This email is already registered. If you signed up but haven't verified your account yet, you can go to the verification screen.",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 13.sp,
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                      Navigator.pushNamed(
+                        context,
+                        '/verify',
+                        arguments: emailController.text.trim(),
+                      );
+                    },
+                    child: Text(
+                      "Verify Now",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            Toast.showErrorToast(msg: errMsg, context: context);
+          }
         }
       },
       child: BlocBuilder<RegisterCubit, RegisterStates>(
@@ -56,76 +123,75 @@ class _SignupState extends State<Signup> {
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.width * 0.085,
               ),
-              child: Column(
-                children: [
-                  BasicTextField(
-                    label: 'Full Name',
-                    hint: 'Enter your full name',
-                    controller: fullNameController,
-                    isPassword: false,
-                  ),
-                  BasicTextField(
-                    label: 'Email',
-                    hint: 'Example@gmail.com',
-                    controller: emailController,
-                    isPassword: false,
-                  ),
-                  BasicTextField(
-                    label: 'Password',
-                    hint: 'At least 8 character',
-                    controller: passwordController,
-                    isPassword: true,
-                  ),
-                  BasicTextField(
-                    label: 'Confirm Password',
-                    hint: 'Re-enter your password',
-                    controller: confirmPasswordController,
-                    isPassword: true,
-                  ),
-                  SizedBox(height: 20.h),
-                  BasicButton(
-                    onPressed: () {
-                      context.read<RegisterCubit>().register(
-                        name: fullNameController.text.trim(),
-                        email: emailController.text.trim(),
-                        password: passwordController.text,
-                        confirmPassword: confirmPasswordController.text,
-                      );
-                    },
-
-                    text: "Create Account",
-                    colors: [
-                      BasicColors.linearGradientSLight,
-                      BasicColors.linearGradientSDark,
-                    ],
-                    radius: 7.65,
-                  ),
-
-                  SizedBox(height: 40.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BasicText(
-                        text: 'Already have an account?',
-                        fontSize: 14.sp,
-                        isBold: false,
-                        color: BasicColors.linearGradientDark,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/login');
-                        },
-                        child: BasicText(
-                          text: "Log In",
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    BasicTextField(
+                      label: 'Full Name',
+                      hint: 'Enter your full name',
+                      controller: fullNameController,
+                      isPassword: false,
+                    ),
+                    BasicTextField(
+                      label: 'Email',
+                      hint: 'Example@gmail.com',
+                      controller: emailController,
+                      isPassword: false,
+                    ),
+                    BasicTextField(
+                      label: 'Password',
+                      hint: 'At least 8 character',
+                      controller: passwordController,
+                      isPassword: true,
+                    ),
+                    BasicTextField(
+                      label: 'Confirm Password',
+                      hint: 'Re-enter your password',
+                      controller: confirmPasswordController,
+                      isPassword: true,
+                    ),
+                    SizedBox(height: 24.h),
+                    BasicButton(
+                      onPressed: () {
+                        context.read<RegisterCubit>().register(
+                          name: fullNameController.text.trim(),
+                          email: emailController.text.trim(),
+                          password: passwordController.text,
+                          confirmPassword: confirmPasswordController.text,
+                        );
+                      },
+                      text: "Create Account",
+                      colors: [
+                        BasicColors.linearGradientSLight,
+                        BasicColors.linearGradientSDark,
+                      ],
+                      radius: 7.65,
+                    ),
+                    SizedBox(height: 40.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BasicText(
+                          text: 'already_have_an_account'.tr(),
                           fontSize: 14.sp,
-
+                          isBold: false,
                           color: BasicColors.linearGradientDark,
-                          isBold: true,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          child: BasicText(
+                            text: "Log In",
+                            fontSize: 14.sp,
+                            color: BasicColors.linearGradientDark,
+                            isBold: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

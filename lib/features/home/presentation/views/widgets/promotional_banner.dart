@@ -68,7 +68,7 @@ class PromotionalBanner extends StatelessWidget {
               width: 40.w,
               height: 40.h,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 shape: BoxShape.circle,
               ),
               child: const Center(

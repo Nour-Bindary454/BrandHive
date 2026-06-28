@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/overView/widgets/order_card.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,13 @@ class RecentOrders extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BasicText(
-                text: 'Recent Orders',
+                text: 'recent_orders'.tr(),
                 fontSize: 16,
                 color: const Color(0xFF0F172A),
                 isBold: true,
               ),
               BasicText(
-                text: 'View All',
+                text: 'view_all'.tr(),
                 fontSize: 12,
                 color: const Color(0xFF5384DB),
                 isBold: true,

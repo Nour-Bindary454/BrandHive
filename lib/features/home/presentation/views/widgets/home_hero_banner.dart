@@ -25,7 +25,7 @@ class HomeHeroBanner extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
             blurRadius: 15.r,
             offset: Offset(0, 5),
           ),
@@ -61,7 +61,7 @@ class HomeHeroBanner extends StatelessWidget {
                     vertical: 4.h,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.25),
+                    color: Theme.of(context).cardColor.withOpacity(0.25),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
@@ -97,8 +97,8 @@ class HomeHeroBanner extends StatelessWidget {
                 ElevatedButton(
                   onPressed: onShopNowTap,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black87,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    foregroundColor: Theme.of(context).colorScheme.onSurface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.r),
                     ),

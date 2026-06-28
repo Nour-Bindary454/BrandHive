@@ -11,12 +11,15 @@ class CustomShippingForm extends StatelessWidget {
     required this.label,
     required this.controller,
     required this.isPhone,
+    this.onChanged,
   });
 
   final BuildContext context;
   final String label;
   final TextEditingController controller;
   final bool isPhone;
+  final ValueChanged<String>? onChanged;
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +48,11 @@ class CustomShippingForm extends StatelessWidget {
           ),
           child: TextFormField(
             controller: controller,
+            onChanged: onChanged,
             keyboardType: isPhone ? TextInputType.phone : TextInputType.text,
             validator: (value) =>
                 value == null || value.isEmpty ? 'Required' : null,
+
             decoration: InputDecoration(
               isDense: true,
 

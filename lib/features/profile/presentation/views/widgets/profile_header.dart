@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -29,12 +28,14 @@ class ProfileHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: BasicColors.white,
+                  color: Theme.of(context).cardColor,
                   width: 3.w,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.05),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -43,7 +44,9 @@ class ProfileHeader extends StatelessWidget {
               child: CircleAvatar(
                 radius: 45.r,
                 backgroundImage: NetworkImage(imageUrl),
-                backgroundColor: BasicColors.grey.withOpacity(0.2),
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withOpacity(0.2),
               ),
             ),
             Positioned(
@@ -52,13 +55,16 @@ class ProfileHeader extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(4.r),
                 decoration: BoxDecoration(
-                  color: BasicColors.buttonColorDark,
+                  color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
-                  border: Border.all(color: BasicColors.white, width: 2.w),
+                  border: Border.all(
+                    color: Theme.of(context).cardColor,
+                    width: 2.w,
+                  ),
                 ),
                 child: Icon(
                   Icons.settings_outlined,
-                  color: BasicColors.white,
+                  color: Theme.of(context).cardColor,
                   size: 16.sp,
                 ),
               ),
@@ -69,27 +75,27 @@ class ProfileHeader extends StatelessWidget {
         BasicText(
           text: name,
           fontSize: 20.sp,
-          color: BasicColors.black,
+          color: Theme.of(context).colorScheme.onSurface,
           isBold: true,
         ),
         SizedBox(height: 4.h),
         BasicText(
           text: email,
           fontSize: 14.sp,
-          color: BasicColors.grey,
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
           isBold: false,
         ),
         SizedBox(height: 12.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: const Color(0xFFE2EAF8), // Light blue background
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: BasicText(
             text: membership,
             fontSize: 12.sp,
-            color: BasicColors.buttonColorDark,
+            color: Theme.of(context).colorScheme.primary,
             isBold: true,
           ),
         ),

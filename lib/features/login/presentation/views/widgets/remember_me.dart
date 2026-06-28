@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,7 @@ class _RememberMeState extends State<RememberMe> {
             ),
           ),
           BasicText(
-            text: 'Remember Me',
+            text: 'remember_me'.tr(),
             fontSize: 13.sp,
             isBold: true,
             color: Color(0xff2C3F52),

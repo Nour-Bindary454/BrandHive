@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:brand/features/seller/settings/widgets/settings_text_field.dart';
@@ -18,7 +19,7 @@ class ContactInfo extends StatelessWidget {
               Icon(Icons.mail_outline, color: const Color(0xFF4C79BD), size: 18.sp),
               SizedBox(width: 8.w),
               BasicText(
-                text: 'Contact Information',
+                text: 'contact_information'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF1F2937),
                 isBold: true,

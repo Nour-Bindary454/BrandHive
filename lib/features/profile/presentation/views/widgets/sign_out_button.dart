@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
+
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class SignOutButton extends StatelessWidget {
@@ -16,7 +17,8 @@ class SignOutButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
         decoration: BoxDecoration(
-          color: BasicColors.grey.withOpacity(0.15),
+          color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
+              .withOpacity(0.15),
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Row(
@@ -25,11 +27,12 @@ class SignOutButton extends StatelessWidget {
             Icon(
               Icons.logout,
               size: 20.sp,
-              color: BasicColors.black,
+              color:
+                  Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             ),
             SizedBox(width: 8.w),
             BasicText(
-              text: 'Sign Out',
+              text: 'sign_out'.tr(),
               fontSize: 14.sp,
               color: const Color(0xFFFF4D4D), // Red color
               isBold: true,

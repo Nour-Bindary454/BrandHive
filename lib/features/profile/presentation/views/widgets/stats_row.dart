@@ -17,26 +17,26 @@ class StatsRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: _buildStatCard(stats.orders.toString(), 'ORDERS')),
+          Expanded(child: _buildStatCard(context, stats.orders.toString(), 'ORDERS')),
           SizedBox(width: 12.w),
-          Expanded(child: _buildStatCard(stats.reviews.toString(), 'REVIEWS')),
+          Expanded(child: _buildStatCard(context, stats.reviews.toString(), 'REVIEWS')),
           SizedBox(width: 12.w),
-          Expanded(child: _buildStatCard(stats.points.toString(), 'POINTS')),
+          Expanded(child: _buildStatCard(context, stats.points.toString(), 'POINTS')),
         ],
       ),
     );
   }
 
-  Widget _buildStatCard(String value, String label) {
+  Widget _buildStatCard(BuildContext context, String value, String label) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h),
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: BasicColors.grey.withOpacity(0.1)),
+        border: Border.all(color: (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black).withOpacity(0.1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.02),
             blurRadius: 10,
             spreadRadius: 2,
             offset: const Offset(0, 4),
@@ -55,7 +55,7 @@ class StatsRow extends StatelessWidget {
           BasicText(
             text: label,
             fontSize: 10.sp,
-            color: BasicColors.grey,
+            color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey,
             isBold: true,
           ),
         ],

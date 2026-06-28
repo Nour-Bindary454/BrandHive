@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class LegalPolicies extends StatelessWidget {
               Icon(Icons.description_outlined, color: const Color(0xFF4C79BD), size: 18.sp),
               SizedBox(width: 8.w),
               BasicText(
-                text: 'Legal & Policies',
+                text: 'legal_policies'.tr(),
                 fontSize: 14,
                 color: const Color(0xFF1F2937),
                 isBold: true,
@@ -25,20 +26,20 @@ class LegalPolicies extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15.h),
-          _buildItem('Terms & Conditions'),
-          _buildItem('Privacy Policy'),
-          _buildItem('Return Policy', isLast: true),
+          _buildItem(context, 'Terms & Conditions'),
+          _buildItem(context, 'Privacy Policy'),
+          _buildItem(context, 'Return Policy', isLast: true),
         ],
       ),
     );
   }
 
-  Widget _buildItem(String title, {bool isLast = false}) {
+  Widget _buildItem(BuildContext context, String title, {bool isLast = false}) {
     return Container(
       margin: EdgeInsets.only(bottom: isLast ? 0 : 10.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         border: Border.all(color: Colors.grey.shade200),
         borderRadius: BorderRadius.circular(8.r),
       ),

@@ -14,14 +14,14 @@ class CustomBackarrow extends StatelessWidget {
         width: 45.w,
         height: 45.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: Center(
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
             size: 20.sp,
           ),
         ),

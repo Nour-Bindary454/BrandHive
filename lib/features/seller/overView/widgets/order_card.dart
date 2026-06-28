@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,7 @@ class OrderCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
@@ -84,7 +85,7 @@ class OrderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: BasicText(
-                  text: 'Pending',
+                  text: 'pending'.tr(),
                   fontSize: 10,
                   color: const Color(0xFFF5A623), // Deep yellow text
                   isBold: true,

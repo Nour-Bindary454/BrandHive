@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/features/seller/settings/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class PaymentInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicText(
-            text: 'Payment Information',
+            text: 'payment_information'.tr(),
             fontSize: 14,
             color: const Color(0xFF1F2937),
             isBold: true,
@@ -22,7 +23,7 @@ class PaymentInfo extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               border: Border.all(color: Colors.grey.shade200),
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -34,21 +35,21 @@ class PaymentInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BasicText(
-                      text: 'Primary Payout Method',
+                      text: 'primary_payout_method'.tr(),
                       fontSize: 10,
                       color: Colors.grey.shade500,
                       isBold: false,
                     ),
                     SizedBox(height: 8.h),
                     BasicText(
-                      text: 'Banque Misr',
+                      text: 'banque_misr'.tr(),
                       fontSize: 12,
                       color: const Color(0xFF1F2937),
                       isBold: true,
                     ),
                     SizedBox(height: 4.h),
                     BasicText(
-                      text: 'Account ending in 4267',
+                      text: 'account_ending_in_4267'.tr(),
                       fontSize: 10,
                       color: Colors.grey.shade500,
                       isBold: false,
@@ -67,7 +68,7 @@ class PaymentInfo extends StatelessWidget {
                       border: Border.all(color: Colors.grey.shade300),
                     ),
                     child: BasicText(
-                      text: 'Edit',
+                      text: 'edit'.tr(),
                       fontSize: 11,
                       color: const Color(0xFF4C79BD), // blue
                       isBold: true,
@@ -83,7 +84,7 @@ class PaymentInfo extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(12.r),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 border: Border.all(color: Colors.grey.shade200),
                 borderRadius: BorderRadius.circular(8.r),
               ),
@@ -91,7 +92,7 @@ class PaymentInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BasicText(
-                    text: 'Add Another Payment Method',
+                    text: 'add_another_payment_method'.tr(),
                     fontSize: 11,
                     color: const Color(0xFF1F2937),
                     isBold: true,

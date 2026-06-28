@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/sharedWidgets/basic_colors.dart';
 import '../../../../../core/sharedWidgets/basic_text.dart';
 
 class BazaarSectionTitle extends StatelessWidget {
@@ -15,7 +14,7 @@ class BazaarSectionTitle extends StatelessWidget {
       child: BasicText(
         text: title,
         fontSize: 18.sp,
-        color: BasicColors.black,
+        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
         isBold: true,
       ),
     );

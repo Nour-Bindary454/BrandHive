@@ -1,5 +1,5 @@
 class CartItemModel {
-  final String id;
+  final String productId;
   final String name;
   final String brand;
   final double price;
@@ -7,7 +7,7 @@ class CartItemModel {
   int quantity;
 
   CartItemModel({
-    required this.id,
+    required this.productId,
     required this.name,
     required this.brand,
     required this.price,
@@ -15,27 +15,44 @@ class CartItemModel {
     required this.quantity,
   });
 
-  /// Factory constructor to create a CartItemModel from JSON (future API usage)
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    final product = json['product'] ?? {};
+
+    final String parsedProductId =
+        product['id'] ?? product['_id'] ?? json['productId'] ?? '';
+
+    String parsedName = '';
+    String parsedBrand = '';
+    String parsedImage = '';
+
+    if (product is Map) {
+      parsedName = product['name'] ?? '';
+      parsedImage = product['image'] ?? product['mainImage'] ?? '';
+
+      if (product['brand'] is Map) {
+        parsedBrand = product['brand']['name'] ?? '';
+      } else if (product['brand'] is String) {
+        parsedBrand = product['brand'];
+      }
+    }
+
+    double parsedPrice =
+        (json['effectivePrice'] as num?)?.toDouble() ??
+        (json['currentPrice'] as num?)?.toDouble() ??
+        (json['lockedPrice'] as num?)?.toDouble() ??
+        0.0;
+
     return CartItemModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      brand: json['brand'] as String,
-      price: (json['price'] as num).toDouble(),
-      image: json['image'] as String,
-      quantity: json['quantity'] as int,
+      productId: parsedProductId,
+      name: parsedName,
+      brand: parsedBrand,
+      price: parsedPrice,
+      image: parsedImage,
+      quantity: json['quantity'] ?? 1,
     );
   }
 
-  /// Converts a CartItemModel to JSON for API submission
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'brand': brand,
-      'price': price,
-      'image': image,
-      'quantity': quantity,
-    };
+    return {'productId': productId, 'quantity': quantity};
   }
 }

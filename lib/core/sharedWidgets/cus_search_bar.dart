@@ -1,10 +1,16 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CusSearchBar extends StatefulWidget {
-  const CusSearchBar({super.key, required this.hintText});
+  const CusSearchBar({
+    super.key,
+    this.hintText = 'Search...',
+    this.onChanged,
+    this.onSubmitted,
+  });
   final String hintText;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   @override
   State<CusSearchBar> createState() => _CusSearchBarState();
 }
@@ -16,7 +22,7 @@ class _CusSearchBarState extends State<CusSearchBar> {
       height: 45.h,
 
       decoration: BoxDecoration(
-        color: BasicColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
@@ -29,10 +35,20 @@ class _CusSearchBarState extends State<CusSearchBar> {
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: TextField(
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
+        textInputAction: widget.onSubmitted != null
+            ? TextInputAction.search
+            : null,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: BasicColors.grey),
-          prefixIcon: Icon(Icons.search, color: BasicColors.grey),
+          hintStyle: TextStyle(
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
         ),

@@ -31,7 +31,7 @@ class ManagementOrderCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 15.h, left: 20.w, right: 20.w),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey.shade200),
       ),

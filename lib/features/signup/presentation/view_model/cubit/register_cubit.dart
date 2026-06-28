@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:brand/core/services/cache_helper.dart';
 
 import 'package:brand/features/signup/data/repository/register_repos.dart';
 import 'package:brand/features/signup/presentation/view_model/cubit/register_state.dart';
-
-import 'package:dio/dio.dart';
 
 class RegisterCubit extends Cubit<RegisterStates> {
   RegisterCubit(this.registerRepository) : super(RegisterInitState());
@@ -16,7 +15,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
     required String name,
     required String confirmPassword,
   }) async {
-
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
       emit(SignUpError("Please fill all fields"));
       return;
@@ -26,7 +24,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
       emit(SignUpError("Passwords do not match"));
       return;
     }
-
 
     emit(SignUpLoading());
 
@@ -44,7 +41,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
         (failure) {
           emit(SignUpError(failure.errMessage));
         },
-        (response) {
+        (response) async {
+          await CacheHelper.saveData(key: 'name', value: name);
+          await CacheHelper.saveData(key: 'email', value: email);
           emit(SignUpSuccess(response));
         },
       );

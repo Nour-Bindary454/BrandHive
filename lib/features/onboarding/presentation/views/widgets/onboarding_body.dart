@@ -19,17 +19,41 @@ class OnboardingBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 80.h, left: 20.w, right: 20.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(image, height: 280.h, fit: BoxFit.contain),
-          SizedBox(height: 30.h),
-          BasicText(text: t1, fontSize: 24.sp, isBold: true, color: Colors.white),
-          BasicText(text: t2, fontSize: 24.sp, isBold: true, color: Colors.white),
-          SizedBox(height: 20.h),
-          BasicText(text: s1, fontSize: 20.sp, isBold: false, color: Colors.white),
-          BasicText(text: s2, fontSize: 20.sp, isBold: false, color: Colors.white),
-        ],
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(image, height: 280.h, fit: BoxFit.contain),
+            SizedBox(height: 30.h),
+            BasicText(
+              text: t1,
+              fontSize: 24.sp,
+              isBold: true,
+              color: Colors.white,
+            ),
+            BasicText(
+              text: t2,
+              fontSize: 24.sp,
+              isBold: true,
+              color: Colors.white,
+            ),
+            SizedBox(height: 20.h),
+            BasicText(
+              text: s1,
+              fontSize: 20.sp,
+              isBold: false,
+              color: Colors.white,
+            ),
+            BasicText(
+              text: s2,
+              fontSize: 20.sp,
+              isBold: false,
+              color: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }

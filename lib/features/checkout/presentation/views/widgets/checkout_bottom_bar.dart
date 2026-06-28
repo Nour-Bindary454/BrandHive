@@ -7,12 +7,14 @@ class CheckoutBottomBar extends StatelessWidget {
   final int currentStep;
   final VoidCallback onNext;
   final double totalPrice;
+  final bool isLoading;
 
   const CheckoutBottomBar({
     super.key,
     required this.currentStep,
     required this.onNext,
     required this.totalPrice,
+    this.isLoading = false,
   });
 
   @override
@@ -20,10 +22,12 @@ class CheckoutBottomBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color:
+                (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
+                    .withOpacity(0.05),
             offset: const Offset(0, -5),
             blurRadius: 10,
           ),
@@ -50,7 +54,7 @@ class CheckoutBottomBar extends StatelessWidget {
           SizedBox(height: 4.h),
 
           Text(
-            '$totalPrice EGP',
+            '${totalPrice.toStringAsFixed(0)} EGP',
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w900,
@@ -62,8 +66,10 @@ class CheckoutBottomBar extends StatelessWidget {
 
           /// 🔹 Button (LOGIC ONLY)
           BasicButton(
-            text: currentStep == 3 ? "Place Order" : "Continue",
-            onPressed: onNext,
+            text: isLoading
+                ? " "
+                : (currentStep == 3 ? "Place Order" : "Continue"),
+            onPressed: isLoading ? () {} : onNext,
             colors: const [BasicColors.buttonColorLight],
             radius: 22.r,
           ),

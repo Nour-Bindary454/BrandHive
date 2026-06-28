@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:brand/core/sharedWidgets/favorite_button.dart';
 
 class FeaturedProductsSection extends StatelessWidget {
   final List<HomeProduct> products;
@@ -27,23 +29,23 @@ class FeaturedProductsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Featured Products',
+              'featured_products'.tr(),
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             TextButton(
               onPressed: onViewAllTap,
               child: Text(
-                'View All',
+                'view_all'.tr(),
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A78B8),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -68,16 +70,16 @@ class FeaturedProductsSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.05),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                       blurRadius: 10.r,
                       offset: Offset(0, 4),
                     ),
                   ],
-                  border: Border.all(color: Colors.grey.shade100),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +96,11 @@ class FeaturedProductsSection extends StatelessWidget {
                                 topRight: Radius.circular(20.r),
                               ),
                               image: DecorationImage(
-                                image: NetworkImage(product.imageUrl),
+                                image: NetworkImage(
+                                  product.imageUrl.isEmpty 
+                                      ? 'https://placehold.co/300x300/png' 
+                                      : product.imageUrl
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -102,19 +108,16 @@ class FeaturedProductsSection extends StatelessWidget {
                           Positioned(
                             top: 8.h,
                             right: 8.w,
-                            child: InkWell(
-                              onTap: () => onFavoriteTap(product.id),
-                              child: Container(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: FavoriteButton(
+                                productId: product.id,
+                                initialIsFavorite: false,
+                                size: 18.sp,
                                 padding: EdgeInsets.all(6.r),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  size: 18.sp,
-                                  color: Colors.black54,
-                                ),
                               ),
                             ),
                           ),
@@ -133,18 +136,17 @@ class FeaturedProductsSection extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  product.brandName.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w800,
-                                    color: const Color.fromARGB(
-                                      255,
-                                      88,
-                                      123,
-                                      160,
+                                Expanded(
+                                  child: Text(
+                                    product.brandName.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w800,
+                                      color: Theme.of(context).colorScheme.primary,
+                                      letterSpacing: 0.5,
                                     ),
-                                    letterSpacing: 0.5,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Row(
@@ -160,7 +162,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.orange[700],
+                                        color: Colors.orange,
                                       ),
                                     ),
                                   ],
@@ -174,7 +176,7 @@ class FeaturedProductsSection extends StatelessWidget {
                                 fontFamily: 'Outfit',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w800,
-                                color: Colors.black87,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 height: 1.2.h,
                               ),
                               maxLines: 2,
@@ -199,11 +201,11 @@ class FeaturedProductsSection extends StatelessWidget {
                                     ),
                                     SizedBox(width: 2.w),
                                     Text(
-                                      'EGP',
+                                      'egp'.tr(),
                                       style: TextStyle(
                                         fontSize: 8.sp,
                                         fontWeight: FontWeight.w900,
-                                        color: Colors.grey,
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                       ),
                                     ),
                                   ],
@@ -213,13 +215,13 @@ class FeaturedProductsSection extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.all(4.r),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF2C5A9C), // Dark blue
+                                      color: Theme.of(context).colorScheme.primary,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.add,
                                       size: 16.sp,
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                     ),
                                   ),
                                 ),

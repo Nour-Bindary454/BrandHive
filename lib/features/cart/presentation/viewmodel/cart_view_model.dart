@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:brand/core/services/event_tracker.dart';
 import '../../data/model/cart_item_model.dart';
+import '../../data/model/cart_response_model.dart';
 import '../../services/cart_service.dart';
 
 class CartViewModel extends ChangeNotifier {
@@ -9,6 +11,7 @@ class CartViewModel extends ChangeNotifier {
     fetchCart();
   }
 
+  CartDataModel? _cartData;
   List<CartItemModel> _items = [];
   bool _isLoading = false;
   String? _errorMessage;
@@ -17,12 +20,11 @@ class CartViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  double get subtotal =>
-      _items.fold(0.0, (sum, item) => sum + (item.price * item.quantity));
+  double get subtotal => _cartData?.subtotal ?? 0.0;
 
-  double get shippingCost => 50.0; // Fixed as per requirements
+  double get shippingCost => 50.0; // Keep local or get from API if available
 
-  double get total => _items.isEmpty ? 0.0 : subtotal + shippingCost;
+  double get total => _cartData?.total ?? (_items.isEmpty ? 0.0 : subtotal + shippingCost);
 
   Future<void> fetchCart() async {
     _isLoading = true;
@@ -30,7 +32,8 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _items = await _cartService.fetchCartItems();
+      _cartData = await _cartService.fetchCartItems();
+      _items = _cartData?.items ?? [];
     } catch (e) {
       _errorMessage = 'Failed to load cart items.';
     } finally {
@@ -39,40 +42,30 @@ class CartViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> addToCart(CartItemModel item) async {
+  Future<void> addToCart(String productId, {int quantity = 1}) async {
     try {
-      await _cartService.addItemToCart(item);
-      final index = _items.indexWhere((element) => element.id == item.id);
-      if (index >= 0) {
-        _items[index].quantity += item.quantity;
-      } else {
-        _items.add(item);
-      }
-      notifyListeners();
+      await _cartService.addItemToCart(productId, quantity: quantity);
+      EventTracker.track(productId: productId, event: 'cart');
+      await fetchCart(); // Refresh the cart from server to ensure data is synced
     } catch (e) {
       // Handle error gracefully
     }
   }
 
-  Future<void> updateQuantity(String productId, int quantity) async {
+  Future<void> updateQuantity(String itemId, int quantity) async {
     if (quantity < 1) return;
     try {
-      await _cartService.updateItemQuantity(productId, quantity);
-      final index = _items.indexWhere((element) => element.id == productId);
-      if (index >= 0) {
-        _items[index].quantity = quantity;
-        notifyListeners();
-      }
+      await _cartService.updateItemQuantity(itemId, quantity);
+      await fetchCart();
     } catch (e) {
       // Handle error
     }
   }
 
-  Future<void> removeItem(String productId) async {
+  Future<void> removeItem(String itemId) async {
     try {
-      await _cartService.removeItemFromCart(productId);
-      _items.removeWhere((element) => element.id == productId);
-      notifyListeners();
+      await _cartService.removeItemFromCart(itemId);
+      await fetchCart();
     } catch (e) {
       // Handle error
     }
@@ -85,6 +78,7 @@ class CartViewModel extends ChangeNotifier {
       final success = await _cartService.processCheckout(_items, total);
       if (success) {
         _items.clear();
+        _cartData = null;
       }
     } catch (e) {
       _errorMessage = 'Checkout failed.';

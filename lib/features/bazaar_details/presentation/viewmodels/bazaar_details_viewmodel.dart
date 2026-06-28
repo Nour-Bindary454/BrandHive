@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/bazaar_details_model.dart';
 
@@ -25,7 +26,7 @@ class BazaarDetailsViewModel extends ChangeNotifier {
       // Right now, using mock payload matching the UI constraints tightly.
       _bazaarDetails = BazaarDetailsModel(
         id: bazaarId,
-        title: 'Cairo Artisan Bazaar',
+        title: 'cairo_artisan_bazaar'.tr(),
         description:
             'The heart of Egyptian craftsmanship. Experience traditional bazaar vibes with modern local brands.',
         imageUrl:

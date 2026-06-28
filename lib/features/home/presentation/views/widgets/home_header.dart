@@ -1,7 +1,10 @@
-import 'package:brand/core/sharedWidgets/basic_colors.dart';
 import 'package:brand/features/home/data/models/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_cubit.dart';
+import 'package:brand/features/notifications/presentation/viewmodel/notifications_state.dart';
 
 class HomeHeader extends StatelessWidget {
   final UserProfile user;
@@ -21,7 +24,7 @@ class HomeHeader extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: BasicColors.linearGradientLight.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
               width: 8.w,
             ),
           ),
@@ -38,7 +41,9 @@ class HomeHeader extends StatelessWidget {
               Text(
                 user.greeting,
                 style: TextStyle(
-                  color: Colors.grey[600],
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.6),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                 ),
@@ -47,34 +52,39 @@ class HomeHeader extends StatelessWidget {
                 user.name,
                 style: TextStyle(
                   fontSize: 18.sp,
-
-                  color: BasicColors.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontFamily: 'Outfit',
                 ),
               ),
             ],
           ),
         ),
-        Stack(
-          children: [
-            IconButton(
-              onPressed: onNotificationTap,
-              icon: Icon(Icons.notifications_none_rounded, size: 28.sp),
-              color: Colors.black87,
-            ),
-            Positioned(
-              right: 12.w,
-              top: 12.h,
-              child: Container(
-                width: 8.w,
-                height: 9.h,
-                decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  shape: BoxShape.circle,
+        BlocBuilder<NotificationsCubit, NotificationsState>(
+          builder: (context, state) {
+            final bool hasUnread = state.unreadCount > 0;
+            return Stack(
+              children: [
+                IconButton(
+                  onPressed: onNotificationTap,
+                  icon: Icon(Icons.notifications_none_rounded, size: 28.sp),
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
-              ),
-            ),
-          ],
+                if (hasUnread)
+                  Positioned(
+                    right: 12.w,
+                    top: 12.h,
+                    child: Container(
+                      width: 8.w,
+                      height: 9.h,
+                      decoration: const BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );

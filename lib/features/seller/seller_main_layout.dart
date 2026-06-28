@@ -37,10 +37,10 @@ class SellerMainLayout extends StatelessWidget {
             body: screens[currentIndex],
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: (Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black).withOpacity(0.08),
                     blurRadius: 15,
                     offset: const Offset(0, -5), // Shadow going up slightly
                   ),
