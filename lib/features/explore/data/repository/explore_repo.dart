@@ -11,4 +11,3 @@ abstract class ExploreRepository {
   });
   Future<Either<Failure, List<Product>>> getTrendingProducts();
 }
-

@@ -37,7 +37,8 @@ class OrdersBody extends StatelessWidget {
                         String countStr = "";
                         if (state is OrdersSuccess) {
                           final count = state.orders.length;
-                          countStr = "$count ${count == 1 ? 'order' : 'orders'}";
+                          countStr =
+                              "$count ${count == 1 ? 'order' : 'orders'}";
                         } else if (state is OrdersLoading) {
                           countStr = "Loading...";
                         }

@@ -16,10 +16,14 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   void initCheckout({
     required List<OrderItemModel> items,
     required double subtotal,
+    String? couponCode,
+    double couponDiscount = 0,
   }) {
     emit(state.copyWith(
       checkoutItems: items,
       subtotal: subtotal,
+      couponCode: couponCode,
+      couponDiscount: couponDiscount,
       currentStep: 1,
       error: null,
       orderSuccessResult: null,
@@ -119,8 +123,8 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         paymentMethod: state.selectedPayment!.methodType == PaymentMethodType.creditCard ? 'paymob' : 'cod',
         items: state.checkoutItems,
         subtotal: state.subtotal,
-
         shippingFee: state.shippingFee,
+        discount: state.couponDiscount,
         total: state.totalAmount,
       );
 

@@ -21,22 +21,16 @@ class ExploreCubit extends Cubit<ExploreState> {
     // Fetch trending products from API
     List<Product> trending = [];
     final trendingResult = await repo.getTrendingProducts();
-    trendingResult.fold(
-      (_) {},
-      (trendingProducts) {
-        trending = trendingProducts;
-      },
-    );
+    trendingResult.fold((_) {}, (trendingProducts) {
+      trending = trendingProducts;
+    });
 
     // Also fetch categories from API
     List<CategoryModel> categories = [];
     final catResult = await sl<HomeRepository>().getAllCategories();
-    catResult.fold(
-      (_) {},
-      (cats) {
-        categories = cats;
-      },
-    );
+    catResult.fold((_) {}, (cats) {
+      categories = cats;
+    });
 
     result.fold(
       (failure) {
@@ -70,11 +64,11 @@ class ExploreCubit extends Cubit<ExploreState> {
     if (shippingFilter != 'All') {
       emit(state.copyWith(isLoading: true));
       final bool isGlobal = shippingFilter == 'Global Only';
-      final apiResult = await repo.searchProducts('', shipsInternationally: isGlobal);
-      result = apiResult.fold(
-        (_) => <HomeProduct>[],
-        (products) => products,
+      final apiResult = await repo.searchProducts(
+        '',
+        shipsInternationally: isGlobal,
       );
+      result = apiResult.fold((_) => <HomeProduct>[], (products) => products);
       emit(state.copyWith(isLoading: false));
 
       // Apply category filter locally if selected
@@ -93,7 +87,9 @@ class ExploreCubit extends Cubit<ExploreState> {
 
         if (cat.id.isNotEmpty) {
           emit(state.copyWith(isLoading: true));
-          final apiResult = await sl<HomeRepository>().getProductsByCategory(cat.id);
+          final apiResult = await sl<HomeRepository>().getProductsByCategory(
+            cat.id,
+          );
           result = apiResult.fold(
             (_) => <HomeProduct>[],
             (products) => products,
@@ -137,7 +133,8 @@ class ExploreCubit extends Cubit<ExploreState> {
 
     emit(
       state.copyWith(
-        isFiltering: (category != null && category != 'All') || shippingFilter != 'All',
+        isFiltering:
+            (category != null && category != 'All') || shippingFilter != 'All',
         filteredProducts: result,
         sortBy: sortBy,
         category: category,

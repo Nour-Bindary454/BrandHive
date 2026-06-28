@@ -47,8 +47,9 @@ dependencies:
   shared_preferences: ^2.5.5
   easy_localization: ^3.0.8
   webview_flutter: ^4.10.0
-  image_picker: ^1.2.2
+  equatable: ^2.0.8
   url_launcher: ^6.3.2
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -103,9 +104,9 @@ flutter:
         #   style: italic
     - family: Outfit
       fonts:
-        - asset: assets/fonts/outfit/Outfit-Bold.ttf 
+        - asset: assets/fonts/outfit/Outfit-Bold.ttf
         # - asset: fonts/TrajanPro_Bold.ttf
         #   weight: 700
-  
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

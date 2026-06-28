@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:brand/core/sharedWidgets/basic_text.dart';
 import 'package:brand/core/utils/appImages/png_images.dart';
+import 'package:brand/features/seller/presentation/view_model/seller_cubit.dart';
+import 'package:brand/features/seller/presentation/view_model/seller_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StoreAnalytics extends StatelessWidget {
@@ -9,62 +12,118 @@ class StoreAnalytics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BasicText(
-            text: 'store_analytics'.tr(),
-            fontSize: 16,
-            color: const Color(0xFF0F172A),
-            isBold: true,
-          ),
-          SizedBox(height: 15.h),
-          Row(
+    return BlocBuilder<SellerCubit, SellerState>(
+      builder: (context, state) {
+        final cubit = context.read<SellerCubit>();
+        final views = cubit.dashboardData?.profileViews ?? 0;
+        final products = cubit.dashboardData?.productsCount ?? 0;
+        final rating = cubit.dashboardData?.rating ?? 0.0;
+        final analytics = cubit.analyticsData;
+
+        // Formats views like 1200 -> 1.2k
+        String formattedViews = views.toString();
+        if (views >= 1000) {
+          formattedViews = '${(views / 1000).toStringAsFixed(1)}k';
+        }
+
+        String formatAmount(double value) {
+          if (value >= 1000) {
+            return '${(value / 1000).toStringAsFixed(1)}k';
+          }
+          return value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1);
+        }
+
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: _buildAnalyticBox(
-                  context,
-                  ImageIcon(
-                    AssetImage(PngImages.people),
-                    color: const Color(0xFF5384DB),
-                    size: 24.sp,
-                  ),
-                  '1.2k',
-                  'Profile Views',
-                ),
+              BasicText(
+                text: 'store_analytics'.tr(),
+                fontSize: 16,
+                color: const Color(0xFF0F172A),
+                isBold: true,
               ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: _buildAnalyticBox(
-                  context,
-                  ImageIcon(
-                    AssetImage(PngImages.products),
-                    color: const Color(0xFF5384DB),
-                    size: 24.sp,
+              SizedBox(height: 15.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildAnalyticBox(
+                      context,
+                      ImageIcon(
+                        AssetImage(PngImages.people),
+                        color: const Color(0xFF5384DB),
+                        size: 24.sp,
+                      ),
+                      formattedViews,
+                      'Profile Views',
+                    ),
                   ),
-                  '24',
-                  'Products',
-                ),
-              ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: _buildAnalyticBox(
-                  context,
-                  ImageIcon(
-                    AssetImage(PngImages.dollar),
-                    color: const Color(0xFFF5A623),
-                    size: 24.sp,
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: _buildAnalyticBox(
+                      context,
+                      ImageIcon(
+                        AssetImage(PngImages.products),
+                        color: const Color(0xFF5384DB),
+                        size: 24.sp,
+                      ),
+                      products.toString(),
+                      'Products',
+                    ),
                   ),
-                  '4.8',
-                  'Rating',
-                ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: _buildAnalyticBox(
+                      context,
+                      ImageIcon(
+                        AssetImage(PngImages.dollar),
+                        color: const Color(0xFFF5A623),
+                        size: 24.sp,
+                      ),
+                      rating.toStringAsFixed(1),
+                      'Rating',
+                    ),
+                  ),
+                ],
               ),
+              if (analytics != null) ...[
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.payments_outlined, color: const Color(0xFF16A34A), size: 24.sp),
+                        formatAmount(analytics.totalSales),
+                        'total_sales'.tr(),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.receipt_long_outlined, color: const Color(0xFF5384DB), size: 24.sp),
+                        analytics.totalOrders.toString(),
+                        'total_orders'.tr(),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: _buildAnalyticBox(
+                        context,
+                        Icon(Icons.trending_up, color: const Color(0xFFF5A623), size: 24.sp),
+                        formatAmount(analytics.averageOrderValue),
+                        'avg_order_value'.tr(),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

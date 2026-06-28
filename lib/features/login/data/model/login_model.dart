@@ -10,7 +10,7 @@ class LoginModel {
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    accessToken = json['accessToken'];
+    accessToken = json['accessToken'] ?? json['token'];
     refreshToken = json['refreshToken'];
 
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;

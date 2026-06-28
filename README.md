@@ -4,9 +4,15 @@
 
 **BrandHive** is a graduation project that aims to empower local Egyptian brands by providing a complete digital marketplace. The platform connects customers with local businesses through a modern e-commerce experience while giving sellers and administrators the tools they need to manage and grow their businesses.
 
+
+This project is a starting point for a Flutter application.
+ 
+A few resources to get you started if this is your first Flutter project:
+=======
 The project consists of a **cross-platform Flutter mobile application**, a **responsive web platform**, and dedicated **Seller** and **Admin** dashboards.
 
 ---
+
 
 ## ✨ Features
 

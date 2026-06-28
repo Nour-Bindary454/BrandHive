@@ -18,6 +18,8 @@ class Toast {
         width: MediaQuery.of(context).size.width * 0.8,
         title: Text(
           msg,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
         ),
       ).show(context);

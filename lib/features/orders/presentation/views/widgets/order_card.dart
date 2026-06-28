@@ -57,7 +57,11 @@ class OrderCard extends StatelessWidget {
                     SizedBox(height: 5.h),
                     Row(
                       children: [
-                        Icon(Icons.calendar_today_outlined, size: 14.sp, color: const Color(0xFF64748B)),
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          size: 14.sp,
+                          color: const Color(0xFF64748B),
+                        ),
                         SizedBox(width: 5.w),
                         BasicText(
                           text: date,
@@ -71,15 +75,22 @@ class OrderCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
+                  ),
                   decoration: BoxDecoration(
-                    color: isDelivered ? const Color(0xFFBCE6A6) : const Color(0xFF93C5FD),
+                    color: isDelivered
+                        ? const Color(0xFFBCE6A6)
+                        : const Color(0xFF93C5FD),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: BasicText(
                     text: status,
                     fontSize: 12.sp,
-                    color: isDelivered ? const Color(0xFF166534) : const Color(0xFF1D4ED8),
+                    color: isDelivered
+                        ? const Color(0xFF166534)
+                        : const Color(0xFF1D4ED8),
                     isBold: true,
                   ),
                 ),
@@ -113,17 +124,23 @@ class OrderCard extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
 
-            // Footer: Price & Buttons
+            // Price on its own line
+            BasicText(
+              text: price,
+              fontSize: 16.sp,
+              color: const Color(0xFF1E293B),
+              isBold: true,
+            ),
+            SizedBox(height: 12.h),
+
+            // Buttons Row
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                BasicText(
-                  text: price,
-                  fontSize: 16.sp,
-                  color: const Color(0xFF1E293B),
-                  isBold: true,
+                const OrderOutlinedButton(
+                  text: "Invoice",
+                  icon: Icons.download_outlined,
                 ),
-                const Spacer(),
-                const OrderOutlinedButton(text: "Invoice", icon: Icons.download_outlined),
                 SizedBox(width: 10.w),
                 const OrderFilledButton(text: "Track"),
               ],

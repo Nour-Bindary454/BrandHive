@@ -9,6 +9,8 @@ import 'package:brand/features/seller/overView/overview.dart';
 import 'package:brand/features/seller/products/products.dart';
 import 'package:brand/features/seller/settings/settings.dart';
 
+import 'package:brand/core/services/service_locator.dart';
+import 'package:brand/features/seller/presentation/view_model/seller_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,8 +29,18 @@ class SellerMainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LayoutCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LayoutCubit()),
+        BlocProvider(create: (context) => sl<SellerCubit>()
+          ..getDashboard()
+          ..getProducts()
+          ..getOrders()
+          ..getStockAlerts()
+          ..getAnalytics()
+          ..getProductInsights()
+          ..loadCategories()),
+      ],
       child: BlocBuilder<LayoutCubit, int>(
         builder: (context, currentIndex) {
           return Scaffold(

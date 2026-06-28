@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BasicButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final List<Color> colors; // بنبعت لستة ألوان علطول
+  final List<Color> colors;
   final double radius;
+  final bool isLoading;
 
   const BasicButton({
     super.key,
@@ -13,16 +14,15 @@ class BasicButton extends StatelessWidget {
     required this.onPressed,
     required this.colors,
     required this.radius,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
-        // التدريجة شغالة دايماً
         gradient: LinearGradient(
           colors: colors.length == 1 ? [colors[0], colors[0]] : colors,
           begin: Alignment.centerLeft,
@@ -30,18 +30,34 @@ class BasicButton extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
+          disabledBackgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
+          padding: EdgeInsets.symmetric(vertical: 12.h),
         ),
-        child: Text(
-          text,
-          style: TextStyle(color: Colors.white, fontSize: 17.sp),
-        ),
+        child: isLoading
+            ? SizedBox(
+                height: 20.h,
+                width: 20.h,
+                child: const CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Outfit',
+                ),
+              ),
       ),
     );
   }

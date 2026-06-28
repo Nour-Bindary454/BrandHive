@@ -93,7 +93,7 @@ class OrderReviewScreen extends StatelessWidget {
                           Icon(
                             Icons.credit_card,
                             size: 20.sp,
-                            color: (BasicColors.buttonColorDark),
+                            color: BasicColors.buttonColorLight,
                           ),
                           SizedBox(width: 8.w),
                           Text(
@@ -141,6 +141,28 @@ class OrderReviewScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      if (state.couponDiscount > 0) ...[
+                        SizedBox(height: 8.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Coupon (${state.couponCode ?? ''})',
+                              style: TextStyle(
+                                color: const Color(0xFF059669),
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            Text(
+                              '-${state.couponDiscount.toStringAsFixed(0)} EGP',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: const Color(0xFF059669),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                       SizedBox(height: 16.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +179,7 @@ class OrderReviewScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 16.sp,
-                              color: (BasicColors.buttonColorDark),
+                              color: BasicColors.buttonColorLight,
                             ),
                           ),
                         ],

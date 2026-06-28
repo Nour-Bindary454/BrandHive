@@ -9,8 +9,8 @@ class NewArrivalsCubit extends Cubit<NewArrivalsState> {
 
   List products = [];
 
-  Future<void> getNewArrivals() async {
-    if (products.isNotEmpty) return;
+  Future<void> getNewArrivals({bool forceRefresh = false}) async {
+    if (!forceRefresh && products.isNotEmpty) return;
 
     emit(NewArrivalsLoading());
 

@@ -15,6 +15,8 @@ class CheckoutState {
   final List<OrderItemModel> checkoutItems;
   final double subtotal;
   final double shippingFee;
+  final String? couponCode;
+  final double couponDiscount;
   final String? paymentUrl;
   final CheckoutResponseModel? orderSuccessResult;
 
@@ -28,11 +30,14 @@ class CheckoutState {
     this.checkoutItems = const [],
     this.subtotal = 0.0,
     this.shippingFee = 50.0,
+    this.couponCode,
+    this.couponDiscount = 0,
     this.paymentUrl,
     this.orderSuccessResult,
   });
 
-  double get totalAmount => subtotal + shippingFee;
+  double get totalAmount =>
+      (subtotal + shippingFee - couponDiscount).clamp(0, double.infinity);
 
   CheckoutState copyWith({
     bool? isLoading,
@@ -44,6 +49,8 @@ class CheckoutState {
     List<OrderItemModel>? checkoutItems,
     double? subtotal,
     double? shippingFee,
+    String? couponCode,
+    double? couponDiscount,
     String? paymentUrl,
     CheckoutResponseModel? orderSuccessResult,
   }) {
@@ -57,6 +64,8 @@ class CheckoutState {
       checkoutItems: checkoutItems ?? this.checkoutItems,
       subtotal: subtotal ?? this.subtotal,
       shippingFee: shippingFee ?? this.shippingFee,
+      couponCode: couponCode ?? this.couponCode,
+      couponDiscount: couponDiscount ?? this.couponDiscount,
       paymentUrl: paymentUrl ?? this.paymentUrl,
       orderSuccessResult: orderSuccessResult ?? this.orderSuccessResult,
     );

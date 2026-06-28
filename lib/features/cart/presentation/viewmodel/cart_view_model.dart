@@ -77,8 +77,7 @@ class CartViewModel extends ChangeNotifier {
     try {
       final success = await _cartService.processCheckout(_items, total);
       if (success) {
-        _items.clear();
-        _cartData = null;
+        clearCartLocal();
       }
     } catch (e) {
       _errorMessage = 'Checkout failed.';
@@ -86,5 +85,11 @@ class CartViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearCartLocal() {
+    _items = [];
+    _cartData = null;
+    notifyListeners();
   }
 }

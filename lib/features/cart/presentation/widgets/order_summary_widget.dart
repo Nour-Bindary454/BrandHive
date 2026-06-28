@@ -1,13 +1,23 @@
 import 'package:brand/features/cart/presentation/viewmodel/cart_view_model.dart';
 import 'package:brand/features/checkout/presentation/views/checkout_screen.dart';
+import 'package:brand/features/coupon/presentation/views/widgets/coupon_input_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../checkout/data/models/order_item_model.dart';
 
-class OrderSummaryWidget extends StatelessWidget {
+class OrderSummaryWidget extends StatefulWidget {
   const OrderSummaryWidget({super.key});
+
+  @override
+  State<OrderSummaryWidget> createState() => _OrderSummaryWidgetState();
+}
+
+class _OrderSummaryWidgetState extends State<OrderSummaryWidget> {
+  double _couponDiscount = 0;
+  String? _appliedCouponCode;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +26,9 @@ class OrderSummaryWidget extends StatelessWidget {
         if (viewModel.items.isEmpty) {
           return const SizedBox.shrink();
         }
+
+        final total = (viewModel.subtotal + viewModel.shippingCost - _couponDiscount)
+            .clamp(0, double.infinity);
 
         return Container(
           padding: EdgeInsets.all(20.r),
@@ -46,6 +59,24 @@ class OrderSummaryWidget extends StatelessWidget {
 
               SizedBox(height: 16.h),
 
+              CouponInputWidget(
+                orderAmount: viewModel.subtotal,
+                onCouponApplied: (code, discount) {
+                  setState(() {
+                    _couponDiscount = discount;
+                    _appliedCouponCode = code;
+                  });
+                },
+                onCouponRemoved: () {
+                  setState(() {
+                    _couponDiscount = 0;
+                    _appliedCouponCode = null;
+                  });
+                },
+              ),
+
+              SizedBox(height: 16.h),
+
               _buildSummaryRow(
                 context,
                 'Subtotal',
@@ -59,6 +90,16 @@ class OrderSummaryWidget extends StatelessWidget {
                 'Shipping',
                 '${viewModel.shippingCost.toStringAsFixed(0)} EGP',
               ),
+
+              if (_couponDiscount > 0) ...[
+                SizedBox(height: 10.h),
+                _buildSummaryRow(
+                  context,
+                  'coupon_discount'.tr(),
+                  '-${_couponDiscount.toStringAsFixed(0)} EGP',
+                  valueColor: const Color(0xFF059669),
+                ),
+              ],
 
               SizedBox(height: 16.h),
 
@@ -78,7 +119,7 @@ class OrderSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${viewModel.total.toStringAsFixed(0)} EGP',
+                    '${total.toStringAsFixed(0)} EGP',
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w900,
@@ -105,7 +146,6 @@ class OrderSummaryWidget extends StatelessWidget {
                                   productName: e.name,
                                   product: e.productId,
                                   unitPrice: e.price,
-
                                   quantity: e.quantity,
                                 ),
                               )
@@ -117,6 +157,8 @@ class OrderSummaryWidget extends StatelessWidget {
                               builder: (_) => CheckoutScreen(
                                 items: orderItems,
                                 subtotal: viewModel.subtotal,
+                                couponCode: _appliedCouponCode,
+                                couponDiscount: _couponDiscount,
                               ),
                             ),
                           );
@@ -137,7 +179,7 @@ class OrderSummaryWidget extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          'Checkout (${viewModel.total.toStringAsFixed(0)} EGP)',
+                          'Checkout (${total.toStringAsFixed(0)} EGP)',
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -155,7 +197,12 @@ class OrderSummaryWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(BuildContext context, String title, String value) {
+  Widget _buildSummaryRow(
+    BuildContext context,
+    String title,
+    String value, {
+    Color? valueColor,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -171,7 +218,7 @@ class OrderSummaryWidget extends StatelessWidget {
           value,
           style: TextStyle(
             fontSize: 14.sp,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: valueColor ?? Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.w600,
           ),
         ),

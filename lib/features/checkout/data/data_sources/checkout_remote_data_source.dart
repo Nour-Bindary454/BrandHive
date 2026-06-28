@@ -29,6 +29,7 @@ class CheckoutRemoteDataSource {
     final dataToSend = {
       'shippingAddress': addressJson,
       'paymentMethod': order.paymentMethod,
+      if (order.discount > 0) 'discount': order.discount,
     };
     print("SENDING_ORDER_DATA: $dataToSend");
 
